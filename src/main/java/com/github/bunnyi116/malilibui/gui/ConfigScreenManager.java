@@ -74,6 +74,9 @@ public final class ConfigScreenManager {
 
     private static final Map<Screen, ConfigScreenState> STATES = new WeakHashMap<>();
 
+    /** 记录渲染层输入框的原始坐标，每次布局都按原始坐标重新偏移，避免漂移与新控件漏移。 */
+    private static final Map<GuiTextFieldGeneric, int[]> STANDALONE_FIELD_ORIGINS = new WeakHashMap<>();
+
     /** 是否有滑块正在被拖动（拖动期间冻结布局重建，避免拖拽被中断）。 */
     private static boolean sliderDragging;
 
@@ -542,12 +545,14 @@ public final class ConfigScreenManager {
         for (TextFieldWrapper<? extends GuiTextFieldGeneric> wrapper : access.malilibui$getTextFields()) {
             GuiTextFieldGeneric field = wrapper.textField();
 
-            if (field == null || !state.positionedControls.add(field)) {
+            if (field == null) {
                 continue;
             }
 
-            int nx = field.getX() + deltaX;
-            int ny = field.getY() + deltaY;
+            int[] origin = STANDALONE_FIELD_ORIGINS.computeIfAbsent(field,
+                    f -> new int[] { f.getX(), f.getY() });
+            int nx = origin[0] + deltaX;
+            int ny = origin[1] + deltaY;
             // GuiTextFieldGeneric 自己保存了一份 x/y，但 EditBox/AbstractWidget 的
             // 父类字段仍停留在旧坐标，文本会按父类坐标绘制。这里同步移动父类字段。
             field.setX(nx);
