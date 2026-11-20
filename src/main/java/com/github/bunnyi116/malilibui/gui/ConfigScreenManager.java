@@ -546,8 +546,42 @@ public final class ConfigScreenManager {
                 continue;
             }
 
-            field.setX(field.getX() + deltaX);
-            field.setY(field.getY() + deltaY);
+            int nx = field.getX() + deltaX;
+            int ny = field.getY() + deltaY;
+            // GuiTextFieldGeneric 自己保存了一份 x/y，但 EditBox/AbstractWidget 的
+            // 父类字段仍停留在旧坐标，文本会按父类坐标绘制。这里同步移动父类字段。
+            field.setX(nx);
+            field.setY(ny);
+            field.setPosition(nx, ny);
+            ((com.github.bunnyi116.malilibui.mixin.accessor.AbstractWidgetAccessor) field)
+                    .malilibui$setWidgetX(nx);
+            ((com.github.bunnyi116.malilibui.mixin.accessor.AbstractWidgetAccessor) field)
+                    .malilibui$setWidgetY(ny);
+
+            if (Boolean.getBoolean("malilib-ui.debuglayout")) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("field ").append(field.getClass().getName())
+                  .append(" getX=").append(field.getX())
+                  .append(" getY=").append(field.getY())
+                  .append(" value=").append(field.getValue())
+                  .append('\n');
+                for (Class<?> c = field.getClass(); c != null && c != Object.class; c = c.getSuperclass()) {
+                    for (java.lang.reflect.Field f : c.getDeclaredFields()) {
+                        if (f.getType() == int.class && (f.getName().equals("x") || f.getName().equals("y"))) {
+                            try {
+                                f.setAccessible(true);
+                                sb.append("  ").append(c.getSimpleName()).append('.').append(f.getName())
+                                  .append('=').append(f.getInt(field)).append('\n');
+                            } catch (Exception ignored) {
+                            }
+                        }
+                    }
+                }
+                try {
+                    java.nio.file.Files.writeString(java.nio.file.Path.of("C:\\Users\\AsiaA\\Desktop\\rli\\field-debug.log"), sb.toString());
+                } catch (Exception ignored) {
+                }
+            }
         }
     }
 
@@ -632,16 +666,14 @@ public final class ConfigScreenManager {
         BadgeRenderer.draw(ctx, layout.sidebarX + 10, layout.sidebarY + 8,
                 Math.max(40, layout.sidebarW - 20));
 
-        UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), modName, layout.sidebarW - 24),
-                layout.sidebarX + 12, layout.sidebarY + 47, UiTheme.TEXT_TITLE, true);
-
-        UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 66, layout.sidebarW - 24,
+        UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 42, layout.sidebarW - 24,
                 0x22FFFFFF);
     }
 
     private static void drawContentHeader(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
-        String currentTab = activeTabLabel(state);
+        // 侧栏只保留徽章，模组名统一显示在内容区标题栏，避免重复。
+        String currentTab = prettyModName(getModId(state.screen));
 
         if (currentTab == null || currentTab.isEmpty()) {
             currentTab = state.screen.getTitleString();

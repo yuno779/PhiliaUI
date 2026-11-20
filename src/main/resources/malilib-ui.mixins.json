@@ -16,6 +16,7 @@
     "WidgetListConfigOptionsMixin",
     "WidgetDropDownListMixin",
     "WidgetSliderMixin",
+    "accessor.AbstractWidgetAccessor",
     "accessor.ButtonBaseAccessor",
     "accessor.GuiBaseAccessor",
     "accessor.GuiConfigsBaseAccessor",
