@@ -31,7 +31,8 @@
     "dialog.GuiKeybindSettingsMixin",
     "dialog.GuiLockedListEditMixin",
     "dialog.GuiStringListEditMixin",
-    "dialog.GuiTableEditMixin"
+    "dialog.GuiTableEditMixin",
+    "compat.LpctoolsConfigPageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
