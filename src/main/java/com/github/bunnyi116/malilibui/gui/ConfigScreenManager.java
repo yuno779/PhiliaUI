@@ -358,7 +358,7 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.sidebarX + layout.sidebarW + 6;
+        int x = layout.sidebarX + layout.sidebarW + 16;
         int y = layout.panelY + 4;
         int right = layout.contentX + layout.contentW - 136;
         int w = Math.max(80, right - x);
@@ -1001,9 +1001,9 @@ public final class ConfigScreenManager {
         }
 
         int badgeY = layout.panelY + 4;
-        UiTheme.fill(ctx, layout.sidebarX + 1, badgeY, layout.sidebarW - 7, 18,
+        UiTheme.fill(ctx, layout.sidebarX + 1, badgeY, layout.sidebarW + 9, 18,
                 0x33000000);
-        BadgeRenderer.draw(ctx, layout.sidebarX + 10, badgeY, Math.max(40, layout.sidebarW - 20));
+        BadgeRenderer.draw(ctx, layout.sidebarX + 10, badgeY, Math.max(40, layout.sidebarW - 10));
 
         drawModTree(ctx, state);
     }
@@ -1031,7 +1031,7 @@ public final class ConfigScreenManager {
                 int clipTop = Math.max(boxY, layout.navY);
                 int clipBottom = Math.min(boxY + boxH, layout.listY + layout.listH + 6);
                 if (clipTop < clipBottom) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW - 8,
+                    UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW,
                             clipBottom - clipTop, 0x66000000);
                 }
             }
@@ -1050,7 +1050,7 @@ public final class ConfigScreenManager {
 
             if (row.tab()) {
                 if (row.selected() && drawBottom > drawTop) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW - 8, drawBottom - drawTop, 0x22000000);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW, drawBottom - drawTop, 0x22000000);
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
                 }
 
@@ -1060,7 +1060,7 @@ public final class ConfigScreenManager {
                 }
             } else {
                 if (drawBottom > drawTop) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW - 8, drawBottom - drawTop,
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW, drawBottom - drawTop,
                             row.selected() ? 0xA0000000 : 0x80000000);
                 }
 
@@ -1083,7 +1083,7 @@ public final class ConfigScreenManager {
         int viewTop = layout.navY;
         int viewBottom = layout.listY + layout.listH + 6;
         int viewH = Math.max(1, viewBottom - viewTop);
-        int barX = layout.sidebarX + layout.sidebarW - 8;
+        int barX = layout.sidebarX + layout.sidebarW + 2;
         UiTheme.fill(ctx, barX, viewTop, 8, viewH, 0x44000000);
         UiTheme.outline(ctx, barX, viewTop, 8, viewH, 0x88FFFFFF);
 
@@ -1272,7 +1272,7 @@ public final class ConfigScreenManager {
 
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
-        int barX = layout.sidebarX + layout.sidebarW - 8;
+        int barX = layout.sidebarX + layout.sidebarW + 2;
 
         if (mouseX < barX || mouseX > barX + 8) {
             return false;
