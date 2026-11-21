@@ -1078,6 +1078,11 @@ public final class ConfigScreenManager {
         return true;
     }
 
+    public static boolean shouldHideNativeSearchBar() {
+        Screen screen = GuiUtils.getCurrentScreen();
+        return screen instanceof GuiBase && hasLayout((GuiBase) screen);
+    }
+
     public static boolean isSearchField(GuiTextFieldGeneric field) {
         for (ConfigScreenState state : STATES.values()) {
             if (state.searchField == field) {

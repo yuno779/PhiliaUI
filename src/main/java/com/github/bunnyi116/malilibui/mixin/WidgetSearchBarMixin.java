@@ -14,7 +14,7 @@ public class WidgetSearchBarMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void malilibui$hideLegacySearchBar(GuiContext ctx, int mouseX, int mouseY,
                                                boolean selected, CallbackInfo ci) {
-        if (!ConfigScreenManager.is26x()) {
+        if (ConfigScreenManager.shouldHideNativeSearchBar()) {
             ci.cancel();
         }
     }
