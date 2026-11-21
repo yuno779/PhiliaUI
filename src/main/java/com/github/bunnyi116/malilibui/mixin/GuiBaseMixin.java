@@ -50,7 +50,7 @@ public abstract class GuiBaseMixin {
     @Inject(method = "mouseDragged", at = @At("HEAD"), cancellable = true)
     private void malilibui$mouseDragged(net.minecraft.client.input.MouseButtonEvent click, double dragX, double dragY,
                                         org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
-        if (ConfigScreenManager.onTreeScrollbarDrag((GuiBase) (Object) this, click.y())) {
+        if (ConfigScreenManager.onTreeScrollbarDrag((GuiBase) (Object) this, dragY)) {
             cir.setReturnValue(true);
         }
     }

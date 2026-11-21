@@ -69,5 +69,6 @@ public final class ConfigScreenState {
 
     public ConfigScreenState(GuiBase screen) {
         this.screen = screen;
+        this.treeScroll = ConfigScreenManager.getSavedTreeScroll();
     }
 }

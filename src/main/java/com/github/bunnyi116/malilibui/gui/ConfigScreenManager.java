@@ -334,6 +334,17 @@ public final class ConfigScreenManager {
 
     private static final java.util.Set<String> EXPANDED_MODS = new java.util.LinkedHashSet<>();
     private static boolean treeBarDragging;
+    /** 跨界面保留树的滚动位置，切换模组时不回顶。 */
+    private static int TREE_SCROLL;
+
+    public static int getSavedTreeScroll() {
+        return TREE_SCROLL;
+    }
+
+    private static void setTreeScroll(ConfigScreenState state, int value) {
+        state.treeScroll = Math.max(0, value);
+        TREE_SCROLL = state.treeScroll;
+    }
 
     /**
      * 2.0 闂備浇顕ф鍝ョ礊婵犲偆鐒藉┑鐘崇閳锋棃鏌涢弴銊ョ仭闁稿顦伴妵鍕棘閹稿寒娼旈梺缁樻煥閸氬寮查鍕厱闁哄洢鍔岄獮姗€鏌ｉ幘鑼獢婵﹥妞藉畷顐﹀礋椤撳缍侀弻娑㈠煛娓氬﹤濮涘┑鈥冲级閸旀牜鈧潧銈稿鍫曞箣閻欌偓濡插瓨绻濆閿嬫緲閳ь剚鍔欏畷鎴﹀箻缂佹鍘遍梺闈涚墕妤犵顕ｉ绛嬫闁绘劘灏欐晥闂佺硶鏂侀崑鎾愁渻閵堝棗绗掗悗姘煎墰閳ь剚鑹鹃ˇ顖炩€︾捄銊﹀磯闁绘碍娼欐导鎰版⒑閹肩偛鈧牜鏁Δ鍐╁床婵炴垶鐟ョ欢鐐烘煕椤愶絿绠撴い顒€鐗撳娲传閵夈儰鍝楀┑鈽嗗亜鐎氼垶鎮橀幒妤佲拺闁圭娴烽埥澶愭倵濮樼厧娅嶉柟顖氱灱閳ь剨缍嗛崰妤呮偂閵夛妇绠鹃柟瀵稿剱閻掗箖鎮楀顓烆棆缂佽鲸鎸搁濂稿椽娴ｇ澹庨柣搴ゎ潐濞叉鍒掑畝鍕垫晣濠靛倻顭堢粣妤呮煥濠靛棗顏柛蹇撶灱缁辨帗娼忛妸銉﹁癁閻庤娲滈崰鏍€侀弴銏℃櫜闁搞儯鍎辨禒褰掓⒒娴ｇ瓔鍤欐慨姗堢畵閿濈偞寰勯幇顓炴疄闂佽鍨庡鍫氬亾閹稿簺浜滈煫鍥ㄦ尰閸ｄ粙鏌嶇紒妯活棃闁诡喗顨婇弫鎰償閳ヨ尙鍑归梻浣虹帛閹稿鎮烽埡鍛摕闁跨喓濮寸粈瀣亜閹般劍鍣伴柟绋垮暣濮?TAB闂?
@@ -914,6 +925,11 @@ public final class ConfigScreenManager {
             int w = button.getWidth();
             int h = button.getHeight();
 
+            // 滚出视口的行不画，避免盖到顶部徽章/标题。
+            if (y < layout.navY - 2 || y >= layout.sidebarY + layout.sidebarH - 8) {
+                continue;
+            }
+
             if (row.selected() && !row.tab()) {
                 UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
                 UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
@@ -976,6 +992,7 @@ public final class ConfigScreenManager {
 
         state.treeScroll = Math.max(0, Math.min(max,
                 state.treeScroll - (int) Math.signum(vertical) * 20));
+        TREE_SCROLL = state.treeScroll;
 
         ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
         state.treeButtons.clear();
@@ -984,21 +1001,21 @@ public final class ConfigScreenManager {
         return true;
     }
 
-    /** 拖动滚动条时更新位置。 */
-    public static boolean onTreeScrollbarDrag(GuiBase screen, double mouseY) {
+    /** 拖动滚动条时按鼠标增量更新位置。 */
+    public static boolean onTreeScrollbarDrag(GuiBase screen, double dragY) {
         if (!treeBarDragging || is26x() || !hasLayout(screen)) {
             return false;
         }
 
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
-        int viewTop = layout.sidebarY + 46;
         int viewH = Math.max(1, layout.sidebarH - 54);
         int max = Math.max(0, state.treeContentH - viewH);
         int thumbH = Math.max(24, viewH * viewH / Math.max(state.treeContentH, viewH));
         int travel = Math.max(1, viewH - thumbH);
-        int rel = Math.max(0, Math.min(travel, (int) mouseY - viewTop - thumbH / 2));
-        state.treeScroll = rel * max / travel;
+        state.treeScroll = Math.max(0, Math.min(max,
+                state.treeScroll - (int) Math.round(dragY * max / travel)));
+        TREE_SCROLL = state.treeScroll;
 
         ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
         state.treeButtons.clear();
@@ -1035,6 +1052,7 @@ public final class ConfigScreenManager {
         int travel = Math.max(1, viewH - thumbH);
         int rel = Math.max(0, Math.min(travel, (int) mouseY - viewTop - thumbH / 2));
         state.treeScroll = rel * max / travel;
+        TREE_SCROLL = state.treeScroll;
 
         ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
         state.treeButtons.clear();
