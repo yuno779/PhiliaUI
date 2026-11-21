@@ -995,10 +995,10 @@ public final class ConfigScreenManager {
             return;
         }
 
-        UiTheme.fill(ctx, layout.sidebarX + 1, layout.panelY + 4, layout.sidebarW - 7, 18,
+        int badgeY = Math.max(4, layout.panelY - 28);
+        UiTheme.fill(ctx, layout.sidebarX + 1, badgeY, layout.sidebarW - 7, 18,
                 0x33000000);
-        BadgeRenderer.draw(ctx, layout.sidebarX + 10, layout.panelY + 4,
-                Math.max(40, layout.sidebarW - 20));
+        BadgeRenderer.draw(ctx, layout.sidebarX + 10, badgeY, Math.max(40, layout.sidebarW - 20));
 
         drawModTree(ctx, state);
     }
