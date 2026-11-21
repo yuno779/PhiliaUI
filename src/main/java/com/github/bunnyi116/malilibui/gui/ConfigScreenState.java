@@ -61,7 +61,10 @@ public final class ConfigScreenState {
     public boolean treeScrollAdjusted;
     public boolean autoExpanded;
 
-    public record TreeRow(String name, String version, boolean selected, boolean tab) {
+    /** 当前打开的 tab 索引，用于左侧树高亮。 */
+    public int selectedTabIndex;
+
+    public record TreeRow(String name, String version, boolean selected, boolean tab, int tabIndex) {
     }
 
     public ConfigScreenState(GuiBase screen) {
