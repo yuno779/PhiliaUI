@@ -358,7 +358,7 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.contentX + 6;
+        int x = layout.sidebarX + layout.sidebarW + 17;
         int y = layout.panelY + 4;
         WidgetDropDownList<ModInfo> switcher = screen instanceof GuiConfigsBase configs
                 ? ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget() : null;
