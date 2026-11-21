@@ -1000,7 +1000,7 @@ public final class ConfigScreenManager {
             return;
         }
 
-        int badgeY = layout.panelY + 4;
+        int badgeY = Math.max(layout.panelY + 2, layout.navY - 24);
         UiTheme.fill(ctx, layout.sidebarX + 1, badgeY, layout.sidebarW + 10, 18,
                 0x33000000);
         BadgeRenderer.draw(ctx, layout.sidebarX + 10, badgeY, Math.max(40, layout.sidebarW - 10));
