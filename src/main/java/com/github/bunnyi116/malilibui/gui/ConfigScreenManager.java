@@ -358,10 +358,10 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.contentX;
+        int x = layout.sidebarX + layout.sidebarW + 6;
         int y = layout.panelY + 4;
-        int right = Math.min(layout.contentX + layout.contentW, layout.screenW - 8);
-        int w = Math.max(80, right - 138 - x);
+        int right = layout.contentX + layout.contentW - 136;
+        int w = Math.max(80, right - x);
 
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 18, screen.getFont());
