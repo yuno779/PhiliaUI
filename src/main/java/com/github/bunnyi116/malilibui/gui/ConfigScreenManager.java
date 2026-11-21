@@ -364,6 +364,7 @@ public final class ConfigScreenManager {
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 16, screen.getFont());
             field.setMaxLength(64);
+            field.setFocused(true);
             state.searchField = field;
             ((GuiBaseAccessor) screen).malilibui$getTextFields().add(new TextFieldWrapper<>(field, null));
         } else {
@@ -380,7 +381,14 @@ public final class ConfigScreenManager {
 
             if (listWidget != null && listWidget.getSearchBarWidget() != null) {
                 // 列表内的搜索框已被顶栏取代，移出屏幕避免重复。
-                listWidget.getSearchBarWidget().setPosition(-1000, -1000);
+                fi.dy.masa.malilib.gui.widgets.WidgetSearchBar bar = listWidget.getSearchBarWidget();
+                bar.setPosition(-1000, -1000);
+                GuiTextFieldGeneric oldBox = ((com.github.bunnyi116.malilibui.mixin.accessor.WidgetSearchBarAccessor) bar)
+                        .malilibui$getSearchBox();
+                oldBox.setX(-1000);
+                oldBox.setY(-1000);
+                oldBox.setPosition(-1000, -1000);
+                oldBox.setFocused(false);
             }
         }
 
