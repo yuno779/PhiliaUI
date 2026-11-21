@@ -714,7 +714,7 @@ public final class ConfigScreenManager {
             int tabIndex = pendingTab;
 
             Minecraft.getInstance().execute(() -> {
-                if (Minecraft.getInstance().screen != screen || tabIndex >= state.navButtons.size()) {
+                if (GuiUtils.getCurrentScreen() != screen || tabIndex >= state.navButtons.size()) {
                     return;
                 }
 
