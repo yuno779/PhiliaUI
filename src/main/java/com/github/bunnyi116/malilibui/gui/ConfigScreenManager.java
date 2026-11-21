@@ -369,7 +369,7 @@ public final class ConfigScreenManager {
             state.autoExpanded = true;
         }
 
-        int y = layout.navY - state.treeScroll;
+        int y = 0;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
         final int modRowH = 28;
         final int tabRowH = 16;
@@ -387,6 +387,12 @@ public final class ConfigScreenManager {
         }
 
         state.treeContentH = totalH;
+
+        // 视口高度固定；切换模组/收起后按新内容高度校正滚动位置，
+        // 避免沿用上一个大列表的滚动值导致所有行都落在视口外。
+        int viewH = bottom - layout.navY;
+        state.treeScroll = Math.max(0, Math.min(state.treeScroll, Math.max(0, totalH - viewH)));
+        y = layout.navY - state.treeScroll;
 
         for (ModTree.ModEntry entry : entries) {
             if (y + modRowH > bottom) {
