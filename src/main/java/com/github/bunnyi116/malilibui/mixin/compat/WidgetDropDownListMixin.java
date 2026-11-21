@@ -5,7 +5,7 @@ import fi.dy.masa.malilib.gui.widgets.WidgetDropDownList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * 展开后的下拉列表会绘制到控件原始高度之外，但点击命中仍只按
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(WidgetDropDownList.class)
 public abstract class WidgetDropDownListMixin {
     @Inject(method = "isMouseOver", at = @At("HEAD"), cancellable = true)
-    private void malilibui$expandClickArea(int mouseX, int mouseY, CallbackInfo ci) {
+    private void malilibui$expandClickArea(int mouseX, int mouseY, CallbackInfoReturnable<Boolean> cir) {
         WidgetDropDownList<?> self = (WidgetDropDownList<?>) (Object) this;
 
         if (!((WidgetDropDownListAccessor) self).malilibui$isOpen()) {
@@ -28,7 +28,7 @@ public abstract class WidgetDropDownListMixin {
         int height = Math.max(self.getHeight(), 400);
 
         if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height) {
-            ci.cancel();
+            cir.setReturnValue(true);
         }
     }
 }
