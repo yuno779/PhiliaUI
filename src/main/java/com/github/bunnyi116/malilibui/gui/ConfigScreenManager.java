@@ -357,9 +357,9 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.contentX + 8;
-        int y = layout.contentY + 3;
-        int w = Math.max(80, layout.contentW - 16);
+        int x = layout.panelX + 230;
+        int y = layout.panelY + 6;
+        int w = Math.max(80, layout.panelX + layout.panelW - 158 - x);
 
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 16, screen.getFont());
@@ -395,8 +395,8 @@ public final class ConfigScreenManager {
             state.autoExpanded = true;
         }
 
-        final int modRowH = 26;
-        final int tabRowH = 15;
+        final int modRowH = 21;
+        final int tabRowH = 12;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
         java.util.List<ModTree.ModEntry> entries = ModTree.snapshot();
         String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(java.util.Locale.ROOT).trim();
@@ -454,8 +454,8 @@ public final class ConfigScreenManager {
                     }
 
                     String tabName = UiTheme.trim(screen.getFont(), tabs.get(tabIndex), layout.navW - 42);
-                    state.treeRows.add(new ConfigScreenState.TreeRow(layout.navX + 18, y,
-                            layout.navW - 18, tabRowH, tabName, "",
+                    state.treeRows.add(new ConfigScreenState.TreeRow(layout.navX + 8, y,
+                            layout.navW - 8, tabRowH, tabName, "",
                             current && tabIndex == state.selectedTabIndex, true, modId, tabIndex));
                     y += tabRowH;
                 }
@@ -889,16 +889,12 @@ public final class ConfigScreenManager {
         ConfigLayout layout = state.layout;
 
         // 闂傚倸鍊烽懗鍫曗€﹂崼銏″床闁割偁鍎辩粈澶屸偓鍏夊亾闁告洦鍓欓崜鐢告⒑缁洖澧茬紒瀣灴瀹曟帡濡搁埡鍌氣偓鐢告煥濠靛棝顎楀ù婊勭箖閵囧嫰寮崹顔瑰亾閸噮娼栨繛宸憾閺佸棗顭跨捄鐚存敾闁诲繑鎹囧铏圭矙鐠恒剱銈夋煛娴ｅ壊鐓肩€?
-        UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, UiTheme.overlayColor());
+        UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, 0x55000000);
 
         // 闂傚倸鍊搁崐鎼佸磹閹间焦鍋嬮柛鏇ㄥ灠閸ㄥ倿鏌涘┑鍡楊伌闁绘柨妫欓幈銊ヮ渻鐠囪弓澹曟俊銈囧Х閸嬫盯鏌婇敐鍜佸殨闁圭虎鍠楅崐椋庘偓鐟板閸犳顢欓崱妞绘斀闁绘劖娼欓悘锕傛煙缁嬫寧鎲搁柤娲憾閹虫牠鍩為幆褌澹曢梻鍌氱墛缁嬫帒锕㈡导瀛樼厵鐎瑰嫮澧楅崵鍥殽閻愬鎳囩€规洜鍠栭、妤呭焵椤掑嫷鏁?
-        UiTheme.shadow(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH);
-        UiTheme.gradient(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH,
-                UiTheme.panelTopColor(), UiTheme.panelBottomColor());
+        UiTheme.fill(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH, 0x26000000);
         UiTheme.outline(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH,
-                UiTheme.PANEL_BORDER);
-        UiTheme.hline(ctx, layout.panelX + 1, layout.panelY + 1, layout.panelW - 2,
-                UiTheme.PANEL_INNER_GLOW);
+                0x30FFFFFF);
 
         if (layout.hasSidebar) {
             drawSidebar(ctx, state);
@@ -910,14 +906,51 @@ public final class ConfigScreenManager {
                 layout.listW + wellMargin * 2, layout.listH + wellMargin * 2);
 
         drawContentHeader(ctx, state);
+        drawSearchBar(ctx, state);
+    }
+
+    public static boolean isSearchField(GuiTextFieldGeneric field) {
+        for (ConfigScreenState state : STATES.values()) {
+            if (state.searchField == field) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void drawSearchBar(GuiContext ctx, ConfigScreenState state) {
+        GuiTextFieldGeneric field = state.searchField;
+
+        if (field == null) {
+            return;
+        }
+
+        int x = field.getX();
+        int y = field.getY();
+        int w = field.getWidth();
+        int h = field.getHeight();
+
+        boolean focused = field.isFocused();
+        UiTheme.fill(ctx, x, y, w, h, focused ? 0xCC000000 : 0x33000000);
+        UiTheme.outline(ctx, x, y, w, h, focused ? 0x99FFFFFF : 0x33FFFFFF);
+
+        String text = field.getValue();
+
+        if (text == null || text.isEmpty()) {
+            UiTheme.text(ctx, "搜索模组...", x + 6, y + 4, 0xFF8B93AD, false);
+        } else {
+            UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), text, w - 12),
+                    x + 6, y + 4, 0xFFFFFFFF, false);
+        }
     }
 
     private static void drawSidebar(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
         String modName = prettyModName(getModId(state.screen));
 
-        UiTheme.gradient(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
-                UiTheme.sidebarTopColor(), UiTheme.sidebarBottomColor());
+        UiTheme.fill(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
+                0x33000000);
         UiTheme.vline(ctx, layout.sidebarX + layout.sidebarW, layout.sidebarY, layout.sidebarH,
                 UiTheme.SIDEBAR_DIVIDER);
 
@@ -958,7 +991,7 @@ public final class ConfigScreenManager {
             }
 
             if (row.tab()) {
-                UiTheme.fill(ctx, x, y, w, h, 0x1C000000);
+                UiTheme.fill(ctx, x, y, w, h, 0x12000000);
 
                 if (row.selected()) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
@@ -973,12 +1006,12 @@ public final class ConfigScreenManager {
                     UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
                 }
 
-                UiTheme.text(ctx, row.name(), x + 8, y + 4,
+                UiTheme.text(ctx, row.name(), x + 8, y + 3,
                         row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
 
                 if (!row.version().isEmpty()) {
                     UiTheme.text(ctx, row.version().length() > 18 ? row.version().substring(0, 17) + "\u2026" : row.version(),
-                            x + 8, y + 15, 0xFF7A7A7A, false);
+                            x + 8, y + 12, 0xFF7A7A7A, false);
                 }
             }
         }

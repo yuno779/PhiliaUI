@@ -337,8 +337,8 @@ public final class UiTheme {
             return;
         }
 
-        fill(ctx, x, y, width, height, CONTENT_WELL_BG);
-        outline(ctx, x, y, width, height, CONTENT_WELL_BORDER);
+        fill(ctx, x, y, width, height, 0x1A000000);
+        outline(ctx, x, y, width, height, 0x33FFFFFF);
     }
 
     /**

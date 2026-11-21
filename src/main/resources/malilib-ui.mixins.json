@@ -6,6 +6,7 @@
   "mixins": [],
   "client": [
     "GuiBaseMixin",
+    "compat.GuiTextFieldGenericMixin",
     "GuiConfigsBaseMixin",
     "GuiListBaseMixin",
     "GuiScrollBarMixin",
