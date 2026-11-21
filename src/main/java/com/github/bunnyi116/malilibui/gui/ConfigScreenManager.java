@@ -996,6 +996,8 @@ public final class ConfigScreenManager {
             return;
         }
 
+        UiTheme.fill(ctx, layout.sidebarX + 1, layout.panelY + 4, layout.sidebarW - 7, 18,
+                0x33000000);
         BadgeRenderer.draw(ctx, layout.sidebarX + 10, layout.panelY + 4,
                 Math.max(40, layout.sidebarW - 20));
 
@@ -1147,7 +1149,9 @@ public final class ConfigScreenManager {
         }
 
         if (keyCode == 256) { // GLFW_KEY_ESCAPE
-            screen.onClose();
+            // 第一次 Esc 只退出搜索输入，再按一次才关闭界面。
+            state.searchField.setFocused(false);
+            state.searchActive = false;
             return true;
         }
 
@@ -1195,6 +1199,9 @@ public final class ConfigScreenManager {
                 mouseY >= field.getY() - 2 && mouseY <= field.getY() + field.getHeight() + 2;
 
         if (!inTopBar) {
+            // 点击别处退出搜索输入，但把点击继续交给下面的控件。
+            field.setFocused(false);
+            state.searchActive = false;
             return false;
         }
 
