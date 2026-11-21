@@ -383,13 +383,19 @@ public final class ConfigScreenManager {
             if (listWidget != null && listWidget.getSearchBarWidget() != null) {
                 // 列表内的搜索框已被顶栏取代，移出屏幕避免重复。
                 fi.dy.masa.malilib.gui.widgets.WidgetSearchBar bar = listWidget.getSearchBarWidget();
-                bar.setPosition(-1000, -1000);
-                GuiTextFieldGeneric oldBox = ((com.github.bunnyi116.malilibui.mixin.accessor.WidgetSearchBarAccessor) bar)
-                        .malilibui$getSearchBox();
-                oldBox.setX(-1000);
-                oldBox.setY(-1000);
-                oldBox.setPosition(-1000, -1000);
-                oldBox.setFocused(false);
+                GuiTextFieldGeneric nativeBox =
+                        ((com.github.bunnyi116.malilibui.mixin.accessor.WidgetSearchBarAccessor) bar)
+                                .malilibui$getSearchBox();
+                state.nativeSearchBox = nativeBox;
+                bar.setSearchOpen(true);
+                nativeBox.setFocused(false);
+                nativeBox.setValue(state.searchField.getValue());
+
+                if (!state.searchField.getValue().equals(state.lastNativeSearch)) {
+                    state.lastNativeSearch = state.searchField.getValue();
+                    ((com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor) listBase)
+                            .malilibui$reCreateListWidget();
+                }
             }
         }
 
@@ -415,8 +421,8 @@ public final class ConfigScreenManager {
             state.autoExpanded = true;
         }
 
-        final int modRowH = 21;
-        final int tabRowH = 12;
+        final int modRowH = 24;
+        final int tabRowH = 14;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
         java.util.List<ModTree.ModEntry> entries = ModTree.snapshot();
         String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(java.util.Locale.ROOT).trim();
@@ -1014,6 +1020,8 @@ public final class ConfigScreenManager {
                 UiTheme.fill(ctx, x, y, w, h, 0x12000000);
 
                 if (row.selected()) {
+                    UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
+                    UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
                     UiTheme.fill(ctx, layout.sidebarX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
                 }
 
@@ -1157,10 +1165,19 @@ public final class ConfigScreenManager {
         }
 
         GuiTextFieldGeneric field = state.searchField;
+        ConfigLayout layout = state.layout;
 
-        if (mouseX < field.getX() || mouseX > field.getX() + field.getWidth() ||
-                mouseY < field.getY() || mouseY > field.getY() + field.getHeight()) {
+        // 顶栏搜索区域整行可点，避免文字框内部坐标偏差导致点不中。
+        boolean inTopBar = mouseY >= layout.panelY && mouseY <= layout.panelY + 30 &&
+                mouseX >= layout.sidebarX + layout.sidebarW;
+
+        if (!inTopBar) {
             return false;
+        }
+
+        for (fi.dy.masa.malilib.gui.wrappers.TextFieldWrapper<? extends GuiTextFieldGeneric> wrapper :
+                ((GuiBaseAccessor) screen).malilibui$getTextFields()) {
+            wrapper.setFocused(false);
         }
 
         if (screen instanceof fi.dy.masa.malilib.gui.GuiListBase<?, ?, ?> listBase) {

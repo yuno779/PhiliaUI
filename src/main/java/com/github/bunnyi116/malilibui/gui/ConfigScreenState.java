@@ -35,7 +35,9 @@ public final class ConfigScreenState {
 
     /** 2.0 top-bar search field and current query. */
     public GuiTextFieldGeneric searchField;
+    public GuiTextFieldGeneric nativeSearchBox;
     public String searchQuery = "";
+    public String lastNativeSearch = "";
     public boolean searchActive;
 
     public record TreeRow(int x, int y, int w, int h, String name, String version,
