@@ -431,7 +431,7 @@ public final class ConfigScreenManager {
         int totalH = 0;
 
         for (ModTree.ModEntry entry : entries) {
-            totalH += modRowH;
+            totalH += modRowH + 6;
 
             if (EXPANDED_MODS.contains(entry.info().modId())) {
                 totalH += entry.tabs().size() * tabRowH;
@@ -483,6 +483,8 @@ public final class ConfigScreenManager {
                     y += tabRowH;
                 }
             }
+
+            y += 6;
         }
 
         for (ButtonBase nav : state.navButtons) {
@@ -920,15 +922,14 @@ public final class ConfigScreenManager {
         int barX = layout.hasSidebar ? layout.contentX : layout.panelX;
         int barW = layout.hasSidebar ? layout.contentW : layout.panelW;
         UiTheme.fill(ctx, barX, layout.panelY, barW, topH, 0x33000000);
-        UiTheme.outline(ctx, barX, layout.panelY, barW, topH, 0x30FFFFFF);
 
         if (layout.hasSidebar) {
             drawSidebar(ctx, state);
         }
 
         // 闂傚倸鍊搁崐椋庣矆娓氣偓楠炲鏁撻悩鑼槷闂佸搫娲㈤崹鍦不閻樿绠归弶鍫濆⒔閹ジ鏌ｉ鐐靛ⅵ闁哄矉缍佹慨鈧柕蹇婃櫇閸斿摜绱撴担鎻掍壕闂佸憡娲﹂崹閬嶅磻閳╁啰绠鹃柛鈩冾殘缁犱即鏌ｅ┑鍥ㄢ拹闁靛洤瀚伴獮鍥醇閺囩噥鈧秴顪冮妶鍐ㄥ姎闁绘鎹囧濠氬即閿涘嫮鏉告繝鐢靛Т閸婃悂鍩涙径宀€纾藉ù锝堟閻撴劙鏌ｉ幙鍕瘈鐎殿喖顭锋俊鎼佸Ψ閵忊槅娼旀繝纰樻閸ㄧ敻宕戦幇顓烆嚤闁搞儺鍓氶埛鎴﹀级閻愭澘宓嗘俊鍓у厴閺屾稒绻濋崘顏勨拡缂備緡鍠栭鍛搭敇婵傜骞㈡俊顖氭惈婵℃娊姊绘笟鈧褏鎹㈤幒鎾冲灁妞ゆ挾鍊ｅ☉銏℃櫢闁绘ê纾崢鍛婄節閵忥絾纭鹃柤娲诲灡缁傛帡骞掗弮鍌滐紲濡炪倖姊婚弲顐﹀箠閸ヮ剚鐓曢柍瑙勫劤娴滅偓淇婇悙顏勨偓鏍ь啅婵犳艾纾婚柟鐐暘娴滄粓鏌ㄩ弮鍌氫壕闁哄棭鍓欓埞鎴﹀焺閸愨晝绋囧銈嗘尭閸氬顕ラ崟顒傜瘈闁告洖鐏氬瓭婵犵數濮撮惀澶愬级鎼存挸浜鹃柡鍥╁Л閸嬫挸顫濋妷銉ヮ潎闂佺硶鏂侀崑?/ 濠电姷鏁告慨鐑藉极閹间礁纾婚柣鎰惈缁犳壆绱掔€ｎ偒鍎ラ柛銈嗘礋閺屾盯顢曢敐鍡欘槰闂佺顑呴崐鍧楀箖濡ゅ懏鏅查幖绮光偓鍐茬婵犵數鍋涢惌鍫熺椤忓牆钃熸繛鎴炵煯濞岊亪鏌涢幘妞诲亾婵℃彃鐗婄换娑氣偓鐢殿焾鏍￠梺鎸庡哺濡焦寰勯幇顓犲幗濠碘槅鍨抽、濠囶敆閻斿吋鐓曢柣鏃堟敱閸犳﹢鏌?
-        UiTheme.drawContentWell(ctx, layout.contentX, layout.contentY,
-                layout.contentW, layout.contentH);
+        UiTheme.fill(ctx, layout.contentX, layout.contentY, layout.contentW, layout.contentH,
+                0x1A000000);
 
         drawContentHeader(ctx, state);
         drawSearchBar(ctx, state);
@@ -958,7 +959,6 @@ public final class ConfigScreenManager {
 
         boolean focused = field.isFocused();
         UiTheme.fill(ctx, x, y, w, h, focused ? 0x66000000 : 0x33000000);
-        UiTheme.outline(ctx, x, y, w, h, focused ? 0x99FFFFFF : 0x33FFFFFF);
 
         String text = field.getValue();
 
@@ -1018,11 +1018,10 @@ public final class ConfigScreenManager {
                     lastY = next.y() + next.h();
                 }
 
-                int boxY = row.y() - 2;
-                int boxH = lastY - row.y() + 4;
+                int boxY = row.y();
+                int boxH = lastY - row.y();
                 if (boxY >= layout.navY && boxY + boxH <= layout.sidebarY + layout.sidebarH - 8) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x26000000);
-                    UiTheme.outline(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x25FFFFFF);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x1E000000);
                 }
             }
 
@@ -1036,25 +1035,19 @@ public final class ConfigScreenManager {
             }
 
             if (row.tab()) {
-                UiTheme.fill(ctx, x, y, w, h, 0x12000000);
-
                 if (row.selected()) {
-                    int boxX = layout.sidebarX;
-                    int boxW = x + w - boxX;
-                    UiTheme.fill(ctx, boxX, y, boxW, h, 0x33FFFFFF);
-                    UiTheme.outline(ctx, boxX, y, boxW, h, 0xFFFFFFFF);
-                    UiTheme.fill(ctx, boxX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, y, layout.sidebarW - 7, h, 0x22000000);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
                 }
 
                 UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
                         row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
             } else {
+                UiTheme.fill(ctx, layout.sidebarX + 1, y, layout.sidebarW - 7, h,
+                        row.selected() ? 0x3D000000 : 0x2E000000);
+
                 if (row.selected()) {
-                    int boxX = layout.sidebarX;
-                    int boxW = layout.sidebarW - 6;
-                    UiTheme.fill(ctx, boxX, y, boxW, h, 0x33FFFFFF);
-                    UiTheme.outline(ctx, boxX, y, boxW, h, 0xFFFFFFFF);
-                    UiTheme.fill(ctx, boxX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
                 }
 
                 UiTheme.text(ctx, row.name(), x + 8, y + 3,
