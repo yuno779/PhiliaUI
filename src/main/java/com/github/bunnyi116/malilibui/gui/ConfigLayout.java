@@ -102,7 +102,7 @@ public final class ConfigLayout {
 
         layout.sidebarX = layout.panelX;
         layout.sidebarY = layout.panelY;
-        layout.sidebarW = sidebarW;
+        layout.sidebarW = Math.max(70, sidebarW - 8);
         layout.sidebarH = layout.panelH;
 
         int divider = layout.hasSidebar ? 1 : 0;
