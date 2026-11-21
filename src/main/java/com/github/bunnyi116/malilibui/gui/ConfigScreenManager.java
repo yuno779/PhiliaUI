@@ -426,7 +426,7 @@ public final class ConfigScreenManager {
 
         final int modRowH = 24;
         final int tabRowH = 14;
-        int bottom = layout.listY + layout.listH;
+        int bottom = layout.listY + layout.listH + 8;
         java.util.List<ModTree.ModEntry> entries = ModTree.snapshot();
 
         int totalH = 0;
@@ -1024,7 +1024,7 @@ public final class ConfigScreenManager {
                 int boxY = row.y();
                 int boxH = lastY - row.y();
                 int clipTop = Math.max(boxY, layout.navY);
-                int clipBottom = Math.min(boxY + boxH, layout.listY + layout.listH);
+                int clipBottom = Math.min(boxY + boxH, layout.listY + layout.listH + 8);
                 if (clipTop < clipBottom) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW - 7,
                             clipBottom - clipTop, 0x66000000);
@@ -1036,12 +1036,12 @@ public final class ConfigScreenManager {
             int w = row.w();
             int h = row.h();
 
-            if (y + h <= layout.navY || y >= layout.listY + layout.listH) {
+            if (y + h <= layout.navY || y >= layout.listY + layout.listH + 8) {
                 continue;
             }
 
             int drawTop = Math.max(y, layout.navY);
-            int drawBottom = Math.min(y + h, layout.listY + layout.listH);
+            int drawBottom = Math.min(y + h, layout.listY + layout.listH + 8);
 
             if (row.tab()) {
                 if (row.selected() && drawBottom > drawTop) {
@@ -1049,7 +1049,7 @@ public final class ConfigScreenManager {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
                 }
 
-                if (y >= layout.navY - 2 && y + h <= layout.listY + layout.listH) {
+                if (y >= layout.navY - 2 && y + h <= layout.listY + layout.listH + 8) {
                     UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
                             row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
                 }
@@ -1063,7 +1063,7 @@ public final class ConfigScreenManager {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
                 }
 
-                if (y >= layout.navY - 2 && y + 12 <= layout.listY + layout.listH) {
+                if (y >= layout.navY - 2 && y + 12 <= layout.listY + layout.listH + 8) {
                     UiTheme.text(ctx, row.name(), x + 8, y + 3,
                             row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
 
@@ -1076,7 +1076,7 @@ public final class ConfigScreenManager {
         }
 
         int viewTop = layout.navY;
-        int viewBottom = layout.listY + layout.listH;
+        int viewBottom = layout.listY + layout.listH + 8;
         int viewH = Math.max(1, viewBottom - viewTop);
         int contentH = Math.max(state.treeContentH, viewH);
         int thumbH = Math.max(24, viewH * viewH / contentH);
