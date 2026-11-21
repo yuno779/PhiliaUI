@@ -79,10 +79,10 @@ public final class ConfigLayout {
 
         layout.margin = layout.compact ? 6 : 14;
         layout.pad = layout.compact ? 6 : 10;
-        layout.headerH = layout.compact ? 38 : 46;
+        layout.headerH = layout.compact ? 32 : 40;
 
         layout.panelX = layout.margin;
-        layout.panelY = layout.margin;
+        layout.panelY = layout.compact ? 4 : 6;
         layout.panelW = screenW - layout.margin * 2;
         layout.panelH = screenH - layout.margin * 2;
 
