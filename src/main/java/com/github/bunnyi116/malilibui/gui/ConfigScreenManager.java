@@ -1517,7 +1517,25 @@ public final class ConfigScreenManager {
 
     private static String getModId(GuiBase screen) {
         if (screen instanceof GuiConfigsBase configs) {
-            return configs.getModId();
+            String raw = configs.getModId();
+
+            // ASA/OMMC 等自定义界面把显示名（如 "ASA"）当作 modId，
+            // 注册表里真正的 modId 往往更长，这里统一映射回注册表 ID。
+            var registry = fi.dy.masa.malilib.registry.Registry.CONFIG_SCREEN;
+
+            if (registry != null && raw != null) {
+                for (ModInfo info : registry.getAllModsWithConfigScreens()) {
+                    if (info == null || info == ModInfo.NO_MOD) {
+                        continue;
+                    }
+
+                    if (info.modId().equalsIgnoreCase(raw) || info.modName().equalsIgnoreCase(raw)) {
+                        return info.modId();
+                    }
+                }
+            }
+
+            return raw;
         }
 
         // 婵犵數濮烽弫鍛婃叏閻戣棄鏋侀柟闂寸绾惧鏌ｉ幇顒佹儓缂佺姵澹嗙槐鎺斺偓锝庡亽閸庛儵鏌涢妶鍡樼闁哄本鐩、鏇㈡晲閸℃瑯妲伴梻浣侯焾椤戝懘宕愰崸妤€绠栨俊銈呮噺閺呮煡骞栫划鍏夊亾閸愯尙顔囧┑鐘垫暩閸嬫盯鎯岄崼鐔侯洸妞ゅ繐鐗嗛拑鐔哥箾閹寸偟鐓繛宀婁邯閺屾盯骞樺Δ鈧幊鎰板储閹烘挾绡€缁炬澘顦辩壕鍧楁煕鐎ｎ偒鐒介柛鎺撳笒閳诲氦绠涢敐鍛吙闂備礁澹婇崑鍛洪弽顓熺厑闁搞儺鍓氶悡鐔兼煛閸愩劎澧辨俊顐ｅ灥闇夐柣妯挎珪缂嶆垿鏌嶇憴鍕伌闁诡喗鐟╁畷锝嗗緞婵犲喚浠梻浣圭湽閸╁嫰宕归柆宥冣偓鍐醇閵忕姴鐏婂┑鐐叉閸旀洜娆㈤悙娴嬫斀闁绘ɑ鐓￠妤呮煙椤旇棄鐏存慨濠呮閸栨牠寮撮悙娴嬫嫟婵?GuiConfigsBase闂傚倸鍊搁崐鎼佸磹閻戣姤鍊块柨鏃堟暜閸嬫挾绮☉妯诲櫧闁活厽鐟╅弻鐔兼倻濡儵鎷婚梺娲诲幗閻熲晠寮婚悢鍏肩劷闁挎洍鍋撻柡瀣洴閺屾盯濡搁敂鍓х杽闂佸搫鐭夌徊鍊熺亽濠电偛妫欓崕鍐测枔椤撶姷纾藉ù锝嗗絻娴滈箖鎮楅崗澶婁壕闂佸憡娲﹂崜娑㈠储閸楃偐鏀介柣鎰綑閻忋儳鈧娲﹂崜鐔兼偘椤斿槈鏃堝川椤旀儳骞堝┑鐘垫暩婵挳宕锕€鐓濋柡鍥ュ灪閻撴盯鎮橀悙棰濆殭濠碘€炽偢閺屽秹鎸婃径妯恍﹂柧浼欑秮閺屻倖鎱ㄩ幇顑藉亾濡ゅ懎鐓濋柟?dy.masa.<modId>.*闂?

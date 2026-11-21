@@ -53,7 +53,9 @@ public final class UiTheme {
     public static final int NAV_TEXT_ACTIVE = 0xFFFFFFFF;
     public static final int NAV_ACTIVE_TOP = 0xFF2E3A64;
     public static final int NAV_ACTIVE_BOTTOM = 0xFF212A47;
-    public static final int NAV_ACTIVE_EDGE = 0xFF6C8CFF;
+    /** 昔涟粉：替换原先所有蓝色竖线/强调线。 */
+    public static final int ACCENT_PINK = 0xFFF2A7D8;
+    public static final int NAV_ACTIVE_EDGE = ACCENT_PINK;
     public static final int NAV_ACTIVE_GLOW = 0x336C8CFF;
     public static final int NAV_HOVER_TOP = 0x1AFFFFFF;
     public static final int NAV_HOVER_BOTTOM = 0x0DFFFFFF;
@@ -61,7 +63,7 @@ public final class UiTheme {
     // 文字
     public static final int TEXT_TITLE = 0xFFFFFFFF;
     public static final int TEXT_SUB = 0xFF8B93AD;
-    public static final int TEXT_ACCENT = 0xFF7B9CFF;
+    public static final int TEXT_ACCENT = ACCENT_PINK;
     /**
      * 禁用状态动作按钮的文字颜色（刻意降低对比度）。
      */
