@@ -961,7 +961,7 @@ public final class ConfigScreenManager {
         String text = field.getValue();
 
         if (text == null || text.isEmpty()) {
-            UiTheme.text(ctx, "鎼滅储妯＄粍...", x + 6, y + 4, 0xFF8B93AD, false);
+            UiTheme.text(ctx, "Search...", x + 6, y + 4, 0xFF8B93AD, false);
         } else {
             UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), text, w - 12),
                     x + 6, y + 4, 0xFFFFFFFF, false);
