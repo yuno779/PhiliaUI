@@ -24,6 +24,7 @@ import fi.dy.masa.malilib.util.GuiUtils;
 import fi.dy.masa.malilib.util.data.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import com.github.bunnyi116.malilibui.MalilibUiMod;
 import com.github.bunnyi116.malilibui.config.UiConfigs;
 import com.github.bunnyi116.malilibui.mixin.accessor.ButtonBaseAccessor;
@@ -33,6 +34,7 @@ import com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiScrollBarAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListConfigOptionsBaseAccessor;
+import com.github.bunnyi116.malilibui.mixin.accessor.WidgetDropDownListAccessor;
 import net.fabricmc.loader.api.FabricLoader;
 
 /**
@@ -942,6 +944,44 @@ public final class ConfigScreenManager {
         drawSearchBar(ctx, state);
     }
 
+    /**
+     * 右上角模组切换器拥有最高点击优先级，避免被搜索框抢走。
+     */
+    public static boolean onSwitcherClick(GuiBase screen, MouseButtonEvent click, boolean doubleClick) {
+        if (!(screen instanceof GuiConfigsBase configs)) {
+            return false;
+        }
+
+        WidgetDropDownList<ModInfo> switcher = ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+
+        if (switcher == null) {
+            return false;
+        }
+
+        int mouseX = (int) click.x();
+        int mouseY = (int) click.y();
+        boolean inside = switcher.isMouseOver(mouseX, mouseY);
+        boolean open = ((WidgetDropDownListAccessor) switcher).malilibui$isOpen();
+        boolean insideOpenList = open && mouseX >= switcher.getX()
+                && mouseX <= switcher.getX() + switcher.getWidth()
+                && mouseY >= switcher.getY() && mouseY <= switcher.getY() + 220;
+
+        if (!inside && !insideOpenList) {
+            return false;
+        }
+
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state != null) {
+            if (state.searchField != null) {
+                state.searchField.setFocused(false);
+            }
+
+            state.searchActive = false;
+        }
+
+        return switcher.onMouseClicked(click, doubleClick) || inside;
+    }
     public static boolean isSearchField(GuiTextFieldGeneric field) {
         for (ConfigScreenState state : STATES.values()) {
             if (state.searchField == field) {

@@ -65,7 +65,13 @@ public abstract class GuiBaseMixin {
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
     private void malilibui$mouseClicked(net.minecraft.client.input.MouseButtonEvent click, boolean doubleClick,
                                         org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
-        // 编辑框优先，避免抢走输入焦点。
+        // 右上角模组切换器最高优先级，不能被搜索框抢走点击。
+        if (ConfigScreenManager.onSwitcherClick((GuiBase) (Object) this, click, doubleClick)) {
+            cir.setReturnValue(true);
+            return;
+        }
+
+        // 编辑框其次，避免抢走输入焦点。
         if (ConfigScreenManager.onSearchClick((GuiBase) (Object) this, click.x(), click.y())) {
             cir.setReturnValue(true);
             return;
