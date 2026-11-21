@@ -358,7 +358,7 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
         int x = layout.contentX + 8;
-        int y = layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 18) / 2;
+        int y = layout.panelY + 4;
         int right = Math.min(layout.contentX + layout.contentW, layout.screenW - 8);
         int w = Math.max(80, right - 150 - x);
 
@@ -711,7 +711,7 @@ public final class ConfigScreenManager {
         // 闂傚倸鍊搁崐椋庢濮橆剦鐒介柤濮愬€栫€氬鏌ｉ弮鍌氬付缂佲偓婢跺备鍋撻崗澶婁壕闂佸憡娲﹂崑澶愬春閻愮儤鐓熼幖杈剧稻閺嗏晝鐥鐐靛煟鐎规洘鍨块獮妯兼嫚閸欏绁舵俊鐐€栭幐楣冨窗鎼粹檧鏋旂€光偓閸曨剛鍘介棅顐㈡处閹歌崵绮嬬€ｎ喗鐓曢柕濞垮妽绾偓銇勯弴顏嗙ɑ缂佸倹甯為埀顒婄秵娴滅偤宕愰悙宸富闁靛牆妫楃粭鎺撱亜閿旇姤绶茬悮娆戔偓鍏夊亾闁告洦鍓涢崢浠嬫⒑缂佹ê濮囨い鏇ㄥ弮閸┿儲寰勯幇顓犲幘濠电偠灏褔鎮橀敂閿亾鐟欏嫭澶勯柛鎾跺枛閻涱喖顫滈埀顒勩€佸▎鎾村亗閹艰揪绲洪崑鎾活敇閵忊檧鎷虹紓浣割儐鐎笛冿耿閹殿喚纾兼い鏃囧亹鑲栭梺姹囧労娴滎亪銆佸☉銏″€烽柡澶嬪灍閸嬫捇宕奸弴鐔哄幗闂佸綊鍋婇崜娆戠棯瑜旈弻娑㈡晲閸℃ê鈧劙鏌＄仦璇测偓婵嗙暦瑜版帩鏁冮柕蹇ｆ線缁辨繈姊绘担鑺ャ€冪紒鈧担铏圭煋闁煎摜鏁搁々鐑芥煥閺囩偛鈧摜澹曡ぐ鎺撶厽闁哄啫鐗滃Λ鎴犳喐閻楀牆绲婚柍瑙勫灴閹瑩寮堕幋鐘辨闂備礁婀遍…鍫ュ箺濠婂牆鐒垫い鎺嶈兌閳绘捇鏌￠崨顖氣枅闁绘侗鍣ｅ畷姗€濡歌濞堥箖姊洪幖鐐插姶闁绘挸鐗嗛…鍥偄閸忓皷鎷洪梻鍌氱墛缁嬫挾绮诲顓濈箚闁圭粯甯楅崵鍥┾偓娈垮枔閸旀垿寮婚崱妤婂悑闁糕剝鐟ラ獮鍫熺節閻㈤潧浠滄俊顐ｎ殘閹广垽骞掑Δ鈧崙鐘绘煕閹板吀绨界痪鎯с偢閺岋繝宕橀妸銉㈠亾閹间礁鍑犻柡鍐ㄥ€荤壕濂稿级閸稑濡介悘蹇ｅ弮閹藉爼鏁愰崨顐熷亾閹烘埈娼╅柣鎾虫捣娴犫晛鈹戦悙鑼闁硅绻濋獮鍫ュΩ閳轰胶顔婇梺鍝勫暙閸婂摜绮敓鐘斥拺闁告稑锕ラ悘婵嬫煕濞戝崬娅樻繛鑲╁枛閺屸剝寰勬繝鍕暤闂佸搫鎳忕换鍫ュ箖瀹曞洨纾兼俊顖氭贡缁犳岸姊洪棃娑氬闁稿﹤鎲＄粋宥嗐偅閸愨晛浠┑鐘诧工閹冲酣銆傞懖鈺冪＜閻庯綆鍋勭粭鎺撱亜椤撶偞绌跨紒鐘崇☉閳藉螣绾拌鲸袨濠碉紕鍋戦崐鏇犳崲閹邦儵娑樜旈崘顭戞闂佺鍕垫畷闁抽攱鍨块弻娑樷攽閸℃浠奸梺鍝勬閸嬬偟鎹㈠┑瀣劦妞ゆ帒瀚幑鑸点亜閹捐泛啸闁伙綀鍩栫换婵嬪閿濆懐鍘梺鍛婃⒐濞叉粎鍒掗崼銉ョ＜婵綆鍘肩紞濠囧极閹版澘鐐婇柍鍝勫€归崯鎺楁⒒娴ｅ憡鎲搁柛鐘查叄楠炲﹤顫滈埀顒勭嵁閸愵煁娲敂閸曨収鍞洪梻浣筋潐閹矂宕归悧鍫濐嚤闁规壆澧楅埛鎴︽煙閼测晛浠滈柍褜鍏欓崐婵嗙暦閿濆绀冮柕濞у嫭顔曟繝娈垮枟閵囨盯宕戦幘鍨涘亾鐟欏嫭纾搁柛鏃€鍨块妴浣肝熷▎鐐╅梻浣告惈閹锋垹绱炴担鍓叉綎婵炲樊浜滃婵嗏攽閻樻彃顏╅柍宄扮墦閺岋綀绠涢幘鍓佺杽闂佸憡姊归崹鍧楁偘?
         int x = Math.min(Math.max(layout.contentX + 8, layout.contentX + layout.contentW - 152),
                 layout.screenW - 142);
-        int y = layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 18) / 2;
+        int y = layout.panelY + 4;
 
         if (switcher.getX() != x || switcher.getY() != y) {
             switcher.setPosition(x, y);
@@ -920,10 +920,7 @@ public final class ConfigScreenManager {
 
         // 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柟闂寸劍閸嬪鏌涢弴銊ョ仩闁搞劌鍊块弻娑樷攽閸℃浼岄梺缁樻煥濡瑩骞堥妸銉富閻犲洩寮撴竟鏇熶繆閵堝洤啸闁稿鐩弻濠囨晲閸滀礁娈ㄩ梺鍦檸閸犳宕愭搴樺亾閻熸澘顥忛柛鐘愁殜椤㈡瑩宕卞缁樻杸闂佺粯鍔栧娆撴倶閿曞倹鐓欑紒瀣閹叉悂鏌ゅú顏冩喚闁硅櫕鐗犻崺鐐哄箚瑜屾竟鏇㈡⒒閸屾氨澧涚紒瀣笒閿曘垺瀵肩€涙鍘甸悗鐟板婢ф宕甸崶顭戞闁绘劕顕幊鍥┾偓瑙勬礈閸犳牠銆佸Δ鍛劦妞ゆ帒瀚烽弫?
         int topH = Math.max(26, layout.sidebarY - layout.panelY);
-        int barX = layout.hasSidebar ? layout.contentX : layout.panelX;
-        int barW = Math.min(layout.hasSidebar ? layout.contentW : layout.panelW,
-                layout.screenW - barX - 8);
-        UiTheme.fill(ctx, barX, layout.panelY, barW, topH, 0x33000000);
+        // 顶栏不再套一个大框：搜索框和切换器各自独立。
 
         if (layout.hasSidebar) {
             drawSidebar(ctx, state);
@@ -970,6 +967,12 @@ public final class ConfigScreenManager {
             UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), text, w - 12),
                     x + 6, y + 4, 0xFFFFFFFF, false);
         }
+
+        if (focused && (System.currentTimeMillis() / 500L) % 2L == 0L) {
+            String shown = text == null ? "" : UiTheme.trim(ctx.fontRenderer(), text, w - 12);
+            UiTheme.fill(ctx, x + 7 + ctx.fontRenderer().width(shown), y + 4, 1, h - 8,
+                    0xFFFFFFFF);
+        }
     }
 
     private static void drawSidebar(GuiContext ctx, ConfigScreenState state) {
@@ -992,12 +995,8 @@ public final class ConfigScreenManager {
             return;
         }
 
-        BadgeRenderer.draw(ctx, layout.sidebarX + 10,
-                layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 24) / 2,
+        BadgeRenderer.draw(ctx, layout.sidebarX + 10, layout.panelY + 4,
                 Math.max(40, layout.sidebarW - 20));
-
-        UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 42, layout.sidebarW - 24,
-                0x22FFFFFF);
 
         drawModTree(ctx, state);
     }
