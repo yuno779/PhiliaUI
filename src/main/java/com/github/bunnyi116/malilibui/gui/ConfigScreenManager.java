@@ -1150,16 +1150,13 @@ public final class ConfigScreenManager {
         int viewBottom = layout.listY + layout.listH + 6;
         int viewH = Math.max(1, viewBottom - viewTop);
         int barX = layout.sidebarX + layout.sidebarW + 2;
-        boolean barHovered = mx >= barX && mx <= barX + 8 &&
-                my >= viewTop && my <= viewTop + viewH;
         UiTheme.fill(ctx, barX, viewTop, 8, viewH, UiTheme.SCROLL_TRACK);
 
         if (state.treeContentH > viewH + 40) {
             int thumbH = Math.max(24, viewH * viewH / state.treeContentH);
             int maxScroll = Math.max(1, state.treeContentH - viewH);
             int thumbY = viewTop + (viewH - thumbH) * Math.min(state.treeScroll, maxScroll) / maxScroll;
-            UiTheme.fill(ctx, barX + 1, thumbY, 6, thumbH,
-                    barHovered ? UiTheme.SCROLL_THUMB_HOVER : UiTheme.SCROLL_THUMB);
+            UiTheme.fill(ctx, barX + 1, thumbY, 6, thumbH, UiTheme.SCROLL_THUMB);
         }
     }
 
