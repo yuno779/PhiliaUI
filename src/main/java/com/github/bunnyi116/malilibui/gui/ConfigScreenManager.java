@@ -346,11 +346,24 @@ public final class ConfigScreenManager {
         }
 
         int right = switcher != null ? switcher.getX() + switcher.getWidth()
-                : layout.contentX + layout.contentW - 22;
-        int y = layout.listY + 8;
+                : layout.contentX + layout.contentW - 8;
+        int y = switcher != null ? switcher.getY()
+                : layout.contentY + (layout.headerH - 18) / 2;
 
         for (int i = extras.size() - 1; i >= 0; --i) {
             WidgetDropDownList<?> dropdown = extras.get(i);
+
+            String dropdownClass = dropdown.getClass().getName();
+            if (dropdownClass.contains("magiclib") || dropdownClass.contains("SelectorDropDownList")) {
+                // MasaGadget 用 MagicLib 的 SelectorDropDownList 替代原版切换器。
+                // 没有原生切换器时，仍放到内容区标题栏右侧，并适当加宽避免模组名截断。
+                int width = Math.max(switcher != null ? switcher.getWidth() : 130, 170);
+                dropdown.setWidth(width);
+                dropdown.setHeight(switcher != null ? switcher.getHeight() : 18);
+                dropdown.setPosition(right - width, y);
+                continue;
+            }
+
             int width = dropdown.getWidth();
             right -= width;
             dropdown.setPosition(Math.max(layout.contentX + 8, right), y);

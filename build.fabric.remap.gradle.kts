@@ -12,6 +12,13 @@ plugins {
 version = fullProjectVersion
 group = modMavenGroup
 
+// 仅 1.21.11 使用的 ModMenu 入口（供 MasaGadget 下拉框枚举）
+sourceSets {
+    main {
+        java.srcDir("src/main/java")
+    }
+}
+
 repositories {
     // Optional local mirror for environments where the Modrinth CDN is
     // unreliable. It is ignored by git and is not required for normal builds.
@@ -32,6 +39,7 @@ repositories {
     strictMaven("https://www.cursemaven.com", "curse.maven")
     strictMaven("https://api.modrinth.com/maven", "maven.modrinth")
     strictMaven("https://jitpack.io")
+    strictMaven("https://maven.terraformersmc.com/releases/", "com.terraformersmc")
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
@@ -49,6 +57,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     modImplementation("maven.modrinth:malilib:$malilib")
     modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:${prop("fabric_api")}")
+    modCompileOnly("com.terraformersmc:modmenu:17.0.1")
+    modLocalRuntime("com.terraformersmc:modmenu:17.0.1")
 }
 
 loom {

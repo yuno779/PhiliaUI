@@ -34,6 +34,7 @@ repositories {
     }
     strictMaven("https://maven.fabricmc.net")
     strictMaven("https://api.modrinth.com/maven", "maven.modrinth")
+    strictMaven("https://maven.terraformersmc.com/releases/", "com.terraformersmc")
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
