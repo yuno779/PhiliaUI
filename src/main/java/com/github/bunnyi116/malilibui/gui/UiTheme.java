@@ -72,7 +72,7 @@ public final class UiTheme {
     // 滚动条（供主题化列表使用）
     public static final int SCROLL_TRACK = 0x40000000;
     public static final int SCROLL_THUMB = 0xFF3A4055;
-    public static final int SCROLL_THUMB_HOVER = 0xFF6C7AA8;
+    public static final int SCROLL_THUMB_HOVER = ACCENT_PINK;
 
     /* ------------------------------------------------------------------ *
      *  随配置变化的颜色（半透明背景开关）
