@@ -131,9 +131,9 @@ public final class ConfigScreenManager {
 
         if (screen instanceof GuiConfigsBase configs) {
             ensureConfigsLayout(configs);
-        } else if (screen instanceof GuiRenderLayerEditBase) {
-            ensureRenderLayerLayout(screen);
         }
+        // 其他界面（如 Litematica 渲染层）保持 MaLiLib 原始布局，
+        // 不套 2.0 侧栏，避免破坏其控件与关闭逻辑。
     }
 
     /**
