@@ -395,8 +395,8 @@ public final class ConfigScreenManager {
 
                 if (changed) {
                     state.lastNativeSearch = state.searchField.getValue();
-                    ((com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor) listBase)
-                            .malilibui$reCreateListWidget();
+                    ((com.github.bunnyi116.malilibui.mixin.accessor.WidgetListBaseAccessor) listWidget)
+                            .malilibui$refreshBrowserEntries();
                 }
             }
         }
@@ -920,9 +920,11 @@ public final class ConfigScreenManager {
         UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, 0x55000000);
 
         // 闂傚倸鍊搁崐鎼佸磹閹间焦鍋嬮柛鏇ㄥ灠閸ㄥ倿鏌涘┑鍡楊伌闁绘柨妫欓幈銊ヮ渻鐠囪弓澹曟俊銈囧Х閸嬫盯鏌婇敐鍜佸殨闁圭虎鍠楅崐椋庘偓鐟板閸犳顢欓崱妞绘斀闁绘劖娼欓悘锕傛煙缁嬫寧鎲搁柤娲憾閹虫牠鍩為幆褌澹曢梻鍌氱墛缁嬫帒锕㈡导瀛樼厵鐎瑰嫮澧楅崵鍥殽閻愬鎳囩€规洜鍠栭、妤呭焵椤掑嫷鏁?
-        UiTheme.fill(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH, 0x26000000);
-        UiTheme.outline(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH,
-                0x30FFFFFF);
+        int topH = Math.max(24, layout.sidebarY - layout.panelY);
+        UiTheme.fill(ctx, layout.sidebarX, layout.panelY, layout.sidebarW, topH, 0x33000000);
+        UiTheme.outline(ctx, layout.sidebarX, layout.panelY, layout.sidebarW, topH, 0x30FFFFFF);
+        UiTheme.fill(ctx, layout.contentX, layout.panelY, layout.contentW, topH, 0x33000000);
+        UiTheme.outline(ctx, layout.contentX, layout.panelY, layout.contentW, topH, 0x30FFFFFF);
 
         if (layout.hasSidebar) {
             drawSidebar(ctx, state);
@@ -979,6 +981,8 @@ public final class ConfigScreenManager {
 
         UiTheme.fill(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
                 0x33000000);
+        UiTheme.outline(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
+                0x30FFFFFF);
         UiTheme.vline(ctx, layout.sidebarX + layout.sidebarW, layout.sidebarY, layout.sidebarH,
                 UiTheme.SIDEBAR_DIVIDER);
 

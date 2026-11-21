@@ -34,6 +34,9 @@ public interface WidgetListBaseAccessor {
     @Invoker("getAllEntries")
     Collection<?> malilibui$getAllEntries();
 
+    @Invoker("refreshBrowserEntries")
+    void malilibui$refreshBrowserEntries();
+
 
     @Accessor("scrollBar")
     GuiScrollBar malilibui$getScrollBar();
