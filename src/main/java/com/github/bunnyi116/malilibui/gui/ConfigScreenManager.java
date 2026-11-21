@@ -359,7 +359,8 @@ public final class ConfigScreenManager {
         ConfigLayout layout = state.layout;
         int x = layout.contentX + 8;
         int y = layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 18) / 2;
-        int w = Math.max(80, layout.contentX + layout.contentW - 150 - x);
+        int right = Math.min(layout.contentX + layout.contentW, layout.screenW - 8);
+        int w = Math.max(80, right - 150 - x);
 
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 18, screen.getFont());
@@ -920,7 +921,8 @@ public final class ConfigScreenManager {
         // 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柟闂寸劍閸嬪鏌涢弴銊ョ仩闁搞劌鍊块弻娑樷攽閸℃浼岄梺缁樻煥濡瑩骞堥妸銉富閻犲洩寮撴竟鏇熶繆閵堝洤啸闁稿鐩弻濠囨晲閸滀礁娈ㄩ梺鍦檸閸犳宕愭搴樺亾閻熸澘顥忛柛鐘愁殜椤㈡瑩宕卞缁樻杸闂佺粯鍔栧娆撴倶閿曞倹鐓欑紒瀣閹叉悂鏌ゅú顏冩喚闁硅櫕鐗犻崺鐐哄箚瑜屾竟鏇㈡⒒閸屾氨澧涚紒瀣笒閿曘垺瀵肩€涙鍘甸悗鐟板婢ф宕甸崶顭戞闁绘劕顕幊鍥┾偓瑙勬礈閸犳牠銆佸Δ鍛劦妞ゆ帒瀚烽弫?
         int topH = Math.max(26, layout.sidebarY - layout.panelY);
         int barX = layout.hasSidebar ? layout.contentX : layout.panelX;
-        int barW = layout.hasSidebar ? layout.contentW : layout.panelW;
+        int barW = Math.min(layout.hasSidebar ? layout.contentW : layout.panelW,
+                layout.screenW - barX - 8);
         UiTheme.fill(ctx, barX, layout.panelY, barW, topH, 0x33000000);
 
         if (layout.hasSidebar) {
