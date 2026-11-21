@@ -417,7 +417,9 @@ public final class ConfigScreenManager {
                     }
                 }
 
-                for (String tab : tabs) {
+                for (int tabIndex = 0; tabIndex < tabs.size(); tabIndex++) {
+                    String tab = tabs.get(tabIndex);
+
                     if (y + tabRowH > bottom) {
                         break;
                     }
@@ -426,7 +428,18 @@ public final class ConfigScreenManager {
                     ButtonGeneric tabButton = new ButtonGeneric(layout.navX + 18, y, layout.navW - 18, tabRowH, "");
                     tabButton.setRenderDefaultBackground(false);
                     state.treeRows.put(tabButton, new ConfigScreenState.TreeRow(tabName, "", false, true));
+                    final int targetTab = tabIndex;
                     screen.addButton(tabButton, (button, mouseButton) -> {
+                        // 当前模组的 tab：直接调用 malilib 原生 tab 按钮的监听器，保证切换的就是这一页。
+                        if (current && targetTab < state.navButtons.size()) {
+                            ButtonBase nativeButton = state.navButtons.get(targetTab);
+                            var listener = ((ButtonBaseAccessor) nativeButton).malilibui$getActionListener();
+
+                            if (listener != null) {
+                                listener.actionPerformedWithButton(nativeButton, 0);
+                                return;
+                            }
+                        }
 
                         GuiBase target = entry.info().configScreenSupplier().get();
 

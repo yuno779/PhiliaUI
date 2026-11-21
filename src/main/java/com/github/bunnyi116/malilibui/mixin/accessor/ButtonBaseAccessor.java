@@ -1,6 +1,7 @@
 package com.github.bunnyi116.malilibui.mixin.accessor;
 
 import fi.dy.masa.malilib.gui.button.ButtonBase;
+import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -11,4 +12,7 @@ public interface ButtonBaseAccessor {
 
     @Accessor("enabled")
     boolean malilibui$isEnabled();
+
+    @Accessor("actionListener")
+    IButtonActionListener malilibui$getActionListener();
 }
