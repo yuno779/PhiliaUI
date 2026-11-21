@@ -430,6 +430,7 @@ public final class ConfigScreenManager {
         String currentModId = getModId(screen);
 
         if (SKIP_AUTO_SCROLL) {
+            setTreeScroll(state, TREE_SCROLL);
             state.autoScrollModId = currentModId;
             SKIP_AUTO_SCROLL = false;
         }
@@ -541,12 +542,12 @@ public final class ConfigScreenManager {
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
 
-        SKIP_AUTO_SCROLL = true;
-
         if (mouseX < layout.sidebarX || mouseX > layout.sidebarX + layout.sidebarW ||
                 mouseY < layout.navY || mouseY > layout.sidebarY + layout.sidebarH) {
             return false;
         }
+
+        SKIP_AUTO_SCROLL = true;
 
         String currentModId = getModId(screen);
 
