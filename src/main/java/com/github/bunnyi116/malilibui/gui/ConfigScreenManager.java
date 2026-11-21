@@ -358,9 +358,9 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.sidebarX + layout.sidebarW + 16;
+        int x = layout.contentX + 12;
         int y = layout.panelY + 4;
-        int right = layout.contentX + layout.contentW - 136;
+        int right = layout.contentX + layout.contentW - 12;
         int w = Math.max(80, right - x);
 
         if (state.searchField == null) {
