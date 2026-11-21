@@ -71,7 +71,8 @@ public final class UiTheme {
 
     // 滚动条（供主题化列表使用）
     public static final int SCROLL_TRACK = 0x40000000;
-    public static final int SCROLL_THUMB = 0xFF3A4055;
+    /** 常态灰粉，悬停亮粉。 */
+    public static final int SCROLL_THUMB = 0xFF9A8492;
     public static final int SCROLL_THUMB_HOVER = ACCENT_PINK;
 
     /* ------------------------------------------------------------------ *
