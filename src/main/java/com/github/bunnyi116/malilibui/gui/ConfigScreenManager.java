@@ -358,11 +358,11 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
         int x = layout.sidebarX + layout.sidebarW + 14;
-        int y = layout.panelY + 6;
-        int w = Math.max(80, layout.panelX + layout.panelW - 158 - x);
+        int y = layout.contentY + (layout.headerH - 18) / 2;
+        int w = Math.max(80, layout.contentX + layout.contentW - 158 - x);
 
         if (state.searchField == null) {
-            GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 16, screen.getFont());
+            GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 18, screen.getFont());
             field.setMaxLength(64);
             field.setFocused(true);
             state.searchActive = true;
@@ -372,7 +372,7 @@ public final class ConfigScreenManager {
             state.searchField.setX(x);
             state.searchField.setY(y);
             state.searchField.setWidth(w);
-            state.searchField.setHeight(16);
+            state.searchField.setHeight(18);
         }
 
         if (screen instanceof fi.dy.masa.malilib.gui.GuiListBase<?, ?, ?> listBase) {
@@ -389,9 +389,11 @@ public final class ConfigScreenManager {
                 state.nativeSearchBox = nativeBox;
                 bar.setSearchOpen(true);
                 nativeBox.setFocused(false);
+
+                boolean changed = !state.searchField.getValue().equals(nativeBox.getValue());
                 nativeBox.setValue(state.searchField.getValue());
 
-                if (!state.searchField.getValue().equals(state.lastNativeSearch)) {
+                if (changed) {
                     state.lastNativeSearch = state.searchField.getValue();
                     ((com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor) listBase)
                             .malilibui$reCreateListWidget();
@@ -958,7 +960,7 @@ public final class ConfigScreenManager {
         int h = field.getHeight();
 
         boolean focused = field.isFocused();
-        UiTheme.fill(ctx, x, y, w, h, focused ? 0xCC000000 : 0x33000000);
+        UiTheme.fill(ctx, x, y, w, h, focused ? 0x66000000 : 0x33000000);
         UiTheme.outline(ctx, x, y, w, h, focused ? 0x99FFFFFF : 0x33FFFFFF);
 
         String text = field.getValue();

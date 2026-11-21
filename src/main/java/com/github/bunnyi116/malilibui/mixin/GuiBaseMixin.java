@@ -45,6 +45,13 @@ public abstract class GuiBaseMixin {
         if (switcher != null && ((WidgetDropDownListAccessor) switcher).malilibui$isOpen()) {
             switcher.postRenderHovered(ctx, mouseX, mouseY, false);
         }
+
+        if (switcher != null) {
+            com.github.bunnyi116.malilibui.gui.UiTheme.fill(ctx, switcher.getX(), switcher.getY(),
+                    switcher.getWidth(), switcher.getHeight(), 0x18000000);
+            com.github.bunnyi116.malilibui.gui.UiTheme.outline(ctx, switcher.getX(), switcher.getY(),
+                    switcher.getWidth(), switcher.getHeight(), 0x55FFFFFF);
+        }
     }
 
     @Inject(method = "mouseDragged", at = @At("HEAD"), cancellable = true)
