@@ -71,7 +71,7 @@ public class UiConfigs implements IConfigHandler {
         /** 左上角徽章文字；留空则回退到默认文字。 */
         public static final UiConfigString BADGE_TEXT =
                 GROUP.string("badgeText")
-                        .defaultValue("MaLiLib UI")
+                        .defaultValue("Philia UI")
                         .build();
 
         /** 左上角徽章图标路径；支持绝对路径，或相对 malilib 配置目录。 */

@@ -37,13 +37,13 @@ public final class BadgeRenderer {
         String text = UiConfigs.Layout.BADGE_TEXT.getStringValue();
 
         if (text == null || text.isBlank()) {
-            text = "MaLiLib UI";
+            text = "Philia UI";
         }
 
         IconTexture icon = loadIcon(UiConfigs.Layout.BADGE_ICON.getStringValue());
         Font font = ctx.fontRenderer();
         // 侧栏太窄时优先保证文字完整，隐藏图标。
-        boolean showIcon = maxWidth >= 100;
+        boolean showIcon = maxWidth >= 100 && icon != null;
         float scale = 1.0f;
         int iconPart = showIcon ? ICON + 5 : 0;
         int textW = Math.round(font.width(text) * scale);
