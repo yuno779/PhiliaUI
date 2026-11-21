@@ -711,13 +711,21 @@ public final class ConfigScreenManager {
 
         if (pendingTab != null && pendingTab >= 0 && pendingTab < state.navButtons.size()) {
             PENDING_TAB.remove(screen);
-            state.selectedTabIndex = pendingTab;
-            ButtonBase pendingButton = state.navButtons.get(pendingTab);
-            var pendingListener = ((ButtonBaseAccessor) pendingButton).malilibui$getActionListener();
+            int tabIndex = pendingTab;
 
-            if (pendingListener != null) {
-                pendingListener.actionPerformedWithButton(pendingButton, 0);
-            }
+            Minecraft.getInstance().execute(() -> {
+                if (Minecraft.getInstance().screen != screen || tabIndex >= state.navButtons.size()) {
+                    return;
+                }
+
+                state.selectedTabIndex = tabIndex;
+                ButtonBase pendingButton = state.navButtons.get(tabIndex);
+                var pendingListener = ((ButtonBaseAccessor) pendingButton).malilibui$getActionListener();
+
+                if (pendingListener != null) {
+                    pendingListener.actionPerformedWithButton(pendingButton, 0);
+                }
+            });
         }
     }
 
