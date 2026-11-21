@@ -418,9 +418,6 @@ public final class ConfigScreenManager {
                 }
 
                 // 闂備浇顕х€涒晠顢欓弽顓炵獥闁哄稁鍘肩粻瑙勩亜閹板墎鐣遍柡鍕╁劜娣囧﹪濡堕崟顔煎帯闂佸磭绮Λ鍐箖濡ゅ懏鏅查柛灞剧⊕閻濇牕顪冮妶鍛濞存粌鐖奸獮鍐╃鐎ｅ灚鏅梺绯曞墲椤ㄥ棝骞栭幇顓犵闁告侗鍋勯悘顕€鏌嶈閸撴盯宕戦敐澶婄９婵°倕鎳庣壕鍧楁煏閸繍妲归柛瀣樀閺岋紕浠︾拠鎻掑闂佸搫鎷嬮崜鐔煎箖濮椻偓閹瑩宕归锝囧涧婵犵數鍋涢崥瀣潖婵犳艾鐒垫い鎺嶇贰閸熷繘鏌涢悩鍐叉诞鐎?闂傚倸鍊峰ù鍥Υ閳ь剟鏌涚€ｎ偅宕岄柡宀€鍠栭、娑橆煥閸愮偓姣夐柣搴ゎ潐濞叉ɑ绻涙繝鍥ц摕婵炴垶菤閺嬪孩淇婇姘础闁烩晛瀛╃换婵嬫濞戞ǚ鍋撹ぐ鎺撳亱闁绘灏欓弳锔姐亜閹扳晛鐒洪柛姘儔閺屾稑鈽夐崡鐐差潾濡炪倖鏌ㄥΛ娆戞崲濞戙垹绠婚悗闈涙啞椤斿洭姊洪崨濠傚闁告柨瀛╃粋鎺戭潩閼哥數鍘介梺缁樺姉缁绘繄娆㈤柆宥嗙厽闁圭偓鍓氬Σ鐑樹繆閸欏濮囬柍瑙勫灴瀹曞爼鍩為悙顒備簷闂佽楠哥粻宥夊磿閸楃倣娑樜旈崨顓犲姷闂佹眹鍨婚。浠嬪磻閹炬枼鏋旈柛顭戝枟閻忊偓闂備胶顭堥鍡涘箲閸ヮ剙钃熼柨婵嗩槹閺呮煡鏌涘☉鍗炵仯闁告棏鍨伴埞鎴︽倷閻戞﹫绱甸梺鍛婎殙濞呮洘绌?
-                ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
-                state.treeButtons.clear();
-                state.treeRows.clear();
                 state.treeBuilt = false;
             });
 
@@ -455,6 +452,9 @@ public final class ConfigScreenManager {
                         // 鐟滅増鎸告晶鐘参熼敍鍕煁闁?tab闁挎稒姘ㄥú鍧楀箳閵夈劎娈堕柣?malilib 闁告鍠撻弫?tab 闁圭顦甸幐鎶芥儍閸曨厽纾ч柛姘煎墮濞呮帡鏁嶇仦鑲╃閻犲洣绀侀崹蹇涘箲閵忋垺鐣遍悘蹇氶哺濡插憡娼诲▎搴ｎ伇濡炪倗鍋ｉ埀?
                         if (current && targetTab < state.navButtons.size()) {
                             state.selectedTabIndex = targetTab;
+                            // 原生 tab 监听器通常会重新 initGui；先标记树需要重建，
+                            // 否则 buttons 被清空后 treeBuilt 仍为 true，左栏文字会全部消失。
+                            state.treeBuilt = false;
                             ButtonBase nativeButton = state.navButtons.get(targetTab);
                             var listener = ((ButtonBaseAccessor) nativeButton).malilibui$getActionListener();
 
@@ -926,7 +926,7 @@ public final class ConfigScreenManager {
             int h = button.getHeight();
 
             // 滚出视口的行不画，避免盖到顶部徽章/标题。
-            if (y < layout.navY - 2 || y >= layout.sidebarY + layout.sidebarH - 8) {
+            if (y < layout.navY || y + h > layout.sidebarY + layout.sidebarH - 8) {
                 continue;
             }
 
@@ -994,9 +994,6 @@ public final class ConfigScreenManager {
                 state.treeScroll - (int) Math.signum(vertical) * 20));
         TREE_SCROLL = state.treeScroll;
 
-        ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
-        state.treeButtons.clear();
-        state.treeRows.clear();
         state.treeBuilt = false;
         return true;
     }
@@ -1017,9 +1014,6 @@ public final class ConfigScreenManager {
                 state.treeScroll - (int) Math.round(dragY * max / travel)));
         TREE_SCROLL = state.treeScroll;
 
-        ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
-        state.treeButtons.clear();
-        state.treeRows.clear();
         state.treeBuilt = false;
         return true;
     }
@@ -1054,9 +1048,6 @@ public final class ConfigScreenManager {
         state.treeScroll = rel * max / travel;
         TREE_SCROLL = state.treeScroll;
 
-        ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
-        state.treeButtons.clear();
-        state.treeRows.clear();
         state.treeBuilt = false;
         return true;
     }
