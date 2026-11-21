@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import fi.dy.masa.malilib.gui.GuiBase;
@@ -44,6 +45,18 @@ public final class ConfigScreenState {
      * 布局首次成功应用后置为 true。
      */
     public boolean ready;
+
+    /** 2.0 左侧树是否已经在当前界面实例上创建过按钮。 */
+    public boolean treeBuilt;
+
+    /** 左侧树的模组行按钮，用于判断界面重建后是否需要重加。 */
+    public final List<ButtonBase> treeButtons = new ArrayList<>();
+
+    /** 树行按钮对应的绘制数据。 */
+    public final Map<ButtonBase, TreeRow> treeRows = new IdentityHashMap<>();
+
+    public record TreeRow(String name, String version, boolean selected, boolean tab) {
+    }
 
     public ConfigScreenState(GuiBase screen) {
         this.screen = screen;

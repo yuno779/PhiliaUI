@@ -13,6 +13,7 @@ import fi.dy.masa.malilib.gui.GuiRenderLayerEditBase;
 import fi.dy.masa.malilib.gui.GuiScrollBar;
 import fi.dy.masa.malilib.gui.GuiTextFieldGeneric;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
+import fi.dy.masa.malilib.gui.button.ButtonGeneric;
 import fi.dy.masa.malilib.gui.widgets.WidgetBase;
 import fi.dy.masa.malilib.gui.widgets.WidgetDropDownList;
 import fi.dy.masa.malilib.gui.widgets.WidgetListBase;
@@ -31,59 +32,60 @@ import com.github.bunnyi116.malilibui.mixin.accessor.GuiConfigsBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListConfigOptionsBaseAccessor;
+import net.fabricmc.loader.api.FabricLoader;
 
 /**
- * 本模组的核心：接收 malilib 的原始界面，重新排布为
- * “左侧 TAB 导航 + 右侧内容区”，并绘制新的界面装饰。
+ * 本模组的核心：接�?malilib 的原始界面，重新排布�?
+ * “左�?TAB 导航 + 右侧内容区”，并绘制新的界面装饰�?
  *
  * <p>会接管两类界面：</p>
  * <ul>
- *   <li>{@link GuiConfigsBase}：常规 masa 配置界面。选项列表控件会被移动
- *       （并在需要时重建）到内容区，搜索框与配置行随之重新布局。</li>
- *   <li>{@link GuiRenderLayerEditBase}：“渲染层”编辑器界面（例如 litematica 的
- *       {@code GuiRenderLayer}）。TAB 按钮被移到左侧导航栏，其余控件整体平移到内容区。</li>
+ *   <li>{@link GuiConfigsBase}：常�?masa 配置界面。选项列表控件会被移动
+ *       （并在需要时重建）到内容区，搜索框与配置行随之重新布局�?/li>
+ *   <li>{@link GuiRenderLayerEditBase}：“渲染层”编辑器界面（例�?litematica �?
+ *       {@code GuiRenderLayer}）。TAB 按钮被移到左侧导航栏，其余控件整体平移到内容区�?/li>
  * </ul>
  *
- * <p>原始 TAB 按钮对象保持存活，仅移动位置；其点击回调仍执行原来的切换逻辑。
- * 由于 masa 模组切换 TAB 时会再次调用 {@code initGui()}，
- * 布局会在每帧渲染前按需重新应用。</p>
+ * <p>原始 TAB 按钮对象保持存活，仅移动位置；其点击回调仍执行原来的切换逻辑�?
+ * 由于 masa 模组切换 TAB 时会再次调用 {@code initGui()}�?
+ * 布局会在每帧渲染前按需重新应用�?/p>
  */
 public final class ConfigScreenManager {
     /**
-     * 极小窗口的保护阈值：低于此尺寸时才放弃重制布局（正常缩放不会触发）。
+     * 极小窗口的保护阈值：低于此尺寸时才放弃重制布局（正常缩放不会触发）�?
      */
     private static final int MIN_SCREEN_W = 240;
     private static final int MIN_SCREEN_H = 160;
 
     /**
-     * 位于原顶部条中、高度不超过该值的按钮被视为 TAB 按钮。
+     * 位于原顶部条中、高度不超过该值的按钮被视�?TAB 按钮�?
      */
     private static final int TAB_STRIP_MAX_Y = 46;
     private static final int TAB_MAX_HEIGHT = 22;
 
     /**
-     * 渲染层控件在原版界面中的初始位置。
+     * 渲染层控件在原版界面中的初始位置�?
      */
     private static final int RENDER_LAYER_CONTROLS_X = 10;
     private static final int RENDER_LAYER_CONTROLS_Y = 60;
 
     /**
-     * 内容“凹槽”面板在受管控件边界外扩的像素数。
+     * 内容“凹槽”面板在受管控件边界外扩的像素数�?
      */
     private static final int WELL_MARGIN = 6;
 
     private static final Map<Screen, ConfigScreenState> STATES = new WeakHashMap<>();
 
-    /** 记录渲染层输入框的原始坐标，每次布局都按原始坐标重新偏移，避免漂移与新控件漏移。 */
+    /** 记录渲染层输入框的原始坐标，每次布局都按原始坐标重新偏移，避免漂移与新控件漏移�?*/
     private static final Map<GuiTextFieldGeneric, int[]> STANDALONE_FIELD_ORIGINS = new WeakHashMap<>();
 
-    /** 是否有滑块正在被拖动（拖动期间冻结布局重建，避免拖拽被中断）。 */
+    /** 是否有滑块正在被拖动（拖动期间冻结布局重建，避免拖拽被中断）�?*/
     private static boolean sliderDragging;
 
-    /** 最近一次滑条渲染的时间戳（用于判断拖拽是否仍在进行）。 */
+    /** 最近一次滑条渲染的时间戳（用于判断拖拽是否仍在进行）�?*/
     private static long lastSliderRenderTime;
 
-    /** 超过该时间没有滑条渲染，就认为拖拽已经结束（避免冻结卡死）。 */
+    /** 超过该时间没有滑条渲染，就认为拖拽已经结束（避免冻结卡死）�?*/
     private static final long SLIDER_DRAG_TIMEOUT_MS = 200L;
 
     private ConfigScreenManager() {
@@ -104,7 +106,7 @@ public final class ConfigScreenManager {
     public static boolean isSliderDragging() {
         if (sliderDragging && System.currentTimeMillis() - lastSliderRenderTime > SLIDER_DRAG_TIMEOUT_MS) {
             // 滑条已不再渲染（例如界面重建导致控件销毁），视为拖拽结束，
-            // 避免布局冻结卡死导致界面不再更新。
+            // 避免布局冻结卡死导致界面不再更新�?
             sliderDragging = false;
         }
 
@@ -112,18 +114,18 @@ public final class ConfigScreenManager {
     }
 
     /* ------------------------------------------------------------------ *
-     *  布局处理（每帧为受管界面调用）
+     *  布局处理（每帧为受管界面调用�?
      * ------------------------------------------------------------------ */
 
     public static void ensureLayout(GuiBase screen) {
         if (isManageDisabled(screen)) {
-            // 禁用重制 / 窗口极小时不应用布局；原版恢复在客户端 tick 中处理。
+            // 禁用重制 / 窗口极小时不应用布局；原版恢复在客户�?tick 中处理�?
             return;
         }
 
         if (isSliderDragging() && STATES.containsKey(screen)) {
             // 拖动滑条（例如侧栏宽度）期间冻结布局应用，避免列表重建打断拖拽；
-            // 松手后的下一帧会自动应用新布局。
+            // 松手后的下一帧会自动应用新布局�?
             return;
         }
 
@@ -135,10 +137,10 @@ public final class ConfigScreenManager {
     }
 
     /**
-     * 客户端 tick：处理禁用重制 / 极小窗口时的原版恢复。
+     * 客户�?tick：处理禁用重�?/ 极小窗口时的原版恢复�?
      *
-     * <p>恢复需要重建界面（{@code initGui()}），必须在 tick 阶段执行而不是渲染阶段，
-     * 否则界面可能停留在旧布局（与切换 TAB 的路径保持一致）。</p>
+     * <p>恢复需要重建界面（{@code initGui()}），必须�?tick 阶段执行而不是渲染阶段，
+     * 否则界面可能停留在旧布局（与切换 TAB 的路径保持一致）�?/p>
      */
     public static void onClientTick() {
         Screen current = GuiUtils.getCurrentScreen();
@@ -152,16 +154,16 @@ public final class ConfigScreenManager {
             return;
         }
 
-        // 动态可见性变化（某个选项切换后，依赖它的选项需要显示 / 隐藏）→ 重建列表。
+        // 动态可见性变化（某个选项切换后，依赖它的选项需要显�?/ 隐藏）→ 重建列表�?
         if (current instanceof GuiConfigsBase && ConfigEntryFilter.hasVisibilityChanged()) {
             refreshCurrentConfigScreen();
         }
     }
 
     /**
-     * 重建当前配置界面（延迟到下一 tick，避免在点击 / 渲染流程中重建界面）。
+     * 重建当前配置界面（延迟到下一 tick，避免在点击 / 渲染流程中重建界面）�?
      *
-     * <p>重建前记录列表的滚动位置，重建后恢复，避免折叠 / 显示隐藏后列表跳回顶部。</p>
+     * <p>重建前记录列表的滚动位置，重建后恢复，避免折�?/ 显示隐藏后列表跳回顶部�?/p>
      */
     public static void refreshCurrentConfigScreen() {
         Screen current = GuiUtils.getCurrentScreen();
@@ -201,10 +203,10 @@ public final class ConfigScreenManager {
     }
 
     /**
-     * 「启用界面重制」配置项的值变化回调（在按钮点击处理阶段同步调用）。
+     * 「启用界面重制」配置项的值变化回调（在按钮点击处理阶段同步调用）�?
      *
-     * <p>关闭时立即恢复原版布局并重建界面（与切换 TAB 相同的路径），
-     * 这样不需要等下一帧/切页；重新开启时下一帧 ensure 会自动重新应用布局。</p>
+     * <p>关闭时立即恢复原版布局并重建界面（与切�?TAB 相同的路径）�?
+     * 这样不需要等下一�?切页；重新开启时下一�?ensure 会自动重新应用布局�?/p>
      */
     public static void onRestyleEnabledChanged(boolean enabled) {
         Screen current = GuiUtils.getCurrentScreen();
@@ -217,10 +219,10 @@ public final class ConfigScreenManager {
     }
 
     /**
-     * 返回某个界面当前生效的布局；未接管 / 已关闭重制时返回 null。
+     * 返回某个界面当前生效的布局；未接管 / 已关闭重制时返回 null�?
      *
-     * <p>GuiListBase 的 mixin 用它来重定向列表控件的创建坐标，
-     * 这样我们不需要修改原版的列表坐标字段。</p>
+     * <p>GuiListBase �?mixin 用它来重定向列表控件的创建坐标，
+     * 这样我们不需要修改原版的列表坐标字段�?/p>
      */
     public static ConfigLayout layoutFor(GuiBase screen) {
         ConfigScreenState state = STATES.get(screen);
@@ -233,7 +235,7 @@ public final class ConfigScreenManager {
     }
 
     /**
-     * 是否禁用了重制布局（配置关闭或窗口极小）。
+     * 是否禁用了重制布局（配置关闭或窗口极小）�?
      */
     private static boolean isManageDisabled(GuiBase screen) {
         if (!UiConfigs.General.ENABLED.getBooleanValue()) {
@@ -256,7 +258,7 @@ public final class ConfigScreenManager {
 
     private static boolean isTooSmallToManage(GuiBase screen) {
         if (screen.getScreenWidth() < MIN_SCREEN_W || screen.getScreenHeight() < MIN_SCREEN_H) {
-            // 尺寸过小：恢复原版布局与原始列表位置。
+            // 尺寸过小：恢复原版布局与原始列表位置�?
             restoreVanillaLayout(screen);
             return true;
         }
@@ -269,16 +271,16 @@ public final class ConfigScreenManager {
             return false;
         }
 
-        // 用户禁用重制时恢复原版布局（幂等：每帧校验直到完全恢复）。
+        // 用户禁用重制时恢复原版布局（幂等：每帧校验直到完全恢复）�?
         restoreVanillaLayout(screen);
         return true;
     }
 
     /**
-     * 恢复原版布局（幂等）：还原被我们修改过的列表宿主坐标，
-     * 并在需要时重建一次界面，让子类按原版位置重建 TAB 按钮与列表控件。
+     * 恢复原版布局（幂等）：还原被我们修改过的列表宿主坐标�?
+     * 并在需要时重建一次界面，让子类按原版位置重建 TAB 按钮与列表控件�?
      *
-     * <p>保留接管状态而不是直接丢弃，以便重新启用重制时能立刻重新应用布局。</p>
+     * <p>保留接管状态而不是直接丢弃，以便重新启用重制时能立刻重新应用布局�?/p>
      */
     private static void restoreVanillaLayout(GuiBase screen) {
         ConfigScreenState state = STATES.get(screen);
@@ -290,20 +292,20 @@ public final class ConfigScreenManager {
         boolean needsRebuild = state.ready || state.layout != null;
 
         state.ready = false;
-        // 清空布局：恢复只需执行一次，否则每帧都会重复重建界面（日志刷屏、界面反复重置）。
+        // 清空布局：恢复只需执行一次，否则每帧都会重复重建界面（日志刷屏、界面反复重置）�?
         state.layout = null;
 
         if (needsRebuild) {
             MalilibUiMod.LOGGER.info("[{}] Restoring vanilla layout for {}",
                     MalilibUiMod.MOD_NAME, screen.getClass().getSimpleName());
 
-            // GuiListBase 的 initGui() 只在列表控件为 null 时才重建它，
-            // 所以先清空列表控件，确保按原版坐标重新创建。
+            // GuiListBase �?initGui() 只在列表控件�?null 时才重建它，
+            // 所以先清空列表控件，确保按原版坐标重新创建�?
             if (screen instanceof GuiListBase<?, ?, ?>) {
                 ((GuiListBaseAccessor) screen).malilibui$setListWidgetField(null);
             }
 
-            // 直接重建界面控件（不走“关闭 → 重开”流程，避免鼠标光标被释放并跳到屏幕中间）。
+            // 直接重建界面控件（不走“关�?�?重开”流程，避免鼠标光标被释放并跳到屏幕中间）�?
             screen.initGui();
         }
     }
@@ -315,16 +317,133 @@ public final class ConfigScreenManager {
 
         ConfigScreenState state = stateFor(configs);
         applyNavLayout(configs, state);
+
+        // 2.0：TAB 已在模组树中绘制，原生 TAB 按钮每帧都保持隐藏，避免与树重叠。
+        if (!is26x()) {
+            for (ButtonBase nav : state.navButtons) {
+                nav.setPosition(-1000, -1000);
+            }
+        }
+
+        ensureModTree(configs, state);
         ensureList(configs, state);
         ensureModSwitcher(configs, state);
         positionExtraDropdowns(configs, state);
         state.ready = true;
     }
 
+    private static final java.util.Set<String> EXPANDED_MODS = new java.util.LinkedHashSet<>();
+
     /**
-     * 部分模组会在配置界面里额外添加排序/筛选下拉框。它们原本按屏幕坐标硬编码，
-     * 重制布局后会被挤到面板外；这里统一按内容区右边缘重新摆放。
-     * 26.x 保持原行为不动。
+     * 2.0 左栏模组树：列出所有已注册模组，当前模组固定在下方显示 TAB�?
+     * 其他模组可展开显示已缓存的 TAB 名称�?
+     */
+    private static void ensureModTree(GuiBase screen, ConfigScreenState state) {
+        if (is26x()) {
+            return;
+        }
+
+        ConfigLayout layout = state.layout;
+        List<ButtonBase> buttons = ((GuiBaseAccessor) screen).malilibui$getButtons();
+
+        if (state.treeBuilt && !state.treeButtons.isEmpty() && buttons.contains(state.treeButtons.get(0))) {
+            return;
+        }
+
+        state.treeButtons.clear();
+        state.treeRows.clear();
+        String currentModId = getModId(screen);
+        int y = layout.sidebarY + 50;
+        int bottom = layout.sidebarY + layout.sidebarH - 10;
+        final int modRowH = 26;
+        final int tabRowH = 18;
+
+        java.util.List<ModTree.ModEntry> entries = new java.util.ArrayList<>(ModTree.snapshot());
+        entries.sort(java.util.Comparator.comparing(e -> !e.info().modId().equals(currentModId)));
+
+        for (ModTree.ModEntry entry : entries) {
+            if (y + modRowH > bottom) {
+                break;
+            }
+
+            String modId = entry.info().modId();
+            boolean current = modId.equals(currentModId);
+            boolean expanded = current || EXPANDED_MODS.contains(modId);
+            String name = UiTheme.trim(screen.getFont(), entry.info().modName(), layout.navW - 34);
+            String version = FabricLoader.getInstance().getModContainer(modId)
+                    .map(c -> c.getMetadata().getVersion().getFriendlyString()).orElse("");
+
+            ButtonGeneric modButton = new ButtonGeneric(layout.navX, y, layout.navW, modRowH, "");
+            modButton.setRenderDefaultBackground(false);
+            state.treeRows.put(modButton, new ConfigScreenState.TreeRow(name, version, current, false));
+            screen.addButton(modButton, (button, mouseButton) -> {
+                if (current) {
+                    if (EXPANDED_MODS.remove(modId)) {
+                        EXPANDED_MODS.add(modId);
+                    } else {
+                        EXPANDED_MODS.add(modId);
+                    }
+                } else {
+                    EXPANDED_MODS.add(modId);
+                    GuiBase target = entry.info().configScreenSupplier().get();
+
+                    if (target != null) {
+                        GuiBase.openGui(target);
+                    }
+                }
+            });
+
+            state.treeButtons.add(modButton);
+            y += modRowH;
+
+            if (expanded) {
+                for (String tab : entry.tabs()) {
+                    if (y + tabRowH > bottom) {
+                        break;
+                    }
+
+                    String tabName = UiTheme.trim(screen.getFont(), tab, layout.navW - 42);
+                    ButtonGeneric tabButton = new ButtonGeneric(layout.navX + 18, y, layout.navW - 18, tabRowH, "");
+                    tabButton.setRenderDefaultBackground(false);
+                    state.treeRows.put(tabButton, new ConfigScreenState.TreeRow(tabName, "", false, true));
+                    screen.addButton(tabButton, (button, mouseButton) -> {
+                        GuiBase target = entry.info().configScreenSupplier().get();
+
+                        if (target != null) {
+                            GuiBase.openGui(target);
+                        }
+                    });
+
+                    state.treeButtons.add(tabButton);
+                    y += tabRowH;
+                }
+            }
+        }
+
+        state.treeBuilt = true;
+
+        // 树里已经绘制了当前模组的 TAB；原�?TAB 按钮隐藏，避免重复�?
+        for (ButtonBase nav : state.navButtons) {
+            nav.setPosition(-1000, -1000);
+        }
+
+        if (System.getProperty("malilib-ui.debugtree") != null) {
+            StringBuilder sb = new StringBuilder("[tree] nav=").append(state.navButtons.size())
+                    .append(" tree=").append(state.treeButtons.size())
+                    .append(" y=").append(y);
+
+            for (ButtonBase nav : state.navButtons) {
+                sb.append(" [").append(nav.getX()).append(',').append(nav.getY()).append(']');
+            }
+
+            MalilibUiMod.LOGGER.info(sb.toString());
+        }
+    }
+
+    /**
+     * 部分模组会在配置界面里额外添加排�?筛选下拉框。它们原本按屏幕坐标硬编码，
+     * 重制布局后会被挤到面板外；这里统一按内容区右边缘重新摆放�?
+     * 26.x 保持原行为不动�?
      */
     private static void positionExtraDropdowns(GuiConfigsBase configs, ConfigScreenState state) {
         if (is26x()) {
@@ -355,8 +474,8 @@ public final class ConfigScreenManager {
 
             String dropdownClass = dropdown.getClass().getName();
             if (dropdownClass.contains("magiclib") || dropdownClass.contains("SelectorDropDownList")) {
-                // MasaGadget 用 MagicLib 的 SelectorDropDownList 替代原版切换器。
-                // 宽度保持与原版切换器一致，只增加一页可显示的条目数。
+                // MasaGadget �?MagicLib �?SelectorDropDownList 替代原版切换器�?
+                // 宽度保持与原版切换器一致，只增加一页可显示的条目数�?
                 int width = switcher != null ? switcher.getWidth() : 130;
                 dropdown.setWidth(width);
                 dropdown.setHeight(switcher != null ? switcher.getHeight() : 18);
@@ -394,7 +513,7 @@ public final class ConfigScreenManager {
 
             masaGadgetEntriesExpanded = true;
         } catch (Throwable ignored) {
-            // MasaGadget/MagicLib 不存在或 API 变化时保持原样。
+            // MasaGadget/MagicLib 不存在或 API 变化时保持原样�?
         }
     }
 
@@ -414,7 +533,7 @@ public final class ConfigScreenManager {
         List<ButtonBase> buttons = ((GuiBaseAccessor) screen).malilibui$getButtons();
 
         if (!state.navButtons.isEmpty()) {
-            // 界面已重建（切换 TAB），原按钮实例全部失效。
+            // 界面已重建（切换 TAB），原按钮实例全部失效�?
             for (ButtonBase button : state.navButtons) {
                 if (!buttons.contains(button)) {
                     state.navButtons.clear();
@@ -435,7 +554,7 @@ public final class ConfigScreenManager {
                 state.navButtons.size());
         state.layout = layout;
 
-        // 2.0 模组树需要知道每个模组有哪些 TAB；这里缓存当前界面已经构建出的分组名称。
+        // 2.0 模组树需要知道每个模组有哪些 TAB；这里缓存当前界面已经构建出的分组名称�?
         List<String> tabLabels = new ArrayList<>();
 
         for (ButtonBase button : state.navButtons) {
@@ -444,7 +563,7 @@ public final class ConfigScreenManager {
 
         ModTree.cacheTabs(getModId(screen), tabLabels);
 
-        // 把 TAB 按钮移动到左侧导航栏。
+        // �?TAB 按钮移动到左侧导航栏�?
         for (int i = 0; i < state.navButtons.size(); i++) {
             ButtonBase button = state.navButtons.get(i);
             int x = layout.navX;
@@ -467,7 +586,7 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        // 在内容区标题行内垂直居中，并与搜索框右边缘对齐；窗口较窄时不允许越出内容区。
+        // 在内容区标题行内垂直居中，并与搜索框右边缘对齐；窗口较窄时不允许越出内容区�?
         int x = Math.max(layout.contentX + 8, layout.contentX + layout.contentW - 152);
         int y = layout.contentY + (layout.headerH - 18) / 2;
 
@@ -513,9 +632,9 @@ public final class ConfigScreenManager {
                 widgetAccess.malilibui$getListPosY() == layout.listY;
 
         if (!positionOk) {
-            // 重新创建列表控件：GuiListBase 的 mixin 会把创建坐标替换成新布局的位置，
+            // 重新创建列表控件：GuiListBase �?mixin 会把创建坐标替换成新布局的位置，
             // 列表控件的构造函数同时会向屏幕查询浏览器宽高（同样被重定向到新布局尺寸），
-            // 因此搜索框与条目区域都会以正确的尺寸创建。
+            // 因此搜索框与条目区域都会以正确的尺寸创建�?
             listAccess.malilibui$reCreateListWidget();
 
             widget = listAccess.malilibui$getListWidget();
@@ -531,14 +650,14 @@ public final class ConfigScreenManager {
         boolean needsRebuild = recreated;
 
         // 列表控件可能是重写了 getBrowserHeight() 的子类（例如 GuiModConfigs）；
-        // 若构造函数最终没有采用我们的尺寸，则重新应用布局尺寸。
+        // 若构造函数最终没有采用我们的尺寸，则重新应用布局尺寸�?
         if (widgetAccess.malilibui$getBrowserWidth() != layout.listW ||
                 widgetAccess.malilibui$getBrowserHeight() != layout.listH) {
             widget.setSize(layout.listW, layout.listH);
             needsRebuild = true;
         }
 
-        // 配置行控件宽度自适应：窄窗口下收缩控件列，避免整行溢出内容区。
+        // 配置行控件宽度自适应：窄窗口下收缩控件列，避免整行溢出内容区�?
         if (widget instanceof WidgetListConfigOptionsBase<?, ?> configList) {
             WidgetListConfigOptionsBaseAccessor configAccess = (WidgetListConfigOptionsBaseAccessor) configList;
             int requested = ((GuiConfigsBaseAccessor) configs).malilibui$getConfigWidth();
@@ -559,11 +678,11 @@ public final class ConfigScreenManager {
     }
 
     /**
-     * 把渲染层编辑器中非 TAB 的控件平移到内容区。
+     * 把渲染层编辑器中�?TAB 的控件平移到内容区�?
      *
-     * <p>这些界面的控件基于原版左上角坐标（{@code 10, 60}）创建；位移通过基于对象身份的
+     * <p>这些界面的控件基于原版左上角坐标（{@code 10, 60}）创建；位移通过基于对象身份�?
      * {@code positionedControls} 集合保证每个控件只应用一次，因此控件不会被重复平移，
-     * 同时又能跟随之后的窗口缩放。</p>
+     * 同时又能跟随之后的窗口缩放�?/p>
      */
     private static void positionStandaloneControls(GuiBase screen, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
@@ -577,7 +696,8 @@ public final class ConfigScreenManager {
         GuiBaseAccessor access = (GuiBaseAccessor) screen;
 
         for (ButtonBase button : access.malilibui$getButtons()) {
-            if (state.navButtons.contains(button) || !state.positionedControls.add(button)) {
+            if (state.navButtons.contains(button) || state.treeButtons.contains(button)
+                    || !state.positionedControls.add(button)) {
                 continue;
             }
 
@@ -603,8 +723,8 @@ public final class ConfigScreenManager {
                     f -> new int[] { f.getX(), f.getY() });
             int nx = origin[0] + deltaX;
             int ny = origin[1] + deltaY;
-            // GuiTextFieldGeneric 自己保存了一份 x/y，但 EditBox/AbstractWidget 的
-            // 父类字段仍停留在旧坐标，文本会按父类坐标绘制。这里同步移动父类字段。
+            // GuiTextFieldGeneric 自己保存了一�?x/y，但 EditBox/AbstractWidget �?
+            // 父类字段仍停留在旧坐标，文本会按父类坐标绘制。这里同步移动父类字段�?
             field.setX(nx);
             field.setY(ny);
             field.setPosition(nx, ny);
@@ -641,7 +761,7 @@ public final class ConfigScreenManager {
     }
 
     /* ------------------------------------------------------------------ *
-     *  供 mixin 使用的查询方法
+     *  �?mixin 使用的查询方�?
      * ------------------------------------------------------------------ */
 
     public static boolean hasLayout(GuiBase screen) {
@@ -661,7 +781,7 @@ public final class ConfigScreenManager {
      * ------------------------------------------------------------------ */
 
     /**
-     * 绘制整块新的界面背景（替代原版背景绘制）。
+     * 绘制整块新的界面背景（替代原版背景绘制）�?
      */
     public static void drawBackground(GuiBase screen, GuiContext ctx, int mouseX, int mouseY) {
         ConfigScreenState state = STATES.get(screen);
@@ -672,10 +792,10 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
 
-        // 全屏压暗遮罩。
+        // 全屏压暗遮罩�?
         UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, UiTheme.overlayColor());
 
-        // 面板投影与主体。
+        // 面板投影与主体�?
         UiTheme.shadow(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH);
         UiTheme.gradient(ctx, layout.panelX, layout.panelY, layout.panelW, layout.panelH,
                 UiTheme.panelTopColor(), UiTheme.panelBottomColor());
@@ -688,7 +808,7 @@ public final class ConfigScreenManager {
             drawSidebar(ctx, state);
         }
 
-        // 内嵌凹槽面板，用于承载选项列表 / 渲染层控件。
+        // 内嵌凹槽面板，用于承载选项列表 / 渲染层控件�?
         int wellMargin = layout.compact ? 4 : WELL_MARGIN;
         UiTheme.drawContentWell(ctx, layout.listX - wellMargin, layout.listY - wellMargin,
                 layout.listW + wellMargin * 2, layout.listH + wellMargin * 2);
@@ -705,7 +825,7 @@ public final class ConfigScreenManager {
         UiTheme.vline(ctx, layout.sidebarX + layout.sidebarW, layout.sidebarY, layout.sidebarH,
                 UiTheme.SIDEBAR_DIVIDER);
 
-        // 徽章与标题区：1.21.11 使用可自定义徽章；26.x 保持上游原样。
+        // 徽章与标题区�?.21.11 使用可自定义徽章�?6.x 保持上游原样�?
         if (is26x()) {
             UiTheme.fill(ctx, layout.sidebarX + 12, layout.sidebarY + 16, 3, 14, UiTheme.TEXT_ACCENT);
             UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), modName, layout.sidebarW - 40),
@@ -723,11 +843,63 @@ public final class ConfigScreenManager {
 
         UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 42, layout.sidebarW - 24,
                 0x22FFFFFF);
+
+        drawModTree(ctx, state);
+    }
+
+    /** 2.0 左侧模组树：模组行两行文字（名称/版本），TAB 行缩进；选中行白框 + 左侧竖条。 */
+    private static void drawModTree(GuiContext ctx, ConfigScreenState state) {
+        if (state.treeButtons.isEmpty()) {
+            return;
+        }
+
+        for (ButtonBase button : state.treeButtons) {
+            ConfigScreenState.TreeRow row = state.treeRows.get(button);
+
+            if (row == null || button.getY() < 0) {
+                continue;
+            }
+
+            int x = button.getX();
+            int y = button.getY();
+            int w = button.getWidth();
+            int h = button.getHeight();
+
+            if (row.selected()) {
+                UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
+                UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
+            }
+
+            if (row.tab()) {
+                UiTheme.vline(ctx, x + 6, y, h, 0x33FFFFFF);
+                UiTheme.text(ctx, row.name(), x + 16, y + (h - 8) / 2,
+                        row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
+            } else {
+                if (row.selected()) {
+                    UiTheme.fill(ctx, layoutAccentX(x), y, 3, h, UiTheme.TEXT_ACCENT);
+                }
+
+                // 没有模组图标时用双色小方块占位，保持 Sodium 的图标行节奏。
+                UiTheme.fill(ctx, x + 6, y + 3, 12, 12, 0xFF2A3550);
+                UiTheme.fill(ctx, x + 8, y + 5, 8, 8, 0xFF6E8BD6);
+                UiTheme.text(ctx, row.name(), x + 24, y + 2,
+                        row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
+
+                if (!row.version().isEmpty()) {
+                    UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), row.version(), w - 30),
+                            x + 24, y + 14, 0xFF7A7A7A, false);
+                }
+            }
+        }
+    }
+
+    private static int layoutAccentX(int rowX) {
+        return rowX + 1;
     }
 
     private static void drawContentHeader(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
-        // 侧栏只保留徽章，模组名统一显示在内容区标题栏，避免重复。
+        // 侧栏只保留徽章，模组名统一显示在内容区标题栏，避免重复�?
         String currentTab = prettyModName(getModId(state.screen));
 
         if (currentTab == null || currentTab.isEmpty()) {
@@ -750,12 +922,12 @@ public final class ConfigScreenManager {
                     layout.contentX + 21, textY, UiTheme.TEXT_TITLE, true);
         }
 
-        // 这里不再画额外的分隔线：标题下方的内容凹槽边框
-        // 已经提供了视觉分隔（再画一条线反而像渲染错误）。
+        // 这里不再画额外的分隔线：标题下方的内容凹槽边�?
+        // 已经提供了视觉分隔（再画一条线反而像渲染错误）�?
     }
 
     /**
-     * 绘制一个导航 TAB；返回 true 表示该按钮属于导航栏且已在此处理（需跳过原版渲染）。
+     * 绘制一个导�?TAB；返�?true 表示该按钮属于导航栏且已在此处理（需跳过原版渲染）�?
      */
     public static boolean drawNavButton(GuiBase screen, ButtonBase button, GuiContext ctx,
                                         int mouseX, int mouseY) {
@@ -794,8 +966,8 @@ public final class ConfigScreenManager {
             return configs.getModId();
         }
 
-        // 渲染层编辑器不是 GuiConfigsBase；从包名（fi.dy.masa.<modId>.*）
-        // 推断模组 ID，足以用于侧栏标题。
+        // 渲染层编辑器不是 GuiConfigsBase；从包名（fi.dy.masa.<modId>.*�?
+        // 推断模组 ID，足以用于侧栏标题�?
         String[] parts = screen.getClass().getName().split("\\.");
 
         for (int i = 1; i < parts.length; i++) {
