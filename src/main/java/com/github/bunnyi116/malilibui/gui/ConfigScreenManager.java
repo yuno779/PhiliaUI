@@ -477,7 +477,10 @@ public final class ConfigScreenManager {
                 }
             }
             setTreeScroll(state, Math.min(targetTop, maxScroll));
-            state.autoScrollModId = currentModId;
+            // Wait for the full tree before marking auto-scroll as handled.
+            if (maxScroll > 0 || targetTop == 0) {
+                state.autoScrollModId = currentModId;
+            }
         }
 
         state.treeScroll = Math.max(0, Math.min(state.treeScroll, maxScroll));
