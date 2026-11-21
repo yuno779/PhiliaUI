@@ -26,6 +26,7 @@
     "accessor.WidgetDropDownListAccessor",
     "accessor.WidgetListBaseAccessor",
     "accessor.WidgetListConfigOptionsBaseAccessor",
+    "accessor.WidgetSearchBarAccessor",
     "accessor.WidgetListEntryBaseAccessor",
     "accessor.WidgetSliderAccessor",
     "dialog.GuiColorListEditMixin",

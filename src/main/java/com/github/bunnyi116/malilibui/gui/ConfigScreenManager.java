@@ -373,6 +373,17 @@ public final class ConfigScreenManager {
             state.searchField.setHeight(16);
         }
 
+        if (screen instanceof fi.dy.masa.malilib.gui.GuiListBase<?, ?, ?> listBase) {
+            fi.dy.masa.malilib.gui.widgets.WidgetListBase<?, ?> listWidget =
+                    ((com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor) listBase)
+                            .malilibui$getListWidget();
+
+            if (listWidget != null && listWidget.getSearchBarWidget() != null) {
+                // 列表内的搜索框已被顶栏取代，移出屏幕避免重复。
+                listWidget.getSearchBarWidget().setPosition(-1000, -1000);
+            }
+        }
+
         String text = state.searchField.getValue();
 
         if (!text.equals(state.searchQuery)) {
@@ -1072,6 +1083,38 @@ public final class ConfigScreenManager {
     }
 
     /** 点击/拖动左侧滚动条时直接跳到对应位置。 */
+    /** 点击顶栏搜索框时，把输入焦点从列表内搜索框转到顶栏。 */
+    public static boolean onSearchClick(GuiBase screen, double mouseX, double mouseY) {
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state == null || state.searchField == null) {
+            return false;
+        }
+
+        GuiTextFieldGeneric field = state.searchField;
+
+        if (mouseX < field.getX() || mouseX > field.getX() + field.getWidth() ||
+                mouseY < field.getY() || mouseY > field.getY() + field.getHeight()) {
+            return false;
+        }
+
+        if (screen instanceof fi.dy.masa.malilib.gui.GuiListBase<?, ?, ?> listBase) {
+            fi.dy.masa.malilib.gui.widgets.WidgetListBase<?, ?> listWidget =
+                    ((com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor) listBase)
+                            .malilibui$getListWidget();
+            fi.dy.masa.malilib.gui.widgets.WidgetSearchBar searchBar =
+                    listWidget == null ? null : listWidget.getSearchBarWidget();
+
+            if (searchBar != null) {
+                ((com.github.bunnyi116.malilibui.mixin.accessor.WidgetSearchBarAccessor) searchBar)
+                        .malilibui$getSearchBox().setFocused(false);
+            }
+        }
+
+        field.setFocused(true);
+        return true;
+    }
+
     public static boolean onTreeScrollbarClick(GuiBase screen, double mouseX, double mouseY) {
         treeBarDragging = false;
         if (is26x() || !hasLayout(screen)) {

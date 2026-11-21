@@ -59,6 +59,11 @@ public abstract class GuiBaseMixin {
     private void malilibui$mouseClicked(net.minecraft.client.input.MouseButtonEvent click, boolean doubleClick,
                                         org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
         // 编辑框优先，避免抢走输入焦点。
+        if (ConfigScreenManager.onSearchClick((GuiBase) (Object) this, click.x(), click.y())) {
+            cir.setReturnValue(true);
+            return;
+        }
+
         if (ConfigScreenManager.onTreeScrollbarClick((GuiBase) (Object) this, click.x(), click.y())) {
             cir.setReturnValue(true);
             return;
