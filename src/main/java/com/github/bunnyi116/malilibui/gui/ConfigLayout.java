@@ -119,7 +119,7 @@ public final class ConfigLayout {
 
         int navTop = ConfigScreenManager.is26x()
                 ? (layout.compact ? 46 : 62)
-                : 54;
+                : Math.max(0, layout.contentY - layout.sidebarY);
 
         layout.navX = layout.sidebarX + (layout.compact ? 8 : 10);
         layout.navY = layout.sidebarY + navTop;

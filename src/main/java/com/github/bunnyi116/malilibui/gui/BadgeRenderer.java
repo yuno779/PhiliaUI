@@ -23,10 +23,10 @@ import net.minecraft.resources.Identifier;
  * 绘制左上角徽章（图标 + 文字）。图标按路径懒加载，文件变化后自动重新注册。
  */
 public final class BadgeRenderer {
-    private static final int HEIGHT = 24;
-    private static final int ICON = 16;
+    private static final int HEIGHT = 18;
+    private static final int ICON = 14;
     private static final int ICON_TEX = 256;
-    private static final int PAD = 6;
+    private static final int PAD = 5;
 
     private static final Map<String, IconTexture> ICONS = new HashMap<>();
 
@@ -44,8 +44,8 @@ public final class BadgeRenderer {
         Font font = ctx.fontRenderer();
         // 侧栏太窄时优先保证文字完整，隐藏图标。
         boolean showIcon = maxWidth >= 100;
-        float scale = showIcon ? 1.15f : 1.0f;
-        int iconPart = showIcon ? ICON + 7 : 0;
+        float scale = 1.0f;
+        int iconPart = showIcon ? ICON + 5 : 0;
         int textW = Math.round(font.width(text) * scale);
         int width = Math.min(maxWidth, PAD * 2 + iconPart + textW + 2);
         int textX = x + PAD + iconPart;

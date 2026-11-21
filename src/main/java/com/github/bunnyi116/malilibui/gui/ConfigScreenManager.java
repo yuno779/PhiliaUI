@@ -357,16 +357,16 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.contentX + 8;
+        int x = layout.contentX;
         int y = layout.panelY + 4;
         int right = Math.min(layout.contentX + layout.contentW, layout.screenW - 8);
-        int w = Math.max(80, right - 150 - x);
+        int w = Math.max(80, right - 138 - x);
 
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 18, screen.getFont());
             field.setMaxLength(64);
-            field.setFocused(true);
-            state.searchActive = true;
+            field.setFocused(false);
+            state.searchActive = false;
             state.searchField = field;
             ((GuiBaseAccessor) screen).malilibui$getTextFields().add(new TextFieldWrapper<>(field, null));
         } else {
@@ -709,8 +709,7 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
         // 闂傚倸鍊搁崐椋庢濮橆剦鐒介柤濮愬€栫€氬鏌ｉ弮鍌氬付缂佲偓婢跺备鍋撻崗澶婁壕闂佸憡娲﹂崑澶愬春閻愮儤鐓熼幖杈剧稻閺嗏晝鐥鐐靛煟鐎规洘鍨块獮妯兼嫚閸欏绁舵俊鐐€栭幐楣冨窗鎼粹檧鏋旂€光偓閸曨剛鍘介棅顐㈡处閹歌崵绮嬬€ｎ喗鐓曢柕濞垮妽绾偓銇勯弴顏嗙ɑ缂佸倹甯為埀顒婄秵娴滅偤宕愰悙宸富闁靛牆妫楃粭鎺撱亜閿旇姤绶茬悮娆戔偓鍏夊亾闁告洦鍓涢崢浠嬫⒑缂佹ê濮囨い鏇ㄥ弮閸┿儲寰勯幇顓犲幘濠电偠灏褔鎮橀敂閿亾鐟欏嫭澶勯柛鎾跺枛閻涱喖顫滈埀顒勩€佸▎鎾村亗閹艰揪绲洪崑鎾活敇閵忊檧鎷虹紓浣割儐鐎笛冿耿閹殿喚纾兼い鏃囧亹鑲栭梺姹囧労娴滎亪銆佸☉銏″€烽柡澶嬪灍閸嬫捇宕奸弴鐔哄幗闂佸綊鍋婇崜娆戠棯瑜旈弻娑㈡晲閸℃ê鈧劙鏌＄仦璇测偓婵嗙暦瑜版帩鏁冮柕蹇ｆ線缁辨繈姊绘担鑺ャ€冪紒鈧担铏圭煋闁煎摜鏁搁々鐑芥煥閺囩偛鈧摜澹曡ぐ鎺撶厽闁哄啫鐗滃Λ鎴犳喐閻楀牆绲婚柍瑙勫灴閹瑩寮堕幋鐘辨闂備礁婀遍…鍫ュ箺濠婂牆鐒垫い鎺嶈兌閳绘捇鏌￠崨顖氣枅闁绘侗鍣ｅ畷姗€濡歌濞堥箖姊洪幖鐐插姶闁绘挸鐗嗛…鍥偄閸忓皷鎷洪梻鍌氱墛缁嬫挾绮诲顓濈箚闁圭粯甯楅崵鍥┾偓娈垮枔閸旀垿寮婚崱妤婂悑闁糕剝鐟ラ獮鍫熺節閻㈤潧浠滄俊顐ｎ殘閹广垽骞掑Δ鈧崙鐘绘煕閹板吀绨界痪鎯с偢閺岋繝宕橀妸銉㈠亾閹间礁鍑犻柡鍐ㄥ€荤壕濂稿级閸稑濡介悘蹇ｅ弮閹藉爼鏁愰崨顐熷亾閹烘埈娼╅柣鎾虫捣娴犫晛鈹戦悙鑼闁硅绻濋獮鍫ュΩ閳轰胶顔婇梺鍝勫暙閸婂摜绮敓鐘斥拺闁告稑锕ラ悘婵嬫煕濞戝崬娅樻繛鑲╁枛閺屸剝寰勬繝鍕暤闂佸搫鎳忕换鍫ュ箖瀹曞洨纾兼俊顖氭贡缁犳岸姊洪棃娑氬闁稿﹤鎲＄粋宥嗐偅閸愨晛浠┑鐘诧工閹冲酣銆傞懖鈺冪＜閻庯綆鍋勭粭鎺撱亜椤撶偞绌跨紒鐘崇☉閳藉螣绾拌鲸袨濠碉紕鍋戦崐鏇犳崲閹邦儵娑樜旈崘顭戞闂佺鍕垫畷闁抽攱鍨块弻娑樷攽閸℃浠奸梺鍝勬閸嬬偟鎹㈠┑瀣劦妞ゆ帒瀚幑鑸点亜閹捐泛啸闁伙綀鍩栫换婵嬪閿濆懐鍘梺鍛婃⒐濞叉粎鍒掗崼銉ョ＜婵綆鍘肩紞濠囧极閹版澘鐐婇柍鍝勫€归崯鎺楁⒒娴ｅ憡鎲搁柛鐘查叄楠炲﹤顫滈埀顒勭嵁閸愵煁娲敂閸曨収鍞洪梻浣筋潐閹矂宕归悧鍫濐嚤闁规壆澧楅埛鎴︽煙閼测晛浠滈柍褜鍏欓崐婵嗙暦閿濆绀冮柕濞у嫭顔曟繝娈垮枟閵囨盯宕戦幘鍨涘亾鐟欏嫭纾搁柛鏃€鍨块妴浣肝熷▎鐐╅梻浣告惈閹锋垹绱炴担鍓叉綎婵炲樊浜滃婵嗏攽閻樻彃顏╅柍宄扮墦閺岋綀绠涢幘鍓佺杽闂佸憡姊归崹鍧楁偘?
-        int x = Math.min(Math.max(layout.contentX + 8, layout.contentX + layout.contentW - 152),
-                layout.screenW - 142);
+        int x = Math.min(layout.contentX + layout.contentW - 130, layout.screenW - 138);
         int y = layout.panelY + 4;
 
         if (switcher.getX() != x || switcher.getY() != y) {
@@ -1028,7 +1027,7 @@ public final class ConfigScreenManager {
                 int clipBottom = Math.min(boxY + boxH, layout.sidebarY + layout.sidebarH - 8);
                 if (clipTop < clipBottom) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW - 7,
-                            clipBottom - clipTop, 0x1E000000);
+                            clipBottom - clipTop, 0x2A000000);
                 }
             }
 
@@ -1147,15 +1146,23 @@ public final class ConfigScreenManager {
     public static boolean onSearchKey(GuiBase screen, int keyCode) {
         ConfigScreenState state = STATES.get(screen);
 
-        if (state == null || state.searchField == null || !state.searchActive) {
+        if (state == null || state.searchField == null) {
             return false;
         }
 
         if (keyCode == 256) { // GLFW_KEY_ESCAPE
-            // 第一次 Esc 只退出搜索输入，再按一次才关闭界面。
-            state.searchField.setFocused(false);
-            state.searchActive = false;
+            if (state.searchActive) {
+                // 第一次 Esc 只退出搜索输入，再按一次才关闭界面。
+                state.searchField.setFocused(false);
+                state.searchActive = false;
+            } else {
+                screen.onClose();
+            }
             return true;
+        }
+
+        if (!state.searchActive) {
+            return false;
         }
 
         if (keyCode == 259) { // GLFW_KEY_BACKSPACE
