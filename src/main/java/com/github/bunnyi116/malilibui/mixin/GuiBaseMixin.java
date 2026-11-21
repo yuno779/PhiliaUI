@@ -61,6 +61,11 @@ public abstract class GuiBaseMixin {
         // 编辑框优先，避免抢走输入焦点。
         if (ConfigScreenManager.onTreeScrollbarClick((GuiBase) (Object) this, click.x(), click.y())) {
             cir.setReturnValue(true);
+            return;
+        }
+
+        if (ConfigScreenManager.onTreeClick((GuiBase) (Object) this, click.x(), click.y(), click.button())) {
+            cir.setReturnValue(true);
         }
     }
 

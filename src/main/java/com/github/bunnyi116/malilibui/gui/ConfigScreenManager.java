@@ -377,7 +377,6 @@ public final class ConfigScreenManager {
 
         if (!text.equals(state.searchQuery)) {
             state.searchQuery = text;
-            state.treeBuilt = false;
         }
     }
 
@@ -387,12 +386,8 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        List<ButtonBase> buttons = ((GuiBaseAccessor) screen).malilibui$getButtons();
-
-        // 濠电姵顔栭崳顖滃緤閻ｅ本宕查柟鐗堟緲缁狀喗鎱ㄥΟ鎸庣【缂佺姵婢橀…璺ㄦ崉娓氼垰鍓辨繛瀵稿У閿曘垽寮婚敓鐘茬＜婵炴垶鐟ч崙锛勭磽娴ｈ顥堟い銉︽尰缁傛帡鏁冮崒姘卞姦濡炪倖甯掔€氼參鎮￠崒婧惧亾楠炲灝鍔氶柟铏姉濡叉劙鏁傞柨顖氫壕鐟滅増甯楁禍銈囩磽閸屾稑鍝虹€殿喗鐓″畷濂稿即閻愭彃鏁ら梻浣筋潐閹矂宕瑰畷鍥╃焼濠㈣埖鍔栭埛鎴炪亜閹哄棗浜鹃梺璇茬箲缁诲牆鐣烽姀銈呂у璺猴功閻嫰鎮峰鍐闁崇粯鎹囬獮瀣晝閳ь剛绮婚弶娆剧唵闁兼悂娼ф慨鍫ユ倶韫囥儳鐣甸柡灞剧椤︽娊鏌涢弮鈧悧鐘诲箖?闂備浇顕х换鎺楀磻閻愯娲冀椤愶綆娼熼梺纭呮彧闂勫嫰宕戦幇鐗堢厾闁告縿鍎洪弳顖炴煕鐎ｎ偅灏伴柟宄版嚇瀹曠兘顢橀悢鍓插敳闂傚倷妞掔槐顔惧緤妤ｅ啯鍋￠柨婵嗩槸閻?
-        buttons.removeAll(state.treeButtons);
-        state.treeButtons.clear();
         state.treeRows.clear();
+
         String currentModId = getModId(screen);
 
         if (!state.autoExpanded) {
@@ -400,18 +395,16 @@ public final class ConfigScreenManager {
             state.autoExpanded = true;
         }
 
-        int y = 0;
+        final int modRowH = 26;
+        final int tabRowH = 15;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
-        final int modRowH = 28;
-        final int tabRowH = 16;
-        List<ModTree.ModEntry> entries = ModTree.snapshot();
-        String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(Locale.ROOT).trim();
+        java.util.List<ModTree.ModEntry> entries = ModTree.snapshot();
+        String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(java.util.Locale.ROOT).trim();
 
         if (!query.isEmpty()) {
-            entries.removeIf(e -> !e.info().modName().toLowerCase(Locale.ROOT).contains(query));
+            entries.removeIf(e -> !e.info().modName().toLowerCase(java.util.Locale.ROOT).contains(query));
         }
 
-        // 閸忓牏鐣荤€瑰本鏆ｉ崘鍛啇妤傛ê瀹抽敍灞剧泊閸斻劍娼?濠婃俺鐤嗘稉濠囨娑撳秷鍏橀幐澶嗏偓婊冨讲鐟欎浇顢戦垾婵堢暬閵?
         int totalH = 0;
 
         for (ModTree.ModEntry entry : entries) {
@@ -421,8 +414,6 @@ public final class ConfigScreenManager {
                 totalH += entry.tabs().size() * tabRowH;
             }
         }
-
-        state.treeContentH = totalH;
 
         if (state.scrollToCurrent) {
             int offset = 0;
@@ -443,11 +434,11 @@ public final class ConfigScreenManager {
             state.scrollToCurrent = false;
         }
 
-        // 视口高度固定；切换模组/收起后按新内容高度校正滚动位置，
-        // 避免沿用上一个大列表的滚动值导致所有行都落在视口外。
         int viewH = bottom - layout.navY;
         state.treeScroll = Math.max(0, Math.min(state.treeScroll, Math.max(0, totalH - viewH)));
-        y = layout.navY - state.treeScroll;
+        state.treeContentH = totalH;
+
+        int y = layout.navY - state.treeScroll;
 
         for (ModTree.ModEntry entry : entries) {
             if (y + modRowH > bottom) {
@@ -458,37 +449,16 @@ public final class ConfigScreenManager {
             boolean current = modId.equals(currentModId);
             boolean expanded = EXPANDED_MODS.contains(modId);
             String name = UiTheme.trim(screen.getFont(), entry.info().modName(), layout.navW - 20);
-            String version = FabricLoader.getInstance().getModContainer(modId)
+            String version = net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer(modId)
                     .map(c -> c.getMetadata().getVersion().getFriendlyString()).orElse("");
 
-            ButtonGeneric modButton = new ButtonGeneric(layout.navX, y, layout.navW, modRowH, "");
-            modButton.setRenderDefaultBackground(false);
-            state.treeRows.put(modButton, new ConfigScreenState.TreeRow(name, version, current, false, -1));
-            screen.addButton(modButton, (button, mouseButton) -> {
-                if (current) {
-                    if (!EXPANDED_MODS.remove(modId)) {
-                        EXPANDED_MODS.add(modId);
-                    }
-                } else {
-                    EXPANDED_MODS.add(modId);
-                    GuiBase target = entry.info().configScreenSupplier().get();
-
-                    if (target != null) {
-                        GuiBase.openGui(target);
-                    }
-                }
-
-                // 闂備浇顕х€涒晠顢欓弽顓炵獥闁哄稁鍘肩粻瑙勩亜閹板墎鐣遍柡鍕╁劜娣囧﹪濡堕崟顔煎帯闂佸磭绮Λ鍐箖濡ゅ懏鏅查柛灞剧⊕閻濇牕顪冮妶鍛濞存粌鐖奸獮鍐╃鐎ｅ灚鏅梺绯曞墲椤ㄥ棝骞栭幇顓犵闁告侗鍋勯悘顕€鏌嶈閸撴盯宕戦敐澶婄９婵°倕鎳庣壕鍧楁煏閸繍妲归柛瀣樀閺岋紕浠︾拠鎻掑闂佸搫鎷嬮崜鐔煎箖濮椻偓閹瑩宕归锝囧涧婵犵數鍋涢崥瀣潖婵犳艾鐒垫い鎺嶇贰閸熷繘鏌涢悩鍐叉诞鐎?闂傚倸鍊峰ù鍥Υ閳ь剟鏌涚€ｎ偅宕岄柡宀€鍠栭、娑橆煥閸愮偓姣夐柣搴ゎ潐濞叉ɑ绻涙繝鍥ц摕婵炴垶菤閺嬪孩淇婇姘础闁烩晛瀛╃换婵嬫濞戞ǚ鍋撹ぐ鎺撳亱闁绘灏欓弳锔姐亜閹扳晛鐒洪柛姘儔閺屾稑鈽夐崡鐐差潾濡炪倖鏌ㄥΛ娆戞崲濞戙垹绠婚悗闈涙啞椤斿洭姊洪崨濠傚闁告柨瀛╃粋鎺戭潩閼哥數鍘介梺缁樺姉缁绘繄娆㈤柆宥嗙厽闁圭偓鍓氬Σ鐑樹繆閸欏濮囬柍瑙勫灴瀹曞爼鍩為悙顒備簷闂佽楠哥粻宥夊磿閸楃倣娑樜旈崨顓犲姷闂佹眹鍨婚。浠嬪磻閹炬枼鏋旈柛顭戝枟閻忊偓闂備胶顭堥鍡涘箲閸ヮ剙钃熼柨婵嗩槹閺呮煡鏌涘☉鍗炵仯闁告棏鍨伴埞鎴︽倷閻戞﹫绱甸梺鍛婎殙濞呮洘绌?
-                state.treeBuilt = false;
-            });
-
-            state.treeButtons.add(modButton);
+            state.treeRows.add(new ConfigScreenState.TreeRow(layout.navX, y, layout.navW, modRowH,
+                    name, version, current, false, modId, -1));
             y += modRowH;
 
             if (expanded) {
                 java.util.List<String> tabs = entry.tabs();
 
-                // 闂備浇宕甸崰鎰垝鎼淬垺娅犳俊銈呮噹缁犱即鏌涘☉姗堟敾婵炲懐濞€閺岋絽螣閼测晛绗￠梺绋款儌閺呮繈鍩€椤掆偓閸樻粓宕戦幘缁樼厱闁哄洢鍔屾晶顖炴煏閸℃鏆ｆ慨?TAB 闂傚倸鍊风粈渚€骞夐敓鐘冲殞闁告挆鍛厠闂佽鍨辨竟瀣矗閸喒鏀介柣鎰▕閸ょ喎鈹戦璇插祮鐎规洘娲熷畷妯兼嫚瑜戦埀顒€娼￠弻銊モ槈濡警浠遍梺绋款儐閹瑰洤鐣烽悜绛嬫晣闁绘劗澧楅崟鍐⒑鐠囨煡顎楅柣蹇旀皑閸掓帡骞樼拠鑼舵憰闂佹寧娲栭崑鍡涘极婵犲洦鐓涢柛鏇ㄥ亞缁犺櫕銇勯敂鍨祮婵﹥妞藉畷銊︾節閸屾粈娣繝纰樻閸嬪嫰顢氶鐐嶏綁骞囬鑺ユ杸闁诲函缍嗛崑鍡涘礉閸洘鈷戦柛鎾瑰皺閸樻盯鏌涢悩宕囧⒈闁轰緡鍠栭悾鐑藉炊閳哄喛绱抽梻浣侯焾閺堫剛绮欓幒鏂剧剨妞ゆ挶鍨洪悡鐔煎箳閹惰棄绀夐柟杈剧畱閽冪喖鎮橀悙鍨珪闁哄棗妫濋弻宥堫檨闁告挻鐟╅崺銏ゅ箻鐠囪尙顓洪梺鎸庢磵閸嬫挾绱?闂傚倸鍊峰ù鍥綖婢舵劕绠氶悘鐐插⒔椤╁弶绻濋棃娑卞剰闁藉啰鍠栭弻娑㈠Ψ椤旂厧顫╁┑鈽嗗亝閿曘垽寮诲☉銏犖ㄩ柨婵嗘噹椤姊洪崷顓炲幋濞存粌鐖煎?
                 if (current && !state.navButtons.isEmpty()) {
                     tabs = new java.util.ArrayList<>();
 
@@ -498,67 +468,93 @@ public final class ConfigScreenManager {
                 }
 
                 for (int tabIndex = 0; tabIndex < tabs.size(); tabIndex++) {
-                    String tab = tabs.get(tabIndex);
-
                     if (y + tabRowH > bottom) {
                         break;
                     }
 
-                    String tabName = UiTheme.trim(screen.getFont(), tab, layout.navW - 42);
-                    ButtonGeneric tabButton = new ButtonGeneric(layout.navX + 18, y, layout.navW - 18, tabRowH, "");
-                    tabButton.setRenderDefaultBackground(false);
-                    state.treeRows.put(tabButton, new ConfigScreenState.TreeRow(tabName, "", current && tabIndex == state.selectedTabIndex, true, tabIndex));
-                    final int targetTab = tabIndex;
-                    screen.addButton(tabButton, (button, mouseButton) -> {
-                        // 鐟滅増鎸告晶鐘参熼敍鍕煁闁?tab闁挎稒姘ㄥú鍧楀箳閵夈劎娈堕柣?malilib 闁告鍠撻弫?tab 闁圭顦甸幐鎶芥儍閸曨厽纾ч柛姘煎墮濞呮帡鏁嶇仦鑲╃閻犲洣绀侀崹蹇涘箲閵忋垺鐣遍悘蹇氶哺濡插憡娼诲▎搴ｎ伇濡炪倗鍋ｉ埀?
-                        if (current && targetTab < state.navButtons.size()) {
-                            state.selectedTabIndex = targetTab;
-                            // 原生 tab 监听器通常会重新 initGui；先标记树需要重建，
-                            // 否则 buttons 被清空后 treeBuilt 仍为 true，左栏文字会全部消失。
-                            state.treeBuilt = false;
-                            ButtonBase nativeButton = state.navButtons.get(targetTab);
-                            var listener = ((ButtonBaseAccessor) nativeButton).malilibui$getActionListener();
-
-                            if (listener != null) {
-                                listener.actionPerformedWithButton(nativeButton, 0);
-                                return;
-                            }
-                        }
-
-                        GuiBase target = entry.info().configScreenSupplier().get();
-
-                        if (target != null) {
-                            GuiBase.openGui(target);
-                        }
-                    });
-
-                    state.treeButtons.add(tabButton);
+                    String tabName = UiTheme.trim(screen.getFont(), tabs.get(tabIndex), layout.navW - 42);
+                    state.treeRows.add(new ConfigScreenState.TreeRow(layout.navX + 18, y,
+                            layout.navW - 18, tabRowH, tabName, "",
+                            current && tabIndex == state.selectedTabIndex, true, modId, tabIndex));
                     y += tabRowH;
                 }
             }
         }
 
-        state.treeBuilt = true;
-        
-
-        // 闂傚倸鍊风粈渚€骞栭銈囩煋闁汇垻顭堥崹鍌炴煕瑜庨〃鍛存⒒椤栨壕鍋撻悷鏉款伃闁稿锕畷顖炲川鐎涙鍘剧紒鐐緲瀹曨剚鏅舵导瀛樼厽闁靛鍎查崳鐣岀磼鏉堛劍灏伴柟宄版噺閹便劑骞嬮婵嬪仐閻庤娲栭幖顐ョ亙婵炶揪绲肩拃锕€煤閹间焦鈷戠紒顖涙礀婢у弶銇勯妸銉уⅱ缂侇喗姊圭缓浠嬪川婵犲嫬骞堥梻浣筋潐閸庡磭澹曢鐔哄ⅰ闂備胶鍘ч悘鍫ュ疾濠靛牊顫曢柟鎯х摠婵绱掔€ｎ偒鍎ュù灏栧亾濠?TAB闂傚倸鍊烽悞锔锯偓绗涘懐鐭欓柟鐑樻⒒閻瑩鏌熺€电校闁哄棙绮嶉妵鍕箛閸洘顎嶉梺?TAB 闂傚倸鍊风粈浣革耿闁秮鈧箓宕奸妷瀣喘閹晫绮欑捄顭戝敹闂備浇顫夐崕鍏兼叏閵堝鐓曢柡鍥ュ灪閻撴瑩姊洪銊х暠闁诲繆鍓濋妵鍕Ψ閿曗偓閻忔挳鏌＄仦璇插闁宠棄顦灒闁兼祴鏅涙慨鍗炩攽閻愬瓨缍戦柣銊у厴瀵煡鎮╅懠顒佹濠德板€愰崑鎾淬亜閹惧啿鎮戠€垫澘瀚换婵嬪礃閸欍儲鍩涘┑鐘垫暩婵即宕归悡搴樻灃婵炴垶姘ㄩ惌娆撴煕閺囥劌鐏犵紒?
         for (ButtonBase nav : state.navButtons) {
             nav.setPosition(-1000, -1000);
         }
-
-        if (System.getProperty("malilib-ui.debugtree") != null) {
-            StringBuilder sb = new StringBuilder("[tree] nav=").append(state.navButtons.size())
-                    .append(" tree=").append(state.treeButtons.size())
-                    .append(" y=").append(y);
-
-            for (ButtonBase nav : state.navButtons) {
-                sb.append(" [").append(nav.getX()).append(',').append(nav.getY()).append(']');
-            }
-
-            MalilibUiMod.LOGGER.info(sb.toString());
-        }
     }
 
+    /** Handles clicks on the custom tree without ButtonGeneric list churn. */
+    public static boolean onTreeClick(GuiBase screen, double mouseX, double mouseY, int mouseButton) {
+        if (is26x() || !hasLayout(screen)) {
+            return false;
+        }
+
+        ConfigScreenState state = stateFor(screen);
+        ConfigLayout layout = state.layout;
+
+        if (mouseX < layout.sidebarX || mouseX > layout.sidebarX + layout.sidebarW ||
+                mouseY < layout.navY || mouseY > layout.sidebarY + layout.sidebarH) {
+            return false;
+        }
+
+        String currentModId = getModId(screen);
+
+        for (ConfigScreenState.TreeRow row : state.treeRows) {
+            if (!row.contains(mouseX, mouseY)) {
+                continue;
+            }
+
+            if (row.tab()) {
+                if (row.modId().equals(currentModId) && row.tabIndex() < state.navButtons.size()) {
+                    state.selectedTabIndex = row.tabIndex();
+                    ButtonBase nativeButton = state.navButtons.get(row.tabIndex());
+                    var listener = ((ButtonBaseAccessor) nativeButton).malilibui$getActionListener();
+
+                    if (listener != null) {
+                        listener.actionPerformedWithButton(nativeButton, 0);
+                    }
+                } else {
+                    ModTree.ModEntry entry = ModTree.snapshot().stream()
+                            .filter(e -> e.info().modId().equals(row.modId())).findFirst().orElse(null);
+
+                    if (entry != null) {
+                        GuiBase target = entry.info().configScreenSupplier().get();
+
+                        if (target != null) {
+                            GuiBase.openGui(target);
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            if (row.modId().equals(currentModId)) {
+                if (!EXPANDED_MODS.remove(row.modId())) {
+                    EXPANDED_MODS.add(row.modId());
+                }
+            } else {
+                EXPANDED_MODS.add(row.modId());
+                ModTree.ModEntry entry = ModTree.snapshot().stream()
+                        .filter(e -> e.info().modId().equals(row.modId())).findFirst().orElse(null);
+
+                if (entry != null) {
+                    GuiBase target = entry.info().configScreenSupplier().get();
+
+                    if (target != null) {
+                        GuiBase.openGui(target);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return true;
+    }
     /**
      * 闂傚倸鍊搁崐椋庢閿熺姴绐楅柟鎹愵嚙缁€澶屸偓鍏夊亾闁告洦鍋勯悗顓㈡煙閼测晞藟闁搞劑绠栭幃銏ゅ礂閸忓吋鐝梻浣告啞濞诧箓宕㈡ィ鍐╁亗濞达絽婀辩粻楣冩煛婢跺鐏ラ柟顔藉灴閺屻倗鎲撮崟顐㈠Б闂佹寧娲忛崹浠嬨€侀弮鍫濋唶闁绘柨鎼敮搴ㄦ煟鎼达紕鐣柛搴″船鐓ら柕濞炬櫅閸戠娀鏌涘畝鈧崑鐐烘偂閻斿吋鐓ユ繝闈涙閸ｄ粙鏌ｉ幒鎴炲暈缂佺粯鐩濠氬级閹存繄銈梻浣告惈閼活垶鎳熼鐐村仼婵犻潧顑呯粈瀣煕椤垵浜濈紒棰濆幖閳规垿鎮╅鑲╀紘闂佺硶鏅滈悧鐘诲箖瑜嶈灃闁告侗鍙冮弫婊勭節閻㈤潧孝婵炲眰鍊楃划鍫熷緞閹邦厾鍘藉┑鈽嗗灠閹碱偊寮虫潏鈺冪＜婵°倓鐒﹀畷宀勬煛?缂傚倸鍊搁崐鐑芥倿閿斿墽鐭欓柟鐑橆殕閸庡孩銇勯弽顐粶闁绘帒鐏氶妵鍕箳閸℃ぞ澹曟俊鐐€х€靛矂宕板鍗炲灊妞ゆ挶鍨瑰婵嬫煛婢跺鐏╂い鏂挎缁绘繈濮€閿濆棛銆愬銈嗗灦閸旀瑥顕ｉ妸鈺傜劶鐎广儱妫涢崢顏堟⒑缁洖澧叉い銊ユ嚇閸┾偓妞ゆ帊鐒﹂崐鎰版煙椤曗偓缁犳牠骞冮埡浣烘殾闁搞儴鍩栫粊顐ｄ繆閻愵亜鈧牕顔忔繝姘；闁瑰墽绮崑銊︺亜閺嶇數鍒板ù婊勫閳ь剚顔栭崰姘跺极婵犳哎鈧礁螖娴ｇ懓顎撻梺鍛婄缚閸庢煡鍩㈡惔銊︹拺閻犲洩灏欑粻鎶芥煕鐎ｎ偆銆掗柟骞垮灲楠炲洭顢欓崣銉х憹闂備胶绮崹鐓幬涢崟顖涚叆闁靛牆顦伴悡娆撴⒑椤撱劎鐣辨鐐达耿閺屾盯濡搁妸銉ゆ睏闂佹眹鍎烘禍顏堛€佸Ο娆炬Щ婵犫拃鍕棆缂佽鲸甯楅～鎴﹀冀閿曞倸浠愰梻浣筋嚃閸ㄦ壆绮旈悽鐢电當闁绘柨鎽滅弧鈧梺鍛婃处閸欏骸危?
      * 闂傚倸鍊搁崐鐑芥倿閿曚降浜归柛鎰典簽閻捇鏌熺紒銏犳灈闁哄嫨鍎叉穱濠囧Χ閸涱厽娈查梺鍝勬缁捇寮诲☉銏犵疀闁宠桨绀侀‖瀣攽閻橆偄浜炬繛瀵稿帶閻°劑鎮￠弴鐔稿弿婵妫楁晶浼存煕閹存繃璐＄紒杈ㄥ笚濞煎繘濡搁妷顔筋棆闂備浇顕栭崳顕€宕抽敐澶堚偓渚€寮撮姀鈩冩珳闂佸憡渚楅崹閬嶆儊瀹ュ鈷掑ù锝呮啞閸熺偤鎮介姘捐含鐎规洩绻濆畷妯侯啅椤旀儳濮哄┑鐐存綑閸氬顭囧▎鎴犳／鐟滄棃寮诲☉鈶┾偓锕傚箣濠靛洨褰繝纰樻閸ㄦ澘螞濠靛钃熼柕濞垮劗濡插牊绻涢崱妯虹劸闁诲繗浜槐鎾存媴閾忕懓绗￠梺缁橆殘婵炩偓鐎殿喛宕垫禒锕傛偩鐏炵偓鐣烽梻渚€鈧偛鑻晶浼存煕閹烘挸娴柟顔界矊铻ｉ悘蹇旂墬閻忓啴姊绘笟鈧埀顒傚仜閼活垱鏅剁€涙﹩娈介柣鎰綑婵牏鈧灚婢樼€氼厾鎹㈠┑瀣＜婵炴垶鐟﹂鏃堟⒒娴ｇ瓔鍤欏Δ鐘殿焾閿曘垽鏌嗗鍛枃闂佸湱鍋撳﹢褰掓倿婵犲啨浜滈柡宥庡亜娴犳粓鏌ｉ鐕佹疁闁诡喗顨婂畷鐑筋敇閻愭劑鍎甸弻锝呪攽閸℃鏆㈢紓浣介哺閹瑰洤鐣烽幒鎴旀閻庡湱濮崑鎾诲锤濡や胶鍘遍梺鎸庣箓濡瑩宕愰幇顔瑰亾濞堝灝娅橀柛鎾跺枛楠炲啳顦圭€规洖銈搁幃銏ゆ煥鐎ｎ偒浠搁梻鍌氬€峰ù鍥Υ閳ь剟鏌涚€ｎ偅宕岄柡宀€鍠栭獮鍡氼槼闁革絾妞介幃?
@@ -815,7 +811,7 @@ public final class ConfigScreenManager {
         GuiBaseAccessor access = (GuiBaseAccessor) screen;
 
         for (ButtonBase button : access.malilibui$getButtons()) {
-            if (state.navButtons.contains(button) || state.treeButtons.contains(button)
+            if (state.navButtons.contains(button)
                     || !state.positionedControls.add(button)) {
                 continue;
             }
@@ -970,48 +966,32 @@ public final class ConfigScreenManager {
     private static void drawModTree(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
 
-        if (state.treeButtons.isEmpty()) {
-            return;
-        }
+        for (ConfigScreenState.TreeRow row : state.treeRows) {
+            int x = row.x();
+            int y = row.y();
+            int w = row.w();
+            int h = row.h();
 
-        for (ButtonBase button : state.treeButtons) {
-            ConfigScreenState.TreeRow row = state.treeRows.get(button);
-
-            if (row == null || button.getY() < 0) {
-                continue;
-            }
-
-            int x = button.getX();
-            int y = button.getY();
-            int w = button.getWidth();
-            int h = button.getHeight();
-
-            // 滚出视口的行不画，避免盖到顶部徽章/标题。
             if (y < layout.navY || y + h > layout.sidebarY + layout.sidebarH - 8) {
                 continue;
             }
 
-            if (row.selected() && !row.tab()) {
-                UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
-                UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
-            }
-
             if (row.tab()) {
-                // 濠电姷鏁搁崑娑㈡偤閵娧冨灊鐎光偓閸曨剙鍓堕梺绋跨箳閳峰牆鈻撴禒瀣厱闁靛绲芥俊绋棵瑰鍕煉婵﹥妞介、鏇㈡晲閸ャ儮鍋撻幒妤佺厽闁绘柨鎽滅粻鎾绘婢舵劖鐓ユ繝闈涙婢ф稓鐥鐐靛煟闁哄备鍓濋幏鍛存濞戞帒浜炬俊銈呭暙閸ㄦ繈鏌嶉崫鍕櫣闁告劏鍋撴俊鐐€栭崝鎴﹀垂濞差亝鍋柛銉墯閻撴稑顭跨捄鐑橆棡婵炲懎娲弻娑氣偓锝庡墮娴犙囨煛娓氬洤娅嶆鐐达耿椤㈡瑩鎳為妷锔惧建濠电姷鏁搁崑鐐哄垂閸撲礁鏋堢€广儱顦Ч鏌ョ叓閸ャ劎鈯曢柣鎾寸洴閺屾盯濡烽幋婵囧櫤闁硅尙鍘ч埞鎴︽倷閼碱剙鈷堥梺绋款儏閿曨亪鐛崱娑樼妞ゆ棁鍋愰ˇ鏉款渻閵堝棗濮傞柛濠冩尰缁傚秹濮€閵堝棌鎷婚梺绋挎湰閼归箖寮抽悙瀵哥闁稿繗鍋愰幊鍕磼鏉炴壆鐭欑€殿喕绮欓、鏇㈡晲閸涱剛閽甸梻鍌欑窔濞佳嗗櫣婵炶揪缍侀ˉ鎾淬仚閹惰姤鈷戦悹鍥у级閹癸綁鏌熼搹顐ｅ磳鐎规洦鍨堕、鏇㈡晜閽樺澹嶆繝纰樻閸ㄩ潧鐣烽悽鎼炩偓鍛村蓟閵夈儳顔愰柣搴㈢⊕椤洨绮诲鈧弻锝夋偄缁嬪灝顫掗梺鍝勭焿缁绘繂鐣烽幒鎴旀斀闁归偊鍘剧粔鐑芥⒑閻撳海浜柡鍛箘濡叉劙骞樼€涙ê顎撶紓浣割儐椤戞瑦绂掗幘顔解拺?
-                UiTheme.fill(ctx, x + 8, y, w - 8, h, 0x1C000000);
+                UiTheme.fill(ctx, x, y, w, h, 0x1C000000);
 
                 if (row.selected()) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
                 }
 
-                UiTheme.text(ctx, row.name(), x + 18, y + (h - 8) / 2,
+                UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
                         row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
             } else {
                 if (row.selected()) {
-                    UiTheme.fill(ctx, layoutAccentX(x), y, 3, h, UiTheme.TEXT_ACCENT);
+                    UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
+                    UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
                 }
 
-                // 婵犵數濮烽弫鎼佸磻濞戞瑥绶為柛銉墮缁€鍫熺節闂堟稒锛旈柤鏉跨仢閵嗘帒顫濋敐鍛闁诲氦顫夊ú鈺冪礊娓氣偓閵嗕礁鈽夊鍡欏弳闂佸憡娲﹂崜姘额敇瑜版帗鈷掑ù锝堫潐閸嬬娀鏌涙惔銏犫枙鐎规洘鍨块獮妯肩磼濡桨鍑介梻浣瑰缁诲倿藝椤栨粎灏电€广儱顦伴悡娑㈡煕椤愮姴鐏柡鍡忔櫊閺岋綁鎮㈤崫銉х暭缂備浇椴搁幐濠氬箯閸涱喗鍙忛柟鎼幒闁垳鈧娲栭幖顐ョ亙闂佸憡渚楅崢楣冦€侀崨瀛樷拺缂備焦锕╅悞鎯瑰搴″缂侇喗妫冮獮姗€顢欓悾灞藉箞闁荤喐绮岄柊锝夊Υ閸愵喖绠涙い鏃傜摂濞肩喎鈹戦悩缁樻锭妞ゆ垵鎳庤灋婵せ鍋撻柡灞剧洴婵＄兘骞嬪┑鍥ф闂佽褰冮…宄邦潖濞差亝鍊婚柍鍝勫€归悵鏃堟⒑鐎癸附婢樻俊鍧楁煛娓氬洤鏋ら柍褜鍓氱粙鎺椻€﹂崶顑锯偓鍛存倻閽樺顔愬┑鐑囩秵閸撴瑩鍩€椤戞儳鈧繂顕ｉ妸鈺傚癄濠㈠厜鏅滈惄顖炲极閹版澘骞㈡繛鍡楃箚閸氬倻绱撻崒娆愮グ濡炲瓨鎮傚畷褰掑醇閺囩偟鐤勯梺闈浤涢埀顒勫磻閹剧粯鏅查柛鎰╁妼鍞梻?
                 UiTheme.text(ctx, row.name(), x + 8, y + 4,
                         row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
 
@@ -1021,8 +1001,8 @@ public final class ConfigScreenManager {
                 }
             }
         }
-        // 闂傚倸鍊风粈渚€骞夐敓鐘冲仭闁靛鏅涢崒銊╂煛瀹ュ骸骞栭柣銈夌畺閹娼幏宀婂妳闂佺粯鎸堕崕鏌ュ箞閵娿儺娼ㄩ柛鈩冾殔椤晠鎮跺鍗炴灈婵﹥妞藉畷顐﹀礋閸倣銏犫攽閳╁啫绲婚悗姘煎枛鍗遍柟閭﹀幖椤曢亶鏌℃径瀣仼妞わ负鍔戝娲川婵犱胶绻侀梺鍛婄懃闁帮絽鐣烽鐐茬倞妞ゎ剦鍓氬Λ鍐ㄧ暦閹烘嚚褰掑閿濆懍姹楅梺鍏兼そ娴滃爼銆佸Δ鍛＜婵炴垶蓱閻庮參姊绘担铏广€婇柛鎾寸箞閵嗗啴宕ㄩ婊咁槸闂佺懓澧界划顖炴偂濞戙垺鐓曢柟浼存涧楠炴牠鏌ｉ幘鏉戝妞ゎ叀鍎婚ˇ鏉戔攽閻愨晛浜鹃柣搴㈩問閸犳洟宕￠崘鑼殾婵犲﹤妫Σ瑙勭箾鐎电校闁烩晩鍨跺?
-        int viewTop = layout.sidebarY + 46;
+
+        int viewTop = layout.navY;
         int viewBottom = layout.sidebarY + layout.sidebarH - 8;
         int viewH = Math.max(1, viewBottom - viewTop);
         int contentH = Math.max(state.treeContentH, viewH);
@@ -1055,7 +1035,6 @@ public final class ConfigScreenManager {
                 state.treeScroll - (int) Math.signum(vertical) * 20));
         TREE_SCROLL = state.treeScroll;
 
-        state.treeBuilt = false;
         return true;
     }
 
@@ -1075,7 +1054,6 @@ public final class ConfigScreenManager {
                 state.treeScroll - (int) Math.round(dragY * max / travel)));
         TREE_SCROLL = state.treeScroll;
 
-        state.treeBuilt = false;
         return true;
     }
 
@@ -1109,7 +1087,6 @@ public final class ConfigScreenManager {
         state.treeScroll = rel * max / travel;
         TREE_SCROLL = state.treeScroll;
 
-        state.treeBuilt = false;
         return true;
     }
 
@@ -1119,6 +1096,11 @@ public final class ConfigScreenManager {
 
     private static void drawContentHeader(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
+
+        // 2.0：搜索框占满标题栏时，不再重复绘制模组标题。
+        if (state.searchField != null) {
+            return;
+        }
         // 濠电姷鏁搁崑鐐哄箰婵犳碍鍎嶆繝濠傜墕缁€瀣亜閹捐泛浠ч柛鏂跨秺濮婄粯鎷呴崨濠傛殘闂佽崵鍣ラ崹杈╃矉瀹ュ應鏋庨柟瀵稿仜鎼村﹤鈹戦绛嬬劸闁糕晜鐗犲畷鎴﹀煛閸屾粎顔曢梺绯曞墲椤ㄥ牏绮婚幎鑺ョ厽婵炴垵鍟块々顒傜磼鏉堛劌娴€殿噮鍣ｅ畷鎺戭潩鐏忔牕浜鹃柟鎯у绾惧ジ寮堕崼娑樺缂佺姵鎹囬幗鍫曟晲婢跺鍙嗗┑鐐村灦閿氭い蹇ｅ亰閺岋綁顢橀悜鍡楀壎闂佸搫鏈粙鎴︼綖濠靛鏁嗛柛灞藉€堕崐妤冩閹烘鏁婇柟顖嗗啫顬嗙紓鍌欑椤戝懘藝閻㈢鏄ラ柍褜鍓氶妵鍕箳閹存繍浠奸梺鍛婄懃閿曨亪寮诲☉銏犵婵＄偟鍋撻ˇ椋庣磼椤旂偓鏆慨濠冩そ濡啴鍩￠崟顓фЧ闂備礁鎲￠弻銊╂儗閸屾氨鏆︽い鎺戝€甸崑鎾绘偨閻㈢偣鈧﹪鏌涚€ｎ偅宕岀€规洜鍏橀、姗€鎮㈤柨瀣殮闂備浇顕х换鎰瑰璺哄瀭閻犺桨璀﹂崵鏇灻归悩宸剰闁绘劕锕ラ妵鍕箳閹搭厽效濠殿噯绲介惌鍌氼潖濞差亜浼犻柛鏇ㄥ帨閵忕姈鏃堟偐閼碱剛顔婂┑鈥冲级閸旀洟鍩為幋鐘亾閿濆骸浜為柛鏂跨埣濮婃椽宕滈懠顒€甯ラ梺鍝ュУ閻楁粓寮鈧獮搴ㄦ嚍閵夈垺瀚奸梻浣告贡缁垳鏁悙鑼懃濠碉紕鍋戦崐褔姊介崟顖涘亗闁跨喓濮撮弸?
         String currentTab = prettyModName(getModId(state.screen));
 
