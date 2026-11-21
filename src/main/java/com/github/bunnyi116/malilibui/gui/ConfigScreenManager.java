@@ -955,7 +955,7 @@ public final class ConfigScreenManager {
         // 椤舵爮涓嶅啀濂椾竴涓ぇ妗嗭細鎼滅储妗嗗拰鍒囨崲鍣ㄥ悇鑷嫭绔嬨€?
 
         if (layout.hasSidebar) {
-            drawSidebar(ctx, state, mouseX, mouseY);
+            drawSidebar(ctx, state);
         }
 
         // 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閼碱剦妲烽梻浣告惈濞层垽宕归崷顓犱笉闁绘顕х粻褰掑级閸繂鈷旈柟顔笺偢閺岋綁顢橀悙闈涒叺闂佸搫鐭夌紞浣规叏閳ь剟鏌曡箛濠冩珖闁告柨鎽滅槐鎾存媴閹绘帊澹曢梻浣告啞濞诧箓宕归柆宥呯；闁斥晛鍟扮粻楣冩煕閳╁喚娈樼紒鐘卞嵆閺岋絽鈹戦崶銊㈡嫻闂侀潧娲ょ€氫即鐛崶顒€閱囬柡鍥╁櫏閳ь剙绉撮—鍐Χ閸愩劌濮庨梺缁橆殕閹瑰洤顕ｆ繝姘嵆闁挎稑瀚弶鍛婄節閻㈤潧孝闁稿﹥鎮傞崺娑欏緞瀹€鈧壕钘壝归敐鍫燁棄闁绘挻鍔欓弻锝夊箼閸曨厾鐦堥悗娈垮枛椤攱淇婇幖浣肝ㄩ柕蹇婃濞兼梹绻濈喊妯活潑闁搞劎鏁诲畷鎴﹀箛椤撶儐鍤ら梺鎼炲労閸撴岸鍩涢幋锕€绾ч柣鎰緲瀹撳棙淇婇崜褍鍘撮柡灞剧⊕缁绘繈宕橀鍕ㄦ嫛缂傚倷绶￠崰鏍敄閸涙惌鏁囧┑鍌滎焾楠炪垺淇婇姘儓濠碘剝濞婂缁樼瑹閳ь剙顭囪閹广垽骞掗幘鍐茬亖濡炪倖鎸鹃崐锝呪槈閵忊剝娅㈤梺缁樏壕顓㈠储閸涘﹦绡€闁靛骏绲剧涵楣冩煠濞茶鐏＄紒鍌涘浮楠炴帡寮崒婊愮床婵＄偑鍊栧濠氬疾椤愶箑绠犻柛銉墯閻撴洟鏌嶇憴鍕姢濞存粎鍋撴穱濠囨倷椤忓嫧鍋撻弽褜鍟呭┑鐘宠壘绾惧鏌熼悙顒傛殬濞存粍绮撻弻銊╁籍閸屾矮澹曢梺鍝勬－閸撴瑩鍩為幋锕€鐒洪柛鎰ㄦ櫇缁嬪洤顪冮妶鍡樺碍闁告艾顑呴銉╁礋椤掑倻鐦堥梺鍛婃礀閻忔艾鐡┑鐘垫暩婵挳鎯€婢舵劕绾ч幖瀛樻尭娴滈箖鏌￠崶鈺佇涢柛瀣尭椤繈濡烽妷銉綆闂備胶纭堕弬渚€宕?/ 婵犵數濮烽弫鍛婃叏閻戣棄鏋侀柟闂寸绾惧鏌ｉ幇顒佹儓缂佺姵澹嗙槐鎺斺偓锝庡亽閸庛儵鏌涢妶鍡樼闁哄本鐩、鏇㈡晲閸℃瑯妲伴梻浣侯焾椤戝懘宕愰崸妤€绠栨俊銈呮噺閺呮煡骞栫划鍏夊亾閸愯尙顔囧┑鐘垫暩閸嬫盯鎯岄崼鐔侯洸妞ゅ繐鐗嗛拑鐔哥箾閹寸偟鐓繛宀婁邯閺屾盯骞樺璇蹭壕濠碘剝褰冮悧濠勬崲濞戞埃鍋撻悽娈跨劸閺嶏繝姊洪幐搴″摵婵☆偂鐒﹀鍕箛椤撶姴骞楁繝纰樻閸ㄦ娊銆佹繝鍥舵晢闁绘柨鍚嬮悡鏇㈡煟閺冨牊鏁遍柛鐘筹耿閺?
@@ -1046,7 +1046,7 @@ public final class ConfigScreenManager {
         }
     }
 
-    private static void drawSidebar(GuiContext ctx, ConfigScreenState state, int mouseX, int mouseY) {
+    private static void drawSidebar(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
         String modName = prettyModName(getModId(state.screen));
 
@@ -1150,8 +1150,8 @@ public final class ConfigScreenManager {
         int viewBottom = layout.listY + layout.listH + 6;
         int viewH = Math.max(1, viewBottom - viewTop);
         int barX = layout.sidebarX + layout.sidebarW + 2;
-        boolean barHovered = mouseX >= barX && mouseX <= barX + 8 &&
-                mouseY >= viewTop && mouseY <= viewTop + viewH;
+        boolean barHovered = mx >= barX && mx <= barX + 8 &&
+                my >= viewTop && my <= viewTop + viewH;
         UiTheme.fill(ctx, barX, viewTop, 8, viewH, UiTheme.SCROLL_TRACK);
 
         if (state.treeContentH > viewH + 40) {
