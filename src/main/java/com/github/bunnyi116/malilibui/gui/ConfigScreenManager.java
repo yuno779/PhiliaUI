@@ -427,11 +427,6 @@ public final class ConfigScreenManager {
         final int tabRowH = 14;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
         java.util.List<ModTree.ModEntry> entries = ModTree.snapshot();
-        String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(java.util.Locale.ROOT).trim();
-
-        if (!query.isEmpty()) {
-            entries.removeIf(e -> !e.info().modName().toLowerCase(java.util.Locale.ROOT).contains(query));
-        }
 
         int totalH = 0;
 
