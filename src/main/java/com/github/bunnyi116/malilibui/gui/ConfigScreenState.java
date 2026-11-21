@@ -24,6 +24,7 @@ public final class ConfigScreenState {
     public final List<TreeRow> treeRows = new ArrayList<>();
 
     public int treeScroll;
+    public String autoScrollModId;
     public int treeContentH;
     public boolean autoExpanded;
 

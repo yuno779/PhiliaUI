@@ -343,6 +343,7 @@ public final class ConfigScreenManager {
     /** 鐠恒劎鏅棃顫箽閻ｆ瑦鐖查惃鍕泊閸斻劋缍呯純顕嗙礉閸掑洦宕插Ο锛勭矋閺冩湹绗夐崶鐐恒€婇妴?*/
     private static int TREE_SCROLL;
     private static boolean PRESERVE_TREE_SCROLL;
+    private static boolean SKIP_AUTO_SCROLL;
 
     public static int getSavedTreeScroll() {
         return TREE_SCROLL;
@@ -428,6 +429,11 @@ public final class ConfigScreenManager {
 
         String currentModId = getModId(screen);
 
+        if (SKIP_AUTO_SCROLL) {
+            state.autoScrollModId = currentModId;
+            SKIP_AUTO_SCROLL = false;
+        }
+
         if (PRESERVE_TREE_SCROLL) {
             setTreeScroll(state, TREE_SCROLL);
             PRESERVE_TREE_SCROLL = false;
@@ -454,7 +460,26 @@ public final class ConfigScreenManager {
         }
 
         int viewH = bottom - layout.navY;
-        state.treeScroll = Math.max(0, Math.min(state.treeScroll, Math.max(0, totalH - viewH)));
+        int maxScroll = Math.max(0, totalH - viewH);
+
+        if (!currentModId.equals(state.autoScrollModId)) {
+            int acc = 0;
+            int targetTop = 0;
+            for (ModTree.ModEntry entry : entries) {
+                if (entry.info().modId().equals(currentModId)) {
+                    targetTop = acc;
+                    break;
+                }
+                acc += modRowH + 6;
+                if (EXPANDED_MODS.contains(entry.info().modId())) {
+                    acc += entry.tabs().size() * tabRowH;
+                }
+            }
+            setTreeScroll(state, Math.min(targetTop, maxScroll));
+            state.autoScrollModId = currentModId;
+        }
+
+        state.treeScroll = Math.max(0, Math.min(state.treeScroll, maxScroll));
         state.treeContentH = totalH;
 
         int y = layout.navY - state.treeScroll;
@@ -516,6 +541,8 @@ public final class ConfigScreenManager {
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
 
+        SKIP_AUTO_SCROLL = true;
+
         if (mouseX < layout.sidebarX || mouseX > layout.sidebarX + layout.sidebarW ||
                 mouseY < layout.navY || mouseY > layout.sidebarY + layout.sidebarH) {
             return false;
@@ -529,8 +556,8 @@ public final class ConfigScreenManager {
             }
 
             if (row.tab()) {
-                PRESERVE_TREE_SCROLL = true;
                 if (row.modId().equals(currentModId) && row.tabIndex() < state.navButtons.size()) {
+                    PRESERVE_TREE_SCROLL = true;
                     state.selectedTabIndex = row.tabIndex();
                     ButtonBase nativeButton = state.navButtons.get(row.tabIndex());
                     var listener = ((ButtonBaseAccessor) nativeButton).malilibui$getActionListener();
@@ -1128,7 +1155,6 @@ public final class ConfigScreenManager {
             int drawBottom = Math.min(y + h, layout.listY + layout.listH + 6);
 
             if (row.tab()) {
-                PRESERVE_TREE_SCROLL = true;
                 if (row.selected() && drawBottom > drawTop) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW, drawBottom - drawTop, 0x22000000);
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
@@ -1183,6 +1209,7 @@ public final class ConfigScreenManager {
 
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
+
 
         if (mouseX < layout.sidebarX || mouseX > layout.sidebarX + layout.sidebarW ||
                 mouseY < layout.sidebarY || mouseY > layout.sidebarY + layout.sidebarH) {
