@@ -325,6 +325,7 @@ public final class ConfigScreenManager {
             }
         }
 
+        ensureSearchField(configs, state);
         ensureModTree(configs, state);
         ensureList(configs, state);
         ensureModSwitcher(configs, state);
@@ -350,6 +351,36 @@ public final class ConfigScreenManager {
      * 2.0 闂備浇顕ф鍝ョ礊婵犲偆鐒藉┑鐘崇閳锋棃鏌涢弴銊ョ仭闁稿顦伴妵鍕棘閹稿寒娼旈梺缁樻煥閸氬寮查鍕厱闁哄洢鍔岄獮姗€鏌ｉ幘鑼獢婵﹥妞藉畷顐﹀礋椤撳缍侀弻娑㈠煛娓氬﹤濮涘┑鈥冲级閸旀牜鈧潧銈稿鍫曞箣閻欌偓濡插瓨绻濆閿嬫緲閳ь剚鍔欏畷鎴﹀箻缂佹鍘遍梺闈涚墕妤犵顕ｉ绛嬫闁绘劘灏欐晥闂佺硶鏂侀崑鎾愁渻閵堝棗绗掗悗姘煎墰閳ь剚鑹鹃ˇ顖炩€︾捄銊﹀磯闁绘碍娼欐导鎰版⒑閹肩偛鈧牜鏁Δ鍐╁床婵炴垶鐟ョ欢鐐烘煕椤愶絿绠撴い顒€鐗撳娲传閵夈儰鍝楀┑鈽嗗亜鐎氼垶鎮橀幒妤佲拺闁圭娴烽埥澶愭倵濮樼厧娅嶉柟顖氱灱閳ь剨缍嗛崰妤呮偂閵夛妇绠鹃柟瀵稿剱閻掗箖鎮楀顓烆棆缂佽鲸鎸搁濂稿椽娴ｇ澹庨柣搴ゎ潐濞叉鍒掑畝鍕垫晣濠靛倻顭堢粣妤呮煥濠靛棗顏柛蹇撶灱缁辨帗娼忛妸銉﹁癁閻庤娲滈崰鏍€侀弴銏℃櫜闁搞儯鍎辨禒褰掓⒒娴ｇ瓔鍤欐慨姗堢畵閿濈偞寰勯幇顓炴疄闂佽鍨庡鍫氬亾閹稿簺浜滈煫鍥ㄦ尰閸ｄ粙鏌嶇紒妯活棃闁诡喗顨婇弫鎰償閳ヨ尙鍑归梻浣虹帛閹稿鎮烽埡鍛摕闁跨喓濮寸粈瀣亜閹般劍鍣伴柟绋垮暣濮?TAB闂?
      * 闂傚倸鍊烽懗鍫曗€﹂崼銏″床闁瑰瓨绻愰懓鍧楁煕閿旇骞栭柛銊︾箖閵囧嫰骞掗崱妞惧闂佸彞绱紞渚€寮婚妸銉㈡婵☆垯璀︽导鈧梻浣规た閸樺ジ顢栨径鎰摕婵炴垶菤閺嬪孩淇婇婵囶仩濞寸姭鏅犲鍝劽虹拠韫盎缂備礁顦伴幐鎶姐€佸鑸垫櫜濠㈣泛锕﹂崝锕€顪冮妶鍡楃瑨閻庢凹鍓熷畷锝嗙節閸ャ劎鍘遍梺鍦亾閵囩偛顪冮幒鏂垮灊闁汇垹鎲￠崐鐢告偡濞嗗繐顏柟钘夊暣閹绠涢弮鍌涘櫘濠碘€冲级閸旀瑩寮崒鐐寸叆妞ゆ牗鐭竟鏇炩攽閻愭潙鐏﹂柣鐕佸灦閹偤鎳為妷褏顔?TAB 闂傚倸鍊风粈渚€骞夐敓鐘冲殞闁告挆鍛厠闂佽鍨辨竟瀣矗閸ф鈷?
      */
+    private static void ensureSearchField(GuiBase screen, ConfigScreenState state) {
+        if (is26x()) {
+            return;
+        }
+
+        ConfigLayout layout = state.layout;
+        int x = layout.contentX + 8;
+        int y = layout.contentY + 3;
+        int w = Math.max(80, layout.contentW - 16);
+
+        if (state.searchField == null) {
+            GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 16, screen.getFont());
+            field.setMaxLength(64);
+            state.searchField = field;
+            ((GuiBaseAccessor) screen).malilibui$getTextFields().add(new TextFieldWrapper<>(field, null));
+        } else {
+            state.searchField.setX(x);
+            state.searchField.setY(y);
+            state.searchField.setWidth(w);
+            state.searchField.setHeight(16);
+        }
+
+        String text = state.searchField.getValue();
+
+        if (!text.equals(state.searchQuery)) {
+            state.searchQuery = text;
+            state.treeBuilt = false;
+        }
+    }
+
     private static void ensureModTree(GuiBase screen, ConfigScreenState state) {
         if (is26x()) {
             return;
@@ -374,6 +405,11 @@ public final class ConfigScreenManager {
         final int modRowH = 28;
         final int tabRowH = 16;
         List<ModTree.ModEntry> entries = ModTree.snapshot();
+        String query = state.searchQuery == null ? "" : state.searchQuery.toLowerCase(Locale.ROOT).trim();
+
+        if (!query.isEmpty()) {
+            entries.removeIf(e -> !e.info().modName().toLowerCase(Locale.ROOT).contains(query));
+        }
 
         // 閸忓牏鐣荤€瑰本鏆ｉ崘鍛啇妤傛ê瀹抽敍灞剧泊閸斻劍娼?濠婃俺鐤嗘稉濠囨娑撳秷鍏橀幐澶嗏偓婊冨讲鐟欎浇顢戦垾婵堢暬閵?
         int totalH = 0;
@@ -387,6 +423,25 @@ public final class ConfigScreenManager {
         }
 
         state.treeContentH = totalH;
+
+        if (state.scrollToCurrent) {
+            int offset = 0;
+
+            for (ModTree.ModEntry entry : entries) {
+                if (entry.info().modId().equals(currentModId)) {
+                    break;
+                }
+
+                offset += modRowH;
+
+                if (EXPANDED_MODS.contains(entry.info().modId())) {
+                    offset += entry.tabs().size() * tabRowH;
+                }
+            }
+
+            state.treeScroll = offset;
+            state.scrollToCurrent = false;
+        }
 
         // 视口高度固定；切换模组/收起后按新内容高度校正滚动位置，
         // 避免沿用上一个大列表的滚动值导致所有行都落在视口外。

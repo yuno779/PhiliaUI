@@ -62,8 +62,15 @@ public final class ConfigScreenState {
     public boolean treeScrollAdjusted;
     public boolean autoExpanded;
 
+    /** 新界面/切换界面时把左栏滚到当前模组，避免沿用上一个界面的底部滚动位置。 */
+    public boolean scrollToCurrent = true;
+
     /** 当前打开的 tab 索引，用于左侧树高亮。 */
     public int selectedTabIndex;
+
+    /** 2.0 top bar search field and current query. */
+    public GuiTextFieldGeneric searchField;
+    public String searchQuery = "";
 
     public record TreeRow(String name, String version, boolean selected, boolean tab, int tabIndex) {
     }
