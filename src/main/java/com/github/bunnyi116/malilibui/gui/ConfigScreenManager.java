@@ -1083,7 +1083,7 @@ public final class ConfigScreenManager {
         int viewTop = layout.navY;
         int viewBottom = layout.listY + layout.listH + 6;
         int viewH = Math.max(1, viewBottom - viewTop);
-        int barX = layout.sidebarX + layout.sidebarW + 2;
+        int barX = layout.sidebarX + layout.sidebarW - 15;
         UiTheme.fill(ctx, barX, viewTop, 8, viewH, 0x44000000);
         UiTheme.outline(ctx, barX, viewTop, 8, viewH, 0x88FFFFFF);
 
@@ -1272,13 +1272,13 @@ public final class ConfigScreenManager {
 
         ConfigScreenState state = stateFor(screen);
         ConfigLayout layout = state.layout;
-        int barX = layout.sidebarX + layout.sidebarW - 8;
+        int barX = layout.sidebarX + layout.sidebarW - 15;
 
         if (mouseX < barX || mouseX > barX + 8) {
             return false;
         }
 
-        int viewTop = layout.sidebarY + 46;
+        int viewTop = layout.navY;
         int viewH = layout.listH;
         int max = Math.max(0, state.treeContentH - viewH);
 

@@ -82,7 +82,7 @@ public final class ConfigLayout {
         layout.headerH = 30;
 
         layout.panelX = layout.margin;
-        layout.panelY = 2;
+        layout.panelY = layout.margin;
         layout.panelW = screenW - layout.margin * 2;
         layout.panelH = screenH - layout.margin * 2;
 
