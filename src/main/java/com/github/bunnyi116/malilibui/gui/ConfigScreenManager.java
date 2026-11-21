@@ -1024,8 +1024,11 @@ public final class ConfigScreenManager {
 
                 int boxY = row.y();
                 int boxH = lastY - row.y();
-                if (boxY >= layout.navY && boxY + boxH <= layout.sidebarY + layout.sidebarH - 8) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x1E000000);
+                int clipTop = Math.max(boxY, layout.navY);
+                int clipBottom = Math.min(boxY + boxH, layout.sidebarY + layout.sidebarH - 8);
+                if (clipTop < clipBottom) {
+                    UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW - 7,
+                            clipBottom - clipTop, 0x1E000000);
                 }
             }
 
