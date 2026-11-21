@@ -107,7 +107,7 @@ public final class ConfigLayout {
 
         int divider = layout.hasSidebar ? 1 : 0;
 
-        layout.contentX = layout.sidebarX + layout.sidebarW + 16;
+        layout.contentX = layout.sidebarX + layout.sidebarW + 17;
         layout.contentY = layout.panelY;
         layout.contentW = layout.panelX + layout.panelW - layout.contentX;
         layout.contentH = layout.panelH;
