@@ -343,7 +343,7 @@ public final class ConfigScreenManager {
     /** 鐠恒劎鏅棃顫箽閻ｆ瑦鐖查惃鍕泊閸斻劋缍呯純顕嗙礉閸掑洦宕插Ο锛勭矋閺冩湹绗夐崶鐐恒€婇妴?*/
     private static int TREE_SCROLL;
     private static boolean PRESERVE_TREE_SCROLL;
-    private static boolean SKIP_AUTO_SCROLL;
+    private static String SUPPRESS_AUTO_SCROLL_MOD;
 
     public static int getSavedTreeScroll() {
         return TREE_SCROLL;
@@ -429,10 +429,10 @@ public final class ConfigScreenManager {
 
         String currentModId = getModId(screen);
 
-        if (SKIP_AUTO_SCROLL) {
+        if (SUPPRESS_AUTO_SCROLL_MOD != null && SUPPRESS_AUTO_SCROLL_MOD.equals(currentModId)) {
             setTreeScroll(state, TREE_SCROLL);
             state.autoScrollModId = currentModId;
-            SKIP_AUTO_SCROLL = false;
+            SUPPRESS_AUTO_SCROLL_MOD = null;
         }
 
         if (PRESERVE_TREE_SCROLL) {
@@ -547,8 +547,6 @@ public final class ConfigScreenManager {
             return false;
         }
 
-        SKIP_AUTO_SCROLL = true;
-
         String currentModId = getModId(screen);
 
         for (ConfigScreenState.TreeRow row : state.treeRows) {
@@ -574,6 +572,7 @@ public final class ConfigScreenManager {
                         GuiBase target = entry.info().configScreenSupplier().get();
 
                         if (target != null) {
+                            SUPPRESS_AUTO_SCROLL_MOD = row.modId();
                             PENDING_TAB.put(target, row.tabIndex());
                             GuiBase.openGui(target);
                         }
@@ -596,6 +595,7 @@ public final class ConfigScreenManager {
                     GuiBase target = entry.info().configScreenSupplier().get();
 
                     if (target != null) {
+                        SUPPRESS_AUTO_SCROLL_MOD = row.modId();
                         GuiBase.openGui(target);
                     }
                 }
