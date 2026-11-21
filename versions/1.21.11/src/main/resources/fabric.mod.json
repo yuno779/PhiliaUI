@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "icon": "assets/${mod_id}/icon.png",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    {
+      "name": "bunnyi116",
+      "contact": {
+        "homepage": "https://github.com/bunnyi116"
+      }
+    }
+  ],
+  "contact": {
+    "homepage": "${mod_homepage}",
+    "sources": "${mod_sources}",
+    "issues": "${mod_sources}/issues"
+  },
+  "license": "${mod_license}",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.github.bunnyi116.malilibui.MalilibUiMod"
+    ],
+    "modmenu": [
+      "com.github.bunnyi116.malilibui.compat.MalilibUiModMenu"
+    ]
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "mixins": [
+    "malilib-ui.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "${minecraft_dependency}",
+    "malilib": ">=${malilib}"
+  }
+}

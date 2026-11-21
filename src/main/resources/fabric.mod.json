@@ -23,13 +23,7 @@
   "entrypoints": {
     "client": [
       "com.github.bunnyi116.malilibui.MalilibUiMod"
-    ],
-    "modmenu": [
-      "com.github.bunnyi116.malilibui.compat.MalilibUiModMenu"
     ]
-  },
-  "suggests": {
-    "modmenu": "*"
   },
   "mixins": [
     "malilib-ui.mixins.json"
