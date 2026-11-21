@@ -357,7 +357,7 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.panelX + 230;
+        int x = layout.sidebarX + layout.sidebarW + 14;
         int y = layout.panelY + 6;
         int w = Math.max(80, layout.panelX + layout.panelW - 158 - x);
 
@@ -716,7 +716,7 @@ public final class ConfigScreenManager {
                 ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget() != null;
     }
 
-    static boolean is26x() {
+    public static boolean is26x() {
         try {
             Class.forName("net.minecraft.client.gui.GuiGraphicsExtractor");
             return true;

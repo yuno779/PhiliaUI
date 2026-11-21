@@ -15,6 +15,7 @@
     "WidgetConfigOptionMixin",
     "WidgetListBaseMixin",
     "WidgetListConfigOptionsMixin",
+    "WidgetSearchBarMixin",
     "WidgetDropDownListMixin",
     "WidgetSliderMixin",
     "accessor.AbstractWidgetAccessor",
