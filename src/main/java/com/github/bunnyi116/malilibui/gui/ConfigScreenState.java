@@ -57,7 +57,9 @@ public final class ConfigScreenState {
 
     /** 宸︿晶妯＄粍鏍戠殑婊氬姩鍋忕Щ涓庡唴瀹规€婚珮搴︺€?*/
     public int treeScroll;
-    public int treeContentH; public boolean treeScrollAdjusted;
+    public int treeContentH;
+    public boolean treeScrollAdjusted;
+    public boolean autoExpanded;
 
     public record TreeRow(String name, String version, boolean selected, boolean tab) {
     }

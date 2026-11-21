@@ -352,8 +352,9 @@ public final class ConfigScreenManager {
         state.treeRows.clear();
         String currentModId = getModId(screen);
 
-        if (!state.treeBuilt && EXPANDED_MODS.isEmpty()) {
+        if (!state.autoExpanded) {
             EXPANDED_MODS.add(currentModId);
+            state.autoExpanded = true;
         }
 
         int y = layout.navY - state.treeScroll;
