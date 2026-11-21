@@ -435,6 +435,15 @@ public final class ConfigScreenManager {
                 state.navButtons.size());
         state.layout = layout;
 
+        // 2.0 模组树需要知道每个模组有哪些 TAB；这里缓存当前界面已经构建出的分组名称。
+        List<String> tabLabels = new ArrayList<>();
+
+        for (ButtonBase button : state.navButtons) {
+            tabLabels.add(((ButtonBaseAccessor) button).malilibui$getDisplayString());
+        }
+
+        ModTree.cacheTabs(getModId(screen), tabLabels);
+
         // 把 TAB 按钮移动到左侧导航栏。
         for (int i = 0; i < state.navButtons.size(); i++) {
             ButtonBase button = state.navButtons.get(i);
