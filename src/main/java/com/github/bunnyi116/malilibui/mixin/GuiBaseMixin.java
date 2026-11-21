@@ -47,6 +47,14 @@ public abstract class GuiBaseMixin {
         }
     }
 
+    @Inject(method = "mouseScrolled", at = @At("HEAD"), cancellable = true)
+    private void malilibui$mouseScrolled(double mouseX, double mouseY, double horizontal,
+                                         double vertical, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigScreenManager.onTreeScroll((GuiBase) (Object) this, mouseX, mouseY, vertical)) {
+            cir.setReturnValue(true);
+        }
+    }
+
     @Inject(method = "drawScreenBackground", at = @At("HEAD"), cancellable = true)
     private void malilibui$drawScreenBackground(GuiContext ctx, int mouseX, int mouseY, CallbackInfo ci) {
         GuiBase screen = (GuiBase) (Object) this;

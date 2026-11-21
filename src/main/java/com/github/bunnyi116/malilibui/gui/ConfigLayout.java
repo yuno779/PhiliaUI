@@ -94,7 +94,7 @@ public final class ConfigLayout {
             int configured = UiConfigs.Layout.SIDEBAR_WIDTH.getIntegerValue();
             // 大窗口下用户配置的宽度完全生效；
             // 只有窗口太窄、内容区会被挤压时才临时限制侧栏宽度。
-            int minimum = ConfigScreenManager.is26x() ? SIDEBAR_MIN : 150;
+            int minimum = SIDEBAR_MIN;
             int maxByScreen = Math.max(minimum, screenW - 300);
 
             sidebarW = Math.max(minimum, Math.min(Math.min(configured, SIDEBAR_MAX), maxByScreen));
