@@ -342,6 +342,7 @@ public final class ConfigScreenManager {
     private static boolean treeBarDragging;
     /** 鐠恒劎鏅棃顫箽閻ｆ瑦鐖查惃鍕泊閸斻劋缍呯純顕嗙礉閸掑洦宕插Ο锛勭矋閺冩湹绗夐崶鐐恒€婇妴?*/
     private static int TREE_SCROLL;
+    private static boolean PRESERVE_TREE_SCROLL;
 
     public static int getSavedTreeScroll() {
         return TREE_SCROLL;
@@ -426,6 +427,11 @@ public final class ConfigScreenManager {
         state.treeRows.clear();
 
         String currentModId = getModId(screen);
+
+        if (PRESERVE_TREE_SCROLL) {
+            setTreeScroll(state, TREE_SCROLL);
+            PRESERVE_TREE_SCROLL = false;
+        }
 
         if (!state.autoExpanded) {
             EXPANDED_MODS.add(currentModId);
@@ -523,6 +529,7 @@ public final class ConfigScreenManager {
             }
 
             if (row.tab()) {
+                PRESERVE_TREE_SCROLL = true;
                 if (row.modId().equals(currentModId) && row.tabIndex() < state.navButtons.size()) {
                     state.selectedTabIndex = row.tabIndex();
                     ButtonBase nativeButton = state.navButtons.get(row.tabIndex());
@@ -1064,7 +1071,7 @@ public final class ConfigScreenManager {
             UiTheme.fill(ctx, layout.sidebarX + 12, layout.sidebarY + 16, 3, 14, UiTheme.TEXT_ACCENT);
             UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), modName, layout.sidebarW - 40),
                     layout.sidebarX + 21, layout.sidebarY + 19, UiTheme.TEXT_TITLE, true);
-            UiTheme.text(ctx, "MaLiLib UI", layout.sidebarX + 21, layout.sidebarY + 33,
+            UiTheme.text(ctx, "Philia UI", layout.sidebarX + 21, layout.sidebarY + 33,
                     UiTheme.TEXT_SUB, false);
 
             UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 48, layout.sidebarW - 24,
@@ -1121,6 +1128,7 @@ public final class ConfigScreenManager {
             int drawBottom = Math.min(y + h, layout.listY + layout.listH + 6);
 
             if (row.tab()) {
+                PRESERVE_TREE_SCROLL = true;
                 if (row.selected() && drawBottom > drawTop) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW, drawBottom - drawTop, 0x22000000);
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);

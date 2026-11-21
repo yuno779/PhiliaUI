@@ -3,8 +3,8 @@
   "id": "${mod_id}",
   "version": "${mod_version}",
   "icon": "assets/${mod_id}/icon.png",
-  "name": "${mod_name}",
-  "description": "${mod_description}",
+  "name": "Philia UI",
+  "description": "Philia UI: modernized configuration screens for the masa mod family.",
   "authors": [
     {
       "name": "bunnyi116",

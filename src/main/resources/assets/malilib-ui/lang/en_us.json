@@ -1,7 +1,7 @@
 {
-  "malilib-ui.name": "MaLiLib UI",
+  "malilib-ui.name": "Philia UI",
   "malilib-ui.description": "Modernized configuration screens for the masa mod family.",
-  "malilib-ui.button.open_config": "MaLiLib UI Settings",
+  "malilib-ui.button.open_config": "Philia UI Settings",
   "malilib-ui.config.category.general": "General",
   "malilib-ui.config.category.visuals": "Visuals",
   "malilib-ui.config.enabled": "Enabled",
@@ -9,7 +9,7 @@
   "malilib-ui.message.enabled": "Enabled",
   "malilib-ui.message.disabled": "Disabled",
   "malilib-ui.search.hint": "Search configs...",
-  "malilib-ui.gui.title.configs": "MaLiLib UI Configs",
+  "malilib-ui.gui.title.configs": "Philia UI Configs",
   "malilib-ui.gui.tab.general": "General",
   "malilib-ui.gui.tab.layout": "Layout",
   "malilib-ui.gui.tab.test": "Test",

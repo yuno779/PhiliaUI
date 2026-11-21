@@ -1,7 +1,7 @@
 {
-  "malilib-ui.name": "MaLiLib UI",
+  "malilib-ui.name": "Philia UI",
   "malilib-ui.description": "为 masa 系列模组提供现代化的配置界面。",
-  "malilib-ui.button.open_config": "MaLiLib UI 设置",
+  "malilib-ui.button.open_config": "Philia UI 设置",
   "malilib-ui.config.category.general": "通用",
   "malilib-ui.config.category.visuals": "视觉",
   "malilib-ui.config.enabled": "启用",
@@ -9,7 +9,7 @@
   "malilib-ui.message.enabled": "已启用",
   "malilib-ui.message.disabled": "已禁用",
   "malilib-ui.search.hint": "搜索配置项...",
-  "malilib-ui.gui.title.configs": "MaLiLib UI 配置",
+  "malilib-ui.gui.title.configs": "Philia UI 配置",
   "malilib-ui.gui.tab.general": "通用",
   "malilib-ui.gui.tab.layout": "布局",
   "malilib-ui.gui.tab.test": "测试",

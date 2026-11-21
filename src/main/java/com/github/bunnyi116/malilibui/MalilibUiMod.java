@@ -24,8 +24,8 @@ import com.github.bunnyi116.malilibui.gui.MalilibUiConfigScreen;
  */
 public class MalilibUiMod implements ClientModInitializer {
     public static final String MOD_ID = "malilib-ui";
-    public static final String MOD_NAME = "MaLiLib UI";
-    public static final String DISPLAY_NAME = "MaLiLib UI";
+    public static final String MOD_NAME = "Philia UI";
+    public static final String DISPLAY_NAME = "Philia UI";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
     @Override
