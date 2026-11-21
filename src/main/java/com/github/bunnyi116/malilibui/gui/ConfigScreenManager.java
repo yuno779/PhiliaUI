@@ -30,6 +30,7 @@ import com.github.bunnyi116.malilibui.mixin.accessor.ButtonBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiConfigsBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiListBaseAccessor;
+import com.github.bunnyi116.malilibui.mixin.accessor.GuiScrollBarAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListBaseAccessor;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetListConfigOptionsBaseAccessor;
 import net.fabricmc.loader.api.FabricLoader;
@@ -797,6 +798,9 @@ public final class ConfigScreenManager {
             widget.initGui();
         }
 
+        GuiScrollBar listBar = ((WidgetListBaseAccessor) widget).malilibui$getScrollBar();
+        ((GuiScrollBarAccessor) listBar).malilibui$setBackgroundColor(0x44000000);
+        ((GuiScrollBarAccessor) listBar).malilibui$setForegroundColor(0xFFFFFFFF);
         state.listWidget = widget;
     }
 
@@ -1079,7 +1083,7 @@ public final class ConfigScreenManager {
         int viewTop = layout.navY;
         int viewBottom = layout.listY + layout.listH + 6;
         int viewH = Math.max(1, viewBottom - viewTop);
-        int barX = layout.sidebarX + layout.sidebarW - 10;
+        int barX = layout.sidebarX + layout.sidebarW + 2;
         UiTheme.fill(ctx, barX, viewTop, 8, viewH, 0x44000000);
         UiTheme.outline(ctx, barX, viewTop, 8, viewH, 0x88FFFFFF);
 
@@ -1128,7 +1132,7 @@ public final class ConfigScreenManager {
         int thumbH = Math.max(24, viewH * viewH / Math.max(state.treeContentH, viewH));
         int travel = Math.max(1, viewH - thumbH);
         state.treeScroll = Math.max(0, Math.min(max,
-                state.treeScroll - (int) Math.round(dragY * max / travel)));
+                state.treeScroll + (int) Math.round(dragY * max / travel)));
         TREE_SCROLL = state.treeScroll;
 
         return true;
