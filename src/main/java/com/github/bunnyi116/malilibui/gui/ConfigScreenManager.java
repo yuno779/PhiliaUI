@@ -915,7 +915,7 @@ public final class ConfigScreenManager {
         ConfigLayout layout = state.layout;
 
         // 闂傚倸鍊搁崐鎼佸磹閻戣姤鍤勯柛顐ｆ磵閳ь剨绠撳畷濂稿閳ュ啿绨ラ梻浣稿閸嬩線宕曟潏鈺冪焼濠㈣泛澶囬崑鎾诲礂婢跺﹣澹曢梻浣告啞濞诧箓宕滃▎鎾崇闁汇垹鎲￠埛鎴犵磼椤栨稒绀€濠⒀嗗皺缁辨帞鈧綆鍋勯悘瀵糕偓瑙勬礃鐢剝淇婇幖浣哥厸闁稿本鍩冮崑鎾绘偨閸涘﹦鍙嗗┑鐘绘涧濡繈顢撳Δ鈧湁婵犲﹤瀚粻鏍煏閸パ冾伃鐎殿噮鍓熷畷褰掝敊閻熼澹曢梺鍓茬厛閸ｎ喖顭囬弽銊х鐎瑰壊鍠曢幉楣冩煛娴ｅ憡顥滄い顓℃硶閹瑰嫰鎮€涙ɑ鏆伴梻浣筋嚙缁绘垿骞戦崶褜娼栭柧蹇撴贡閻瑩鎮归幁鎺戝闁靛牆顦伴悡娑樏归敐鍛棌闁绘捁鍋愰埀?
-        UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, 0x33000000);
+        UiTheme.fill(ctx, 0, 0, layout.screenW, layout.screenH, 0x55000000);
 
         // 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柟闂寸绾惧綊鏌熼梻瀵稿妽闁稿顑夐弻娑㈠即閵娿儳浠╅梺鎼炲妼閸婂潡寮诲☉妯锋斀闁糕剝顨忔导宀勬⒑缂佹ɑ鐓ユ俊顐ｇ懇楠炲牓濡搁妷顔藉瘜闁荤姴娲╁鎾寸珶閺囩喍绻嗛柕鍫濇搐鍟搁梺绋款儐閻╊垶寮绘繝鍥ㄦ櫜闁告粈绀佸▓銊╂⒑閸︻叀妾搁柛鐘愁殜瀹曟劖顦版惔妯轰壕闁荤喐婢橀ˉ蹇涙煕閻樻剚娈滄い銏＄懇瀹曞崬顪冪紒妯绘澑闂備胶绮崝鏍ь焽濞嗘挻鍊堕柨鏇炲€归悡娆戠磼鐎ｎ偄顕滈柟鍙夋倐閺屻倕煤椤忓啯鍠氶梺纭呮珪閻楃娀宕洪悙鍝勭畾鐟滃本绔熼弴銏♀拻闁稿本姘ㄦ晶娑氱磼鐎ｎ偄绗掗柨鏇樺灪鐎佃偐鈧稒顭囬崢鐢告倵閻熸澘顏褎顨婂畷鐢稿炊椤垶顔旈梺缁樺姇椤曨參骞婇崶鈹惧亾鐟欏嫭绀堥柛鐘崇墵閵嗕礁螖閸涱厾鍔﹀銈嗗笒鐎氱兘寮?
         int topH = Math.max(26, layout.sidebarY - layout.panelY);
@@ -928,7 +928,7 @@ public final class ConfigScreenManager {
         // 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閼碱剦妲烽梻浣告惈濞层垽宕归崷顓犱笉闁绘顕х粻褰掑级閸繂鈷旈柟顔笺偢閺岋綁顢橀悙闈涒叺闂佸搫鐭夌紞浣规叏閳ь剟鏌曡箛濠冩珖闁告柨鎽滅槐鎾存媴閹绘帊澹曢梻浣告啞濞诧箓宕归柆宥呯；闁斥晛鍟扮粻楣冩煕閳╁喚娈樼紒鐘卞嵆閺岋絽鈹戦崶銊㈡嫻闂侀潧娲ょ€氫即鐛崶顒€閱囬柡鍥╁櫏閳ь剙绉撮—鍐Χ閸愩劌濮庨梺缁橆殕閹瑰洤顕ｆ繝姘嵆闁挎稑瀚弶鍛婄節閻㈤潧孝闁稿﹥鎮傞崺娑欏緞瀹€鈧壕钘壝归敐鍫燁棄闁绘挻鍔欓弻锝夊箼閸曨厾鐦堥悗娈垮枛椤攱淇婇幖浣肝ㄩ柕蹇婃濞兼梹绻濈喊妯活潑闁搞劎鏁诲畷鎴﹀箛椤撶儐鍤ら梺鎼炲労閸撴岸鍩涢幋锕€绾ч柣鎰緲瀹撳棙淇婇崜褍鍘撮柡灞剧⊕缁绘繈宕橀鍕ㄦ嫛缂傚倷绶￠崰鏍敄閸涙惌鏁囧┑鍌滎焾楠炪垺淇婇姘儓濠碘剝濞婂缁樼瑹閳ь剙顭囪閹广垽骞掗幘鍐茬亖濡炪倖鎸鹃崐锝呪槈閵忊剝娅㈤梺缁樏壕顓㈠储閸涘﹦绡€闁靛骏绲剧涵楣冩煠濞茶鐏＄紒鍌涘浮楠炴帡寮崒婊愮床婵＄偑鍊栧濠氬疾椤愶箑绠犻柛銉墯閻撴洟鏌嶇憴鍕姢濞存粎鍋撴穱濠囨倷椤忓嫧鍋撻弽褜鍟呭┑鐘宠壘绾惧鏌熼悙顒傛殬濞存粍绮撻弻銊╁籍閸屾矮澹曢梺鍝勬－閸撴瑩鍩為幋锕€鐒洪柛鎰ㄦ櫇缁嬪洤顪冮妶鍡樺碍闁告艾顑呴銉╁礋椤掑倻鐦堥梺鍛婃礀閻忔艾鐡┑鐘垫暩婵挳鎯€婢舵劕绾ч幖瀛樻尭娴滈箖鏌￠崶鈺佇涢柛瀣尭椤繈濡烽妷銉綆闂備胶纭堕弬渚€宕?/ 婵犵數濮烽弫鍛婃叏閻戣棄鏋侀柟闂寸绾惧鏌ｉ幇顒佹儓缂佺姵澹嗙槐鎺斺偓锝庡亽閸庛儵鏌涢妶鍡樼闁哄本鐩、鏇㈡晲閸℃瑯妲伴梻浣侯焾椤戝懘宕愰崸妤€绠栨俊銈呮噺閺呮煡骞栫划鍏夊亾閸愯尙顔囧┑鐘垫暩閸嬫盯鎯岄崼鐔侯洸妞ゅ繐鐗嗛拑鐔哥箾閹寸偟鐓繛宀婁邯閺屾盯骞樺璇蹭壕濠碘剝褰冮悧濠勬崲濞戞埃鍋撻悽娈跨劸閺嶏繝姊洪幐搴″摵婵☆偂鐒﹀鍕箛椤撶姴骞楁繝纰樻閸ㄦ娊銆佹繝鍥舵晢闁绘柨鍚嬮悡鏇㈡煟閺冨牊鏁遍柛鐘筹耿閺?
         int wellMargin = layout.compact ? 4 : WELL_MARGIN;
         UiTheme.fill(ctx, layout.contentX, layout.listY - wellMargin, layout.contentW,
-                layout.listH + wellMargin * 2, 0x33000000);
+                layout.listH + wellMargin * 2, 0x55000000);
 
         drawContentHeader(ctx, state);
         drawSearchBar(ctx, state);
@@ -957,7 +957,7 @@ public final class ConfigScreenManager {
         int h = field.getHeight();
 
         boolean focused = field.isFocused();
-        UiTheme.fill(ctx, x, y, w, h, focused ? 0x99000000 : 0x66000000);
+        UiTheme.fill(ctx, x, y, w, h, focused ? 0xCC000000 : 0x99000000);
 
         String text = field.getValue();
 
@@ -1027,7 +1027,7 @@ public final class ConfigScreenManager {
                 int clipBottom = Math.min(boxY + boxH, layout.listY + layout.listH);
                 if (clipTop < clipBottom) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, clipTop, layout.sidebarW - 7,
-                            clipBottom - clipTop, 0x44000000);
+                            clipBottom - clipTop, 0x66000000);
                 }
             }
 
@@ -1056,7 +1056,7 @@ public final class ConfigScreenManager {
             } else {
                 if (drawBottom > drawTop) {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW - 7, drawBottom - drawTop,
-                            row.selected() ? 0x70000000 : 0x50000000);
+                            row.selected() ? 0xA0000000 : 0x80000000);
                 }
 
                 if (row.selected() && drawBottom > drawTop) {
