@@ -357,9 +357,9 @@ public final class ConfigScreenManager {
         }
 
         ConfigLayout layout = state.layout;
-        int x = layout.sidebarX + layout.sidebarW + 14;
+        int x = layout.contentX + 8;
         int y = layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 18) / 2;
-        int w = Math.max(80, layout.contentX + layout.contentW - 158 - x);
+        int w = Math.max(80, layout.contentX + layout.contentW - 150 - x);
 
         if (state.searchField == null) {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 18, screen.getFont());
@@ -706,7 +706,8 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
         // 闂傚倸鍊搁崐椋庢濮橆剦鐒介柤濮愬€栫€氬鏌ｉ弮鍌氬付缂佲偓婢跺备鍋撻崗澶婁壕闂佸憡娲﹂崑澶愬春閻愮儤鐓熼幖杈剧稻閺嗏晝鐥鐐靛煟鐎规洘鍨块獮妯兼嫚閸欏绁舵俊鐐€栭幐楣冨窗鎼粹檧鏋旂€光偓閸曨剛鍘介棅顐㈡处閹歌崵绮嬬€ｎ喗鐓曢柕濞垮妽绾偓銇勯弴顏嗙ɑ缂佸倹甯為埀顒婄秵娴滅偤宕愰悙宸富闁靛牆妫楃粭鎺撱亜閿旇姤绶茬悮娆戔偓鍏夊亾闁告洦鍓涢崢浠嬫⒑缂佹ê濮囨い鏇ㄥ弮閸┿儲寰勯幇顓犲幘濠电偠灏褔鎮橀敂閿亾鐟欏嫭澶勯柛鎾跺枛閻涱喖顫滈埀顒勩€佸▎鎾村亗閹艰揪绲洪崑鎾活敇閵忊檧鎷虹紓浣割儐鐎笛冿耿閹殿喚纾兼い鏃囧亹鑲栭梺姹囧労娴滎亪銆佸☉銏″€烽柡澶嬪灍閸嬫捇宕奸弴鐔哄幗闂佸綊鍋婇崜娆戠棯瑜旈弻娑㈡晲閸℃ê鈧劙鏌＄仦璇测偓婵嗙暦瑜版帩鏁冮柕蹇ｆ線缁辨繈姊绘担鑺ャ€冪紒鈧担铏圭煋闁煎摜鏁搁々鐑芥煥閺囩偛鈧摜澹曡ぐ鎺撶厽闁哄啫鐗滃Λ鎴犳喐閻楀牆绲婚柍瑙勫灴閹瑩寮堕幋鐘辨闂備礁婀遍…鍫ュ箺濠婂牆鐒垫い鎺嶈兌閳绘捇鏌￠崨顖氣枅闁绘侗鍣ｅ畷姗€濡歌濞堥箖姊洪幖鐐插姶闁绘挸鐗嗛…鍥偄閸忓皷鎷洪梻鍌氱墛缁嬫挾绮诲顓濈箚闁圭粯甯楅崵鍥┾偓娈垮枔閸旀垿寮婚崱妤婂悑闁糕剝鐟ラ獮鍫熺節閻㈤潧浠滄俊顐ｎ殘閹广垽骞掑Δ鈧崙鐘绘煕閹板吀绨界痪鎯с偢閺岋繝宕橀妸銉㈠亾閹间礁鍑犻柡鍐ㄥ€荤壕濂稿级閸稑濡介悘蹇ｅ弮閹藉爼鏁愰崨顐熷亾閹烘埈娼╅柣鎾虫捣娴犫晛鈹戦悙鑼闁硅绻濋獮鍫ュΩ閳轰胶顔婇梺鍝勫暙閸婂摜绮敓鐘斥拺闁告稑锕ラ悘婵嬫煕濞戝崬娅樻繛鑲╁枛閺屸剝寰勬繝鍕暤闂佸搫鎳忕换鍫ュ箖瀹曞洨纾兼俊顖氭贡缁犳岸姊洪棃娑氬闁稿﹤鎲＄粋宥嗐偅閸愨晛浠┑鐘诧工閹冲酣銆傞懖鈺冪＜閻庯綆鍋勭粭鎺撱亜椤撶偞绌跨紒鐘崇☉閳藉螣绾拌鲸袨濠碉紕鍋戦崐鏇犳崲閹邦儵娑樜旈崘顭戞闂佺鍕垫畷闁抽攱鍨块弻娑樷攽閸℃浠奸梺鍝勬閸嬬偟鎹㈠┑瀣劦妞ゆ帒瀚幑鑸点亜閹捐泛啸闁伙綀鍩栫换婵嬪閿濆懐鍘梺鍛婃⒐濞叉粎鍒掗崼銉ョ＜婵綆鍘肩紞濠囧极閹版澘鐐婇柍鍝勫€归崯鎺楁⒒娴ｅ憡鎲搁柛鐘查叄楠炲﹤顫滈埀顒勭嵁閸愵煁娲敂閸曨収鍞洪梻浣筋潐閹矂宕归悧鍫濐嚤闁规壆澧楅埛鎴︽煙閼测晛浠滈柍褜鍏欓崐婵嗙暦閿濆绀冮柕濞у嫭顔曟繝娈垮枟閵囨盯宕戦幘鍨涘亾鐟欏嫭纾搁柛鏃€鍨块妴浣肝熷▎鐐╅梻浣告惈閹锋垹绱炴担鍓叉綎婵炲樊浜滃婵嗏攽閻樻彃顏╅柍宄扮墦閺岋綀绠涢幘鍓佺杽闂佸憡姊归崹鍧楁偘?
-        int x = Math.max(layout.contentX + 8, layout.contentX + layout.contentW - 152);
+        int x = Math.min(Math.max(layout.contentX + 8, layout.contentX + layout.contentW - 152),
+                layout.screenW - 142);
         int y = layout.panelY + (Math.max(26, layout.sidebarY - layout.panelY) - 18) / 2;
 
         if (switcher.getX() != x || switcher.getY() != y) {
@@ -916,17 +917,18 @@ public final class ConfigScreenManager {
 
         // 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柟闂寸劍閸嬪鏌涢弴銊ョ仩闁搞劌鍊块弻娑樷攽閸℃浼岄梺缁樻煥濡瑩骞堥妸銉富閻犲洩寮撴竟鏇熶繆閵堝洤啸闁稿鐩弻濠囨晲閸滀礁娈ㄩ梺鍦檸閸犳宕愭搴樺亾閻熸澘顥忛柛鐘愁殜椤㈡瑩宕卞缁樻杸闂佺粯鍔栧娆撴倶閿曞倹鐓欑紒瀣閹叉悂鏌ゅú顏冩喚闁硅櫕鐗犻崺鐐哄箚瑜屾竟鏇㈡⒒閸屾氨澧涚紒瀣笒閿曘垺瀵肩€涙鍘甸悗鐟板婢ф宕甸崶顭戞闁绘劕顕幊鍥┾偓瑙勬礈閸犳牠銆佸Δ鍛劦妞ゆ帒瀚烽弫?
         int topH = Math.max(26, layout.sidebarY - layout.panelY);
-        UiTheme.fill(ctx, layout.panelX, layout.panelY, layout.panelW, topH, 0x33000000);
-        UiTheme.outline(ctx, layout.panelX, layout.panelY, layout.panelW, topH, 0x30FFFFFF);
+        int barX = layout.hasSidebar ? layout.contentX : layout.panelX;
+        int barW = layout.hasSidebar ? layout.contentW : layout.panelW;
+        UiTheme.fill(ctx, barX, layout.panelY, barW, topH, 0x33000000);
+        UiTheme.outline(ctx, barX, layout.panelY, barW, topH, 0x30FFFFFF);
 
         if (layout.hasSidebar) {
             drawSidebar(ctx, state);
         }
 
         // 闂傚倸鍊搁崐椋庣矆娓氣偓楠炲鏁撻悩鑼槷闂佸搫娲㈤崹鍦不閻樿绠归弶鍫濆⒔閹ジ鏌ｉ鐐靛ⅵ闁哄矉缍佹慨鈧柕蹇婃櫇閸斿摜绱撴担鎻掍壕闂佸憡娲﹂崹閬嶅磻閳╁啰绠鹃柛鈩冾殘缁犱即鏌ｅ┑鍥ㄢ拹闁靛洤瀚伴獮鍥醇閺囩噥鈧秴顪冮妶鍐ㄥ姎闁绘鎹囧濠氬即閿涘嫮鏉告繝鐢靛Т閸婃悂鍩涙径宀€纾藉ù锝堟閻撴劙鏌ｉ幙鍕瘈鐎殿喖顭锋俊鎼佸Ψ閵忊槅娼旀繝纰樻閸ㄧ敻宕戦幇顓烆嚤闁搞儺鍓氶埛鎴﹀级閻愭澘宓嗘俊鍓у厴閺屾稒绻濋崘顏勨拡缂備緡鍠栭鍛搭敇婵傜骞㈡俊顖氭惈婵℃娊姊绘笟鈧褏鎹㈤幒鎾冲灁妞ゆ挾鍊ｅ☉銏℃櫢闁绘ê纾崢鍛婄節閵忥絾纭鹃柤娲诲灡缁傛帡骞掗弮鍌滐紲濡炪倖姊婚弲顐﹀箠閸ヮ剚鐓曢柍瑙勫劤娴滅偓淇婇悙顏勨偓鏍ь啅婵犳艾纾婚柟鐐暘娴滄粓鏌ㄩ弮鍌氫壕闁哄棭鍓欓埞鎴﹀焺閸愨晝绋囧銈嗘尭閸氬顕ラ崟顒傜瘈闁告洖鐏氬瓭婵犵數濮撮惀澶愬级鎼存挸浜鹃柡鍥╁Л閸嬫挸顫濋妷銉ヮ潎闂佺硶鏂侀崑?/ 濠电姷鏁告慨鐑藉极閹间礁纾婚柣鎰惈缁犳壆绱掔€ｎ偒鍎ラ柛銈嗘礋閺屾盯顢曢敐鍡欘槰闂佺顑呴崐鍧楀箖濡ゅ懏鏅查幖绮光偓鍐茬婵犵數鍋涢惌鍫熺椤忓牆钃熸繛鎴炵煯濞岊亪鏌涢幘妞诲亾婵℃彃鐗婄换娑氣偓鐢殿焾鏍￠梺鎸庡哺濡焦寰勯幇顓犲幗濠碘槅鍨抽、濠囶敆閻斿吋鐓曢柣鏃堟敱閸犳﹢鏌?
-        int wellMargin = layout.compact ? 4 : WELL_MARGIN;
-        UiTheme.drawContentWell(ctx, layout.listX - wellMargin, layout.listY - wellMargin,
-                layout.listW + wellMargin * 2, layout.listH + wellMargin * 2);
+        UiTheme.drawContentWell(ctx, layout.contentX, layout.contentY,
+                layout.contentW, layout.contentH);
 
         drawContentHeader(ctx, state);
         drawSearchBar(ctx, state);
@@ -973,11 +975,7 @@ public final class ConfigScreenManager {
         String modName = prettyModName(getModId(state.screen));
 
         UiTheme.fill(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
-                0x33000000);
-        UiTheme.outline(ctx, layout.sidebarX, layout.sidebarY, layout.sidebarW, layout.sidebarH,
-                0x30FFFFFF);
-        UiTheme.vline(ctx, layout.sidebarX + layout.sidebarW, layout.sidebarY, layout.sidebarH,
-                UiTheme.SIDEBAR_DIVIDER);
+                0x00000000);
 
         // 闂傚倷娴囬褎顨ラ幖浣瑰€舵慨姗嗗幘閻濆爼鏌涢埄鍐槈闁汇倗鍋撻妵鍕箛閸洘顎嶉梺绋款儑閸犳牕顫忓ú顏勫瀭妞ゆ洖鎳庨崜鎶芥⒑瀹曞洨甯涙俊顐㈠暣閻涱噣寮介‖銉ラ叄椤㈡鍩€椤掑嫭鍊舵い鏇楀亾闁哄本鐩俊姝岊槻閻㈩垰鐖奸幗鍫曟倷閻戞鍘藉┑掳鍊愰崑鎾绘煟閹垮啫浜版い銏℃瀹曢亶寮撮悩鎻掆挄濠碉紕鍋戦崐鏍偋濠婂牆纾婚柣鎰惈閻?.21.11 婵犵數濮烽弫鎼佸磻閻樿绠垫い蹇撴缁€濠囨煃瑜滈崜姘辨崲濞戞瑥绶為悗锝庡亞椤︿即鎮楀▓鍨珮闁稿锕ユ穱濠囨嚋闂堟稓绐炴繝鐢靛Т鐎氼噣宕㈤浣风箚闁绘劦浜滈埀顒佺墵閹兾旈崘鈺佸簥闂佺鏈崺鍐几閺傛５褰掓偂鎼达絾鎲奸梺绋匡功閺佸骞冨畡鎵虫瀻闊洦鎼╂导鈧梻浣虹帛閹尖晠宕瑰畷鍥潟闁圭儤顨嗛崑鎰版⒒閸喓鈯曢柣搴ゎ嚙椤啴濡堕崱妯硷紭闂佺娴烽弫濠氱嵁閸愵喖绠氱憸蹇涘汲閸℃稒鐓冪憸婊堝礈濠靛桅闁圭増婢橀柨銈嗕繆閵堝嫯鍏岄柛?6.x 婵犵數濮烽弫鎼佸磿閹寸姴绶ら柦妯侯棦濞差亝鏅滈柣鎰靛墮鎼村﹪姊洪崨濠傚Е濞存粍鐗犲畷鎴﹀箻鐠囨彃鐎銈嗗姧缁叉椽骞忛崷顓犵＝濞达絽澹婇崕蹇斻亜閿旇棄顥嬮柟骞垮灩閳规垹鈧綆浜為ˇ銊ヮ渻閵堝懐绠伴悗姘煎櫍瀹曘垽顢楅崟顑芥嫽婵炶揪绲介幉锟犲疮閻愭番浜滄い鎾跺仦閸犳鈧娲戦崡鎶界嵁閸ヮ剚鍋嬮柛顐ｇ箑缂冩洟姊婚崒娆戣窗闁告挻鐟х划鏃堟偨缁嬭法鏌?
         if (is26x()) {
@@ -1006,7 +1004,28 @@ public final class ConfigScreenManager {
     private static void drawModTree(GuiContext ctx, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
 
-        for (ConfigScreenState.TreeRow row : state.treeRows) {
+        for (int i = 0; i < state.treeRows.size(); i++) {
+            ConfigScreenState.TreeRow row = state.treeRows.get(i);
+
+            // 一个模组（名称 + 其 tab）作为一个整体框，不同模组之间留空露出游戏背景。
+            if (!row.tab()) {
+                int lastY = row.y() + row.h();
+                for (int j = i + 1; j < state.treeRows.size(); j++) {
+                    ConfigScreenState.TreeRow next = state.treeRows.get(j);
+                    if (!next.tab()) {
+                        break;
+                    }
+                    lastY = next.y() + next.h();
+                }
+
+                int boxY = row.y() - 2;
+                int boxH = lastY - row.y() + 4;
+                if (boxY >= layout.navY && boxY + boxH <= layout.sidebarY + layout.sidebarH - 8) {
+                    UiTheme.fill(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x26000000);
+                    UiTheme.outline(ctx, layout.sidebarX + 1, boxY, layout.sidebarW - 7, boxH, 0x25FFFFFF);
+                }
+            }
+
             int x = row.x();
             int y = row.y();
             int w = row.w();
@@ -1031,9 +1050,11 @@ public final class ConfigScreenManager {
                         row.selected() ? UiTheme.TEXT_TITLE : UiTheme.TEXT_SUB, row.selected());
             } else {
                 if (row.selected()) {
-                    UiTheme.fill(ctx, x, y, w, h, 0x33FFFFFF);
-                    UiTheme.outline(ctx, x, y, w, h, 0xFFFFFFFF);
-                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
+                    int boxX = layout.sidebarX;
+                    int boxW = layout.sidebarW - 6;
+                    UiTheme.fill(ctx, boxX, y, boxW, h, 0x33FFFFFF);
+                    UiTheme.outline(ctx, boxX, y, boxW, h, 0xFFFFFFFF);
+                    UiTheme.fill(ctx, boxX + 1, y + 1, 3, h - 2, UiTheme.TEXT_ACCENT);
                 }
 
                 UiTheme.text(ctx, row.name(), x + 8, y + 3,
@@ -1175,8 +1196,8 @@ public final class ConfigScreenManager {
         ConfigLayout layout = state.layout;
 
         // 椤舵爮鎼滅储鍖哄煙鏁磋鍙偣锛岄伩鍏嶆枃瀛楁鍐呴儴鍧愭爣鍋忓樊瀵艰嚧鐐逛笉涓€?
-        boolean inTopBar = mouseY >= layout.panelY && mouseY <= layout.panelY + 30 &&
-                mouseX >= layout.sidebarX + layout.sidebarW;
+        boolean inTopBar = mouseX >= field.getX() - 2 && mouseX <= field.getX() + field.getWidth() + 2 &&
+                mouseY >= field.getY() - 2 && mouseY <= field.getY() + field.getHeight() + 2;
 
         if (!inTopBar) {
             return false;
