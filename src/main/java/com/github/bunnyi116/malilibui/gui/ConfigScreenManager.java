@@ -382,8 +382,17 @@ public final class ConfigScreenManager {
             modButton.setRenderDefaultBackground(false);
             state.treeRows.put(modButton, new ConfigScreenState.TreeRow(name, version, current, false));
             screen.addButton(modButton, (button, mouseButton) -> {
-                if (!EXPANDED_MODS.remove(modId)) {
+                if (current) {
+                    if (!EXPANDED_MODS.remove(modId)) {
+                        EXPANDED_MODS.add(modId);
+                    }
+                } else {
                     EXPANDED_MODS.add(modId);
+                    GuiBase target = entry.info().configScreenSupplier().get();
+
+                    if (target != null) {
+                        GuiBase.openGui(target);
+                    }
                 }
 
                 // 閻庢鍠栭幖顐﹀春濡や胶鈻旈悗锝傛櫇椤忛亶鎮介鍡楁搐濞呫垻鈧偣鍊楅崕銈夋偉閺屻儲鏅悘鐐垫櫕濞兼梻鈧鍠掗崑?闂佽　鍋撻柟顖滃瀹曟娊鏌涘▎妯圭盎濠靛倹鐗犲畷顐㈩吋閸涱剛顔嗘繛鎾寸殰閸愩劎浠氶柣鐐翠緱閻撳妲愬┑鍥┾枖鐎广儱妫楅埅鐢碘偓娈垮枓閸嬫捇鏌ｉ敐鍛劯婵為棿鍗虫俊?
