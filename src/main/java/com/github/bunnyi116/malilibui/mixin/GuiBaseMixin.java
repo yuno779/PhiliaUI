@@ -64,6 +64,8 @@ public abstract class GuiBaseMixin {
             return;
         }
 
+        ConfigScreenManager.onSearchBlur((GuiBase) (Object) this);
+
         if (ConfigScreenManager.onTreeScrollbarClick((GuiBase) (Object) this, click.x(), click.y())) {
             cir.setReturnValue(true);
             return;
@@ -78,6 +80,22 @@ public abstract class GuiBaseMixin {
     private void malilibui$mouseScrolled(double mouseX, double mouseY, double horizontal,
                                          double vertical, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
         if (ConfigScreenManager.onTreeScroll((GuiBase) (Object) this, mouseX, mouseY, vertical)) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
+    private void malilibui$searchChar(net.minecraft.client.input.CharacterEvent input,
+                                      org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigScreenManager.onSearchChar((GuiBase) (Object) this, input.codepoint())) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
+    private void malilibui$searchKey(net.minecraft.client.input.KeyEvent input,
+                                     org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigScreenManager.onSearchKey((GuiBase) (Object) this, input.key())) {
             cir.setReturnValue(true);
         }
     }

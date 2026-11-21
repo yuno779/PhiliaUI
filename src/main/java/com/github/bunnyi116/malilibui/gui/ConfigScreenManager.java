@@ -365,6 +365,7 @@ public final class ConfigScreenManager {
             GuiTextFieldGeneric field = new GuiTextFieldGeneric(x, y, w, 16, screen.getFont());
             field.setMaxLength(64);
             field.setFocused(true);
+            state.searchActive = true;
             state.searchField = field;
             ((GuiBaseAccessor) screen).malilibui$getTextFields().add(new TextFieldWrapper<>(field, null));
         } else {
@@ -1091,6 +1092,62 @@ public final class ConfigScreenManager {
     }
 
     /** 点击/拖动左侧滚动条时直接跳到对应位置。 */
+    public static boolean onSearchChar(GuiBase screen, int codepoint) {
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state == null || state.searchField == null || !state.searchActive) {
+            return false;
+        }
+
+        if (codepoint < 32 || codepoint == 127) {
+            return false;
+        }
+
+        String text = state.searchField.getValue();
+
+        if (text.length() < 64) {
+            state.searchField.setValue(text + new String(Character.toChars(codepoint)));
+            state.searchQuery = state.searchField.getValue();
+        }
+
+        return true;
+    }
+
+    public static boolean onSearchKey(GuiBase screen, int keyCode) {
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state == null || state.searchField == null || !state.searchActive) {
+            return false;
+        }
+
+        if (keyCode == 259) { // GLFW_KEY_BACKSPACE
+            String text = state.searchField.getValue();
+
+            if (!text.isEmpty()) {
+                state.searchField.setValue(text.substring(0, text.length() - 1));
+                state.searchQuery = state.searchField.getValue();
+            }
+
+            return true;
+        }
+
+        if (keyCode == 257) { // GLFW_KEY_ENTER
+            state.searchActive = false;
+            state.searchField.setFocused(false);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void onSearchBlur(GuiBase screen) {
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state != null) {
+            state.searchActive = false;
+        }
+    }
+
     /** 点击顶栏搜索框时，把输入焦点从列表内搜索框转到顶栏。 */
     public static boolean onSearchClick(GuiBase screen, double mouseX, double mouseY) {
         ConfigScreenState state = STATES.get(screen);
@@ -1120,6 +1177,7 @@ public final class ConfigScreenManager {
         }
 
         field.setFocused(true);
+        state.searchActive = true;
         return true;
     }
 
