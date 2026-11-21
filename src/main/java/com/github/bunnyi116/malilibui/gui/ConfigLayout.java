@@ -79,7 +79,7 @@ public final class ConfigLayout {
 
         layout.margin = layout.compact ? 6 : 14;
         layout.pad = layout.compact ? 6 : 10;
-        layout.headerH = 30;
+        layout.headerH = ConfigScreenManager.is26x() ? 30 : 28;
 
         layout.panelX = layout.margin;
         layout.panelY = layout.margin;
