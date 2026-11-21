@@ -356,11 +356,12 @@ public final class ConfigScreenManager {
             String dropdownClass = dropdown.getClass().getName();
             if (dropdownClass.contains("magiclib") || dropdownClass.contains("SelectorDropDownList")) {
                 // MasaGadget 用 MagicLib 的 SelectorDropDownList 替代原版切换器。
-                // 没有原生切换器时，仍放到内容区标题栏右侧，并适当加宽避免模组名截断。
-                int width = Math.max(switcher != null ? switcher.getWidth() : 130, 170);
+                // 宽度保持与原版切换器一致，只增加一页可显示的条目数。
+                int width = switcher != null ? switcher.getWidth() : 130;
                 dropdown.setWidth(width);
                 dropdown.setHeight(switcher != null ? switcher.getHeight() : 18);
                 dropdown.setPosition(right - width, y);
+                expandMasaGadgetVisibleEntries();
                 continue;
             }
 
@@ -370,6 +371,33 @@ public final class ConfigScreenManager {
             right -= 4;
         }
     }
+
+    private static boolean masaGadgetEntriesExpanded;
+
+    private static void expandMasaGadgetVisibleEntries() {
+        if (masaGadgetEntriesExpanded) {
+            return;
+        }
+
+        try {
+            Class<?> configs = Class.forName("com.plusls.MasaGadget.game.Configs");
+            Object option = configs.getField("fastSwitchMasaGadgetConfigGuiVisibleEntries").get(null);
+            Object value = option.getClass().getMethod("getIntegerValue").invoke(option);
+
+            if (value instanceof Integer current && current < 12) {
+                try {
+                    option.getClass().getMethod("setIntegerValue", int.class).invoke(option, 12);
+                } catch (NoSuchMethodException e) {
+                    option.getClass().getMethod("setValue", Object.class).invoke(option, 12);
+                }
+            }
+
+            masaGadgetEntriesExpanded = true;
+        } catch (Throwable ignored) {
+            // MasaGadget/MagicLib 不存在或 API 变化时保持原样。
+        }
+    }
+
 
     private static void ensureRenderLayerLayout(GuiBase screen) {
         if (isDisabledByConfig(screen) || isTooSmallToManage(screen)) {
