@@ -79,7 +79,7 @@ public final class ConfigLayout {
 
         layout.margin = layout.compact ? 6 : 14;
         layout.pad = layout.compact ? 6 : 10;
-        layout.headerH = ConfigScreenManager.is26x() ? 30 : 28;
+        layout.headerH = 28;
 
         layout.panelX = layout.margin;
         layout.panelY = layout.margin;
@@ -117,9 +117,7 @@ public final class ConfigLayout {
         layout.listW = Math.max(80, layout.contentW - layout.pad * 2);
         layout.listH = Math.max(40, layout.contentH - layout.headerH - layout.pad);
 
-        int navTop = ConfigScreenManager.is26x()
-                ? (layout.compact ? 46 : 62)
-                : 28;
+        int navTop = 28;
 
         layout.navX = layout.sidebarX + (layout.compact ? 8 : 10);
         layout.navY = layout.sidebarY + navTop;

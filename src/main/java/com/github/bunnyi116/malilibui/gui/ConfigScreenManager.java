@@ -324,7 +324,7 @@ public final class ConfigScreenManager {
         applyNavLayout(configs, state);
 
         // 2.0闂傚倸鍊搁崐鎼佸磹閻戣姤鍊块柨鏃堟暜閸嬫挾绮☉妯诲櫧闁活厽鐟╅弻鐔兼倻濮楀棙鐣烽梺绋款儍閸婃繈寮婚敓鐘查唶婵犻潧妫崵?闂傚倸鍊峰ù鍥敋瑜嶉湁闁绘垼妫勭粻鐘绘煙閹规劦鍤欑紒鐘靛枛濮婁粙宕堕鈧闂佸湱澧楀妯肩矆閸愨斂浜滄い鎾跺枎缁椻晠鏌嶈閸撴氨鈧瑳鍥﹂柛鏇ㄥ枤閻も偓闂佽鍎崇壕顓烆嚕閹间焦鈷戠紓浣股戦悡銉╂煕濮橆剦鍎旂€殿喗鐓￠、妤呭礋椤掑倸骞堥梻浣告惈濞层垽宕濆畝鍕祦婵せ鍋撻柡宀嬬秮楠炴﹢鎳犻鍌滃床婵犳鍠栭敃銉ヮ渻閽樺鏆︽い鎰剁畱缁€瀣亜閹炬剚妾х紓宥勭窔瀵鈽夐姀鐘栤晠鏌ㄩ弴妤€浜鹃梺宕囩帛濞茬喖寮婚悢鍏兼優妞ゆ劑鍊栭崳鏉课旈悩闈涗粶妞ゆ垵顦甸獮鍐煛閸涱喖浠虹紒鐐緲椤﹁鲸鎯旀繝鍌楁斀闁绘ɑ顔栭弳顖涗繆閹绘帗鍤囩€规洝顫夌€靛ジ寮堕幋鐙€鍟囨俊鐐€栭崝褔姊介崟顖氱；闁稿瞼鍋為悡娆撳级閸儳鐣烘俊缁㈠櫍閺岋綁骞橀崡鐐插缂備胶绮惄顖炵嵁鐎ｎ喗鍊婚柛鈩冪懃婵ジ姊虹拠鎻掝劉闁活収鍣ｅ畷锟犲箮閽樺鐣烘繛瀵稿Т椤戞劙寮澶嬬叆婵犻潧妫欓崳鎼佹煕閻樿韬慨?TAB 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗ù锝夋交閼板潡姊洪鈧粔顕€鍩€椤掑﹦鐣电€规洖銈告俊椋庘偓锝庝簼閸犳﹢鏌熼鐐珪缂侇喗鐟ч幑鍕€﹂幋婵囨毆闂傚倸鍊风粈渚€骞夐敓鐘茬闁哄稁鍘介崑鈺傘亜閹板墎鐣辩紒鐘冲▕閺岋繝宕堕埡浣囥儵鏌℃径瀣€愭慨濠冩そ瀹曠兘顢橀悙鏉款棜婵犵數鍋涢崥瀣偡閳哄懏鏅查柣鎰惈缁犺崵绱撴担楠ㄦ岸骞忕紒妯肩闁瑰墽顥愭竟妯荤箾鐏炲倸鈧繂顕ｉ幖浣瑰亜闁稿繗鍋愰崢閬嶆⒑闂堟侗鐓┑鈥虫川缁顫滈埀顒勫蓟閻旇偐宓侀柛顭戝枤娴犵厧顪冮妶搴′簼缂佽瀚伴獮鎴﹀礋椤栨稒鍎柣鐘叉礌閳ь剝娅曢弳顏勨攽閻樺灚鏆╅柛瀣仱楠炴劖绻濆顒佹К闂佸憡鍔﹂崰鏍婵犳碍鐓欓柟顖嗗苯娈剁紓浣哄█缁犳牠寮诲☉銏╂晝妞ゆ劑鍨归～顐ょ磽娴ｅ壊妯堥柛锝忕秮瀵鎮㈤搹鍦厯闂佸憡鐗换婵堟鐎靛摜纾藉ù锝呮惈鏍￠梺鐑╂櫓閸ㄨ鲸绌辨繝鍥ㄥ仾妞ゆ牭绲鹃瀷濠碉紕鍋戦崐褏鈧潧鐭傚畷鎶芥晲閸滀焦缍庣紓鍌欑劍椤洭鎮疯ぐ鎺撶厱闁靛鍨甸崰姘焽婵犳碍鈷掑ù锝囩摂閸ゆ瑧绱掔紒妯虹仼闁瑰箍鍨藉畷鐓庘攽閸喐顔曢梻渚€娼х换鍫ュ磹閺囩偞绾梻鍌欒兌绾爼宕滃┑瀣仭闁靛繈鍊曢崙鐘绘煛瀹ュ骸骞楅柣鎾寸懇閺屾稖绠涘顑挎睏闂佸搫妫欓敃銏ゅ蓟濞戙垹惟闁靛鍠氶崥瀣倵鐟欏嫭绀冩俊鐐扮矙閻涱噣宕堕浣镐罕闂佸壊鍋呯喊宥団偓姘偢濮婄粯鎷呴崨濠呯缂備緡鍣崹鎶藉极椤曗偓閹瑩鎳犻浣瑰櫑闂傚倷娴囧畷鐢稿窗閹邦喖鍨濋幖娣灪濞呯姵淇婇妶鍌氫壕闁捐崵鍋ら弻娑㈠箛閵婏附鐝掔紓?
-        if (!is26x()) {
+        if (true) {
             for (ButtonBase nav : state.navButtons) {
                 nav.setPosition(-1000, -1000);
             }
@@ -359,9 +359,7 @@ public final class ConfigScreenManager {
      * 闂傚倸鍊搁崐鎼佸磹閻戣姤鍤勯柛顐ｆ磵閳ь剨绠撳畷濂稿閳ュ啿绨ラ梻浣烘嚀閻°劎鎹㈤幇鐗堝殌闁秆勵殕閻撴洟鏌ㄩ弮鍥跺殭妤犵偞鐗犻弻娑㈠Ω閿斿墽鐣洪梺闈涙搐鐎氫即鐛幒妤€骞㈡俊鐐村劤椤ユ岸姊绘担绋跨稏缂侀硸鍠氱槐鐐寸瑹閳ь剙顕ｆ繝姘╅柕澶堝灪椤秴鈹戦埥鍡楃仧閻犫偓閿旇棄顕遍柍褜鍓熷缁樻媴鐟欏嫨浠ч梺鍛娒妶鎼併€侀弽銊ョ窞闁归偊鍓濋幗鏇炩攽閻愭潙鐏﹂懣銈夋煛鐎ｎ亜顒㈠ǎ鍥э躬椤㈡稑鈹戦崶鏈靛摋濠电偛顕慨顓㈠疾閻樺樊娼栭柛婵嗗▕閾忚瀚氶棅顐幘閻╁海绱撻崒娆戭槮妞わ缚鍗抽獮鎰板箮婵劏鍋撴担鍓叉僵闁肩鐏氬▍婊勭節閵忥絾纭鹃柨鏇畵瀹曟繈鏁冮埀顒勨€旈崘顔嘉ч柛鈩冾殘閻熴劑鏌ｆ惔銏犲毈闁告挾鍠庨悾鐑芥晲閸℃瑧鐦堥梺鎼炲劘閸斿酣宕㈤柆宥嗏拺闁革富鍘兼禍楣冩煏閸モ晛浠滄い顏勫暣楠炴帡寮崹顔句喊闂備焦鐪归崹褰掑箟閿熺姴纾归柣銏犳啞閸嬧剝绻涢崱妤冪妞ゅ浚鍋婇弻鐔兼寠婢跺﹥娈婚梺璇″枟椤牏绮诲☉銏犵睄闁稿本绋戝▍妯荤節绾版ǚ鍋撻崘鑼獓闂佸憡姊归悷鈺侇嚕椤愶箑纾奸柣鎰嚟閸欏棗顪冮妶鍡欏闁活収鍠楃粩鐔煎即閻愨晜鏂€闂佺粯鍔栧娆撴倶閿曞倹鐓熼柣鏇氱閻忥箓鏌熼鎯т槐闁瑰磭鍋ゆ俊鐤槾妞?TAB 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閸愬弶鐤勯梻浣告啞閹稿棝宕ㄩ婊冨脯闂傚倷娴囬鏍垂鏉堛劎鐝堕悗锝庡枛閻鏌涜椤ㄥ棝鍩?
      */
     private static void ensureSearchField(GuiBase screen, ConfigScreenState state) {
-        if (is26x()) {
-            return;
-        }
+        
 
         ConfigLayout layout = state.layout;
         int x = layout.sidebarX + layout.sidebarW + 17;
@@ -420,9 +418,7 @@ public final class ConfigScreenManager {
     }
 
     private static void ensureModTree(GuiBase screen, ConfigScreenState state) {
-        if (is26x()) {
-            return;
-        }
+        
 
         ConfigLayout layout = state.layout;
         state.treeRows.clear();
@@ -538,7 +534,7 @@ public final class ConfigScreenManager {
 
     /** Handles clicks on the custom tree without ButtonGeneric list churn. */
     public static boolean onTreeClick(GuiBase screen, double mouseX, double mouseY, int mouseButton) {
-        if (is26x() || !hasLayout(screen)) {
+        if (!hasLayout(screen)) {
             return false;
         }
 
@@ -615,9 +611,7 @@ public final class ConfigScreenManager {
      * 26.x 濠电姷鏁告慨鐑藉极閹间礁纾块柟瀵稿Т缁躲倝鏌﹀Ο渚＆婵炲樊浜濋弲婊堟煟閹伴潧澧幖鏉戯躬濮婃椽宕ㄦ繝鍌毿曟繛瀛樼矋閻楃姴鐣烽幋锕€绠婚悹鍥ㄥ絻閻庮厼顪冮妶鍡楀Ё缂傚秴妫楄灋闁告劦鍠楅崐鐢告偡濞嗗繐顏痪鐐倐閺屾盯濡搁妶鍥╃厯濡ょ姷鍋涢崯瀛樻叏閳ь剟鏌ｅΟ鐑橆棥婵炲拑绲垮Σ鎰板箳閹冲磭鍠撶槐鎺懳熼懡銈呯濠电姷鏁告慨鐑藉极閹间礁纾婚柣鎰惈閸ㄥ倿鏌涢锝嗙缂佺姵褰冮湁闁挎繂鎳庨ˉ蹇旂箾鐎涙澧甸柡灞炬礃缁绘稖顦查柟铏姍閹箖鎳滈悽鐢电槇闂侀潧楠忕徊浠嬫偂閹扮増鐓曢柡鍐ｅ亾婵炲弶绮庨崚鎺楀醇閻旈绐為柣搴祷閸斿鑺辩拠宸富闁靛牆妫欑亸鐢告煕閻樺弶鎹ｇ紒顕呭幖椤繈鎳滈棃娑掑亾?
      */
     private static void positionExtraDropdowns(GuiConfigsBase configs, ConfigScreenState state) {
-        if (is26x()) {
-            return;
-        }
+        
 
         ConfigLayout layout = state.layout;
         WidgetDropDownList<ModInfo> switcher = ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
@@ -1004,8 +998,8 @@ public final class ConfigScreenManager {
 
         // 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閼碱剦妲烽梻浣告惈濞层垽宕归崷顓犱笉闁绘顕х粻褰掑级閸繂鈷旈柟顔笺偢閺岋綁顢橀悙闈涒叺闂佸搫鐭夌紞浣规叏閳ь剟鏌曡箛濠冩珖闁告柨鎽滅槐鎾存媴閹绘帊澹曢梻浣告啞濞诧箓宕归柆宥呯；闁斥晛鍟扮粻楣冩煕閳╁喚娈樼紒鐘卞嵆閺岋絽鈹戦崶銊㈡嫻闂侀潧娲ょ€氫即鐛崶顒€閱囬柡鍥╁櫏閳ь剙绉撮—鍐Χ閸愩劌濮庨梺缁橆殕閹瑰洤顕ｆ繝姘嵆闁挎稑瀚弶鍛婄節閻㈤潧孝闁稿﹥鎮傞崺娑欏緞瀹€鈧壕钘壝归敐鍫燁棄闁绘挻鍔欓弻锝夊箼閸曨厾鐦堥悗娈垮枛椤攱淇婇幖浣肝ㄩ柕蹇婃濞兼梹绻濈喊妯活潑闁搞劎鏁诲畷鎴﹀箛椤撶儐鍤ら梺鎼炲労閸撴岸鍩涢幋锕€绾ч柣鎰緲瀹撳棙淇婇崜褍鍘撮柡灞剧⊕缁绘繈宕橀鍕ㄦ嫛缂傚倷绶￠崰鏍敄閸涙惌鏁囧┑鍌滎焾楠炪垺淇婇姘儓濠碘剝濞婂缁樼瑹閳ь剙顭囪閹广垽骞掗幘鍐茬亖濡炪倖鎸鹃崐锝呪槈閵忊剝娅㈤梺缁樏壕顓㈠储閸涘﹦绡€闁靛骏绲剧涵楣冩煠濞茶鐏＄紒鍌涘浮楠炴帡寮崒婊愮床婵＄偑鍊栧濠氬疾椤愶箑绠犻柛銉墯閻撴洟鏌嶇憴鍕姢濞存粎鍋撴穱濠囨倷椤忓嫧鍋撻弽褜鍟呭┑鐘宠壘绾惧鏌熼悙顒傛殬濞存粍绮撻弻銊╁籍閸屾矮澹曢梺鍝勬－閸撴瑩鍩為幋锕€鐒洪柛鎰ㄦ櫇缁嬪洤顪冮妶鍡樺碍闁告艾顑呴銉╁礋椤掑倻鐦堥梺鍛婃礀閻忔艾鐡┑鐘垫暩婵挳鎯€婢舵劕绾ч幖瀛樻尭娴滈箖鏌￠崶鈺佇涢柛瀣尭椤繈濡烽妷銉綆闂備胶纭堕弬渚€宕?/ 婵犵數濮烽弫鍛婃叏閻戣棄鏋侀柟闂寸绾惧鏌ｉ幇顒佹儓缂佺姵澹嗙槐鎺斺偓锝庡亽閸庛儵鏌涢妶鍡樼闁哄本鐩、鏇㈡晲閸℃瑯妲伴梻浣侯焾椤戝懘宕愰崸妤€绠栨俊銈呮噺閺呮煡骞栫划鍏夊亾閸愯尙顔囧┑鐘垫暩閸嬫盯鎯岄崼鐔侯洸妞ゅ繐鐗嗛拑鐔哥箾閹寸偟鐓繛宀婁邯閺屾盯骞樺璇蹭壕濠碘剝褰冮悧濠勬崲濞戞埃鍋撻悽娈跨劸閺嶏繝姊洪幐搴″摵婵☆偂鐒﹀鍕箛椤撶姴骞楁繝纰樻閸ㄦ娊銆佹繝鍥舵晢闁绘柨鍚嬮悡鏇㈡煟閺冨牊鏁遍柛鐘筹耿閺?
         int wellMargin = layout.compact ? 4 : WELL_MARGIN;
-        UiTheme.fill(ctx, layout.contentX, layout.listY, layout.contentW,
-                ConfigScreenManager.is26x() ? layout.listH : layout.listH + layout.pad - 4, 0x55000000);
+        int wellH = layout.listH + layout.pad - 4;
+        UiTheme.fill(ctx, layout.contentX, layout.listY, layout.contentW, wellH, 0x55000000);
 
         drawContentHeader(ctx, state);
         drawSearchBar(ctx, state);
@@ -1133,17 +1127,6 @@ public final class ConfigScreenManager {
                 0x00000000);
 
         // 闂傚倸鍊峰ù鍥敋瑜庨〃銉╁箹娴ｇ懓鈧埖鎱ㄥ鍡楀箻闁绘繂鐖奸弻娑㈠焺閸愵亖妲堥梺姹囧€楅崑鎾诲Φ閸曨垰绠涢柛顐ｆ礃椤庡秹姊虹粙娆惧剳闁哥姵鐗曢～蹇撁洪鍕€銈嗘礀閹冲酣宕滈幎鑺モ拺鐎规洖娲ㄧ敮娑欎繆椤愩垹鏆ｉ柣娑卞櫍瀵粙鈥栭妷銉╁弰妞ゃ垺顨婇崺鈧い鎺戝閸婅埖銇勯弴妤€浜鹃梺鍝勬湰閻╊垱淇婂宀婃Щ闁汇埄鍨伴悥濂稿箺閸洘鍊烽柣鎴烆焽閸樿棄鈹戞幊閸婃劙宕戦幘缁樼厽闁瑰灝鍟禍鐗堛亜閵忊剝顥堢€规洟浜跺鎾偐閹绘巻鎸勬繝纰夌磿閸嬫垿宕愰弽顓熷亱婵犲﹤鐗嗙壕濠氭煟閹邦剚鎯堥柣?.21.11 濠电姷鏁告慨鐑藉极閹间礁纾婚柣妯款嚙缁犲灚銇勮箛鎾搭棤缂佲偓婵犲洦鐓冪憸婊堝礈濮樿鲸宕叉繛鎴炵懃缁剁偤鎮楅敐搴′簽妞わ缚鍗抽幃妤€鈻撻崹顔界彯闂佺顑呴敃銉︾┍婵犲洦鍤嬮梻鍫熺〒缁愮偞绻濋悽闈浶㈤悗姘煎櫍瀹曘垽顢楁担椋庣畾闂佺粯鍔︽禍婊堝焵椤掍胶澧甸柟顔ㄥ吘鏃堝礃閳轰礁绨ラ梻浣侯焾閺堫剟宕洪崘顔煎嚑闁哄倹锛曡ぐ鎺撳亗閹艰揪绲鹃幉濂告⒑缁嬪尅鍔熼柡浣割煼楠炲啫鐣￠幍铏€婚棅顐㈡处閹尖晜瀵奸埀顒勬⒒娴ｈ櫣甯涢柟灏栨櫊瀹曠懓鐣烽崶顭戞綗闂佸湱鍎ら〃鍡涘磻閹扮増鈷掗柛顐ゅ枔閳洟鏌ｆ惔銈庡殭妞ゎ亜鍟存俊鍫曞幢濡》绱梻浣侯焾濞寸兘寮繝姘卞祦闁告劦鍠栫粻姘辨喐韫囨稑姹查柛鈩冪⊕閻撳啰鎲稿鍫濈婵犻潧顑呮闂佸湱澧楀姗€鏌ㄩ妶鍡曠箚闁靛牆瀚崗宀勬煕?6.x 濠电姷鏁告慨鐑藉极閹间礁纾块柟瀵稿Т缁躲倝鏌﹀Ο渚＆婵炲樊浜濋弲婊堟煟閹伴潧澧幖鏉戯躬濮婃椽宕ㄦ繝鍌毿曟繛瀛樼矋閻楃姴鐣烽幋锕€绠婚悹鍥ㄥ絻閻庮厼顪冮妶鍡楀Ё缂佸弶妞介獮蹇涘捶椤撶姷锛濇繛杈剧到婢瑰﹪宕曡箛鏂讳簻闁挎棁妫勯ˉ瀣煙楠炲灝鐏╅柍瑙勫灩閳ь剨缍嗘禍鐐核囬妸銉富闁靛牆鎳愮粻浼存倵濮樼厧娅嶇€规洏鍨介、妤呭礋椤戣姤瀚藉┑鐐舵彧缁蹭粙骞夐敓鐘茬柈闁绘劖鐣禍婊勩亜閹捐泛浠﹂柛鐘愁焽閳ь剝顫夊ú鎴﹀础閹剁晫宓侀柛銉墯閸嬪鏌涢锝囩畱缂傚啯娲熷濠氬磼濞嗘垼绐楅梺鍛婃尰閻熝呭垝閺冨牊鍋ㄧ紒瀣硶閺?
-        if (is26x()) {
-            UiTheme.fill(ctx, layout.sidebarX + 12, layout.sidebarY + 16, 3, 14, UiTheme.TEXT_ACCENT);
-            UiTheme.text(ctx, UiTheme.trim(ctx.fontRenderer(), modName, layout.sidebarW - 40),
-                    layout.sidebarX + 21, layout.sidebarY + 19, UiTheme.TEXT_TITLE, true);
-            UiTheme.text(ctx, "Philia UI", layout.sidebarX + 21, layout.sidebarY + 33,
-                    UiTheme.TEXT_SUB, false);
-
-            UiTheme.hline(ctx, layout.sidebarX + 12, layout.sidebarY + 48, layout.sidebarW - 24,
-                    0x22FFFFFF);
-            return;
-        }
 
         int badgeY = layout.panelY + 4;
         UiTheme.fill(ctx, layout.sidebarX + 1, badgeY, layout.sidebarW + 9, 18,
@@ -1242,7 +1225,7 @@ public final class ConfigScreenManager {
 
     /** 濠电姷鏁告慨鐢割敊閺嶎厼绐楁俊銈傚亾闁伙絿鍏樺畷绋课旈埀顒€顔忓┑鍥ヤ簻闁圭偓鍓氬褏绱撳鍕獢鐎殿喖顭烽弫鎰緞婵犲倸鏁ら梻浣圭湽閸ㄥ寮灞稿徍闂備浇顕у锕傦綖婢跺⊕鍝勵煥閸繄顦у┑鈽嗗灥椤斿﹦鎹㈤崱娑欑厵闂傚倸顕ˇ锕傚船椤栫偞鈷戦梻鍫熺〒婢ф洘绻涢弶鎴濃偓鍨暦椤掑嫭顥堟繛鎴炲笚閺傗偓闂備胶绮崝鏇㈡偤閵娧傜剨濞寸厧鐡ㄩ悡鐔兼煏婵犲繐顩柣顓熷笧閳ь剝顫夊ú婊堝窗閺嶎厹鈧礁顫滈埀顒勫箖濞嗘挻顥堟繛鎴烆焽椤╂挳姊婚崒姘偓鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閸愯弓缃曢梻浣告惈濞层垽宕归崷顓犱笉閻熸瑥瀚ㄦ禍婊堟煙閺夎法鍩ｆ俊缁㈠櫍閺屾稓鈧綆浜滈埀顒€婀遍幑銏犫槈閵忕姴鑰垮┑掳鍊撻懗鍫曘€呮导瀛樷拺缂備焦蓱鐏忣亪鏌涙惔銏㈠弨妤犵偛鐗撴俊鎼佸Ψ椤旇棄缂撻梻浣虹《閸撴繈銆冮崨杈剧稏闁冲搫鎳忛崑鐘虫叏濡搫鑸归柡瀣⊕閹便劍绻濋崘鈹夸虎閻庤娲﹂崑濠傜暦閻旂⒈鏁冮柨婵嗘－閸熷牓姊婚崒娆掑厡缁绢厼鐖煎鎻掝煥閸喎浜卞┑鐘诧工閻楀棛绮堥崱娑欑厵闁绘垶锕╁▓鏃傜磼閻樼數甯涢柕鍥у瀵噣宕惰濮规顪冮妶蹇撶槣闁革綇绲介～蹇撁洪鍜佹濠电偞鍨兼禍顒勫矗濮橆厾绡€缁剧増菤閸嬫捇鎼归銏＄亷闁诲氦顫夊ú妯侯渻娴犲宓侀柛銉墯閸嬪鏌涢鐘茬仼鐎殿喛娅曠换婵嬫偨闂堟稐娌梺鎼炲妼閻栧ジ鍨鹃敃鍌氱倞妞ゆ帊绀侀埀顒€娼￠弻锝夊箣閿濆憛鎾绘煟閹惧啿鏆熼柟鑼焾椤劑宕煎┑鍫Ф婵犵數鍋涘Λ娆撳礉濡ゅ懏鈷旈柛鏇ㄥ灡閻撴盯鏌涢幇鈺佸闁逞屽墲瀹曠數鍒掓繝姘婵炲棗澧介崬鐢告⒑閸忓吋鍊愭繛浣冲嫭鍙忛柛銉墯閻撴洘绻涢崱妤呯崪闁衡偓婵犳碍鐓忛柛銉戝喚浼冮悗娈垮枙缁瑦淇婇幖浣肝╅柕澶樺枟椤ャ倝姊婚崒娆愮グ妞ゆ泦鍕垫闁归棿绀佸洿闂佸綊妫跨粈渚€鎷?TAB闂?*/
     public static boolean onTreeScroll(GuiBase screen, double mouseX, double mouseY, double vertical) {
-        if (is26x() || !hasLayout(screen)) {
+        if (!hasLayout(screen)) {
             return false;
         }
 
@@ -1267,7 +1250,7 @@ public final class ConfigScreenManager {
 
     /** 閹锋牕濮╁姘З閺夆剝妞傞幐澶愮炊閺嶅洤顤冮柌蹇旀纯閺傞缍呯純顔衡偓?*/
     public static boolean onTreeScrollbarDrag(GuiBase screen, double dragY) {
-        if (!treeBarDragging || is26x() || !hasLayout(screen)) {
+        if (!treeBarDragging || !hasLayout(screen)) {
             return false;
         }
 
@@ -1412,7 +1395,7 @@ public final class ConfigScreenManager {
 
     public static boolean onTreeScrollbarClick(GuiBase screen, double mouseX, double mouseY) {
         treeBarDragging = false;
-        if (is26x() || !hasLayout(screen)) {
+        if (!hasLayout(screen)) {
             return false;
         }
 
