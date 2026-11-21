@@ -33,7 +33,8 @@
     "dialog.GuiStringListEditMixin",
     "dialog.GuiTableEditMixin",
     "compat.LpctoolsConfigPageMixin",
-    "compat.SelectorDropDownListMixin"
+    "compat.SelectorDropDownListMixin",
+    "compat.WidgetDropDownListMixin"
   ],
   "injectors": {
     "defaultRequire": 1
