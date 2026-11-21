@@ -359,11 +359,6 @@ public final class ConfigScreenManager {
 
         int y = layout.navY - state.treeScroll;
         int bottom = layout.sidebarY + layout.sidebarH - 10;
-
-        if (!state.treeScrollAdjusted && y > bottom) {
-            state.treeScroll += y - bottom;
-            state.treeScrollAdjusted = true;
-        }
         final int modRowH = 28;
         final int tabRowH = 16;
         List<ModTree.ModEntry> entries = ModTree.snapshot();
@@ -380,6 +375,8 @@ public final class ConfigScreenManager {
         }
 
         state.treeContentH = totalH;
+        int viewH = Math.max(1, layout.sidebarH - 54);
+        state.treeScroll = Math.max(0, Math.min(state.treeScroll, Math.max(0, totalH - viewH)));
 
         for (ModTree.ModEntry entry : entries) {
             if (y + modRowH > bottom) {
@@ -442,7 +439,7 @@ public final class ConfigScreenManager {
                     String tabName = UiTheme.trim(screen.getFont(), tab, layout.navW - 42);
                     ButtonGeneric tabButton = new ButtonGeneric(layout.navX + 18, y, layout.navW - 18, tabRowH, "");
                     tabButton.setRenderDefaultBackground(false);
-                    state.treeRows.put(tabButton, new ConfigScreenState.TreeRow(tabName, "", tabIndex == state.selectedTabIndex, true, tabIndex));
+                    state.treeRows.put(tabButton, new ConfigScreenState.TreeRow(tabName, "", current && tabIndex == state.selectedTabIndex, true, tabIndex));
                     final int targetTab = tabIndex;
                     screen.addButton(tabButton, (button, mouseButton) -> {
                         // 鐟滅増鎸告晶鐘参熼敍鍕煁闁?tab闁挎稒姘ㄥú鍧楀箳閵夈劎娈堕柣?malilib 闁告鍠撻弫?tab 闁圭顦甸幐鎶芥儍閸曨厽纾ч柛姘煎墮濞呮帡鏁嶇仦鑲╃閻犲洣绀侀崹蹇涘箲閵忋垺鐣遍悘蹇氶哺濡插憡娼诲▎搴ｎ伇濡炪倗鍋ｉ埀?
@@ -980,6 +977,40 @@ public final class ConfigScreenManager {
 
         state.treeScroll = Math.max(0, Math.min(max,
                 state.treeScroll - (int) Math.signum(vertical) * 20));
+
+        ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
+        state.treeButtons.clear();
+        state.treeRows.clear();
+        state.treeBuilt = false;
+        return true;
+    }
+
+    /** 点击/拖动左侧滚动条时直接跳到对应位置。 */
+    public static boolean onTreeScrollbarClick(GuiBase screen, double mouseX, double mouseY) {
+        if (is26x() || !hasLayout(screen)) {
+            return false;
+        }
+
+        ConfigScreenState state = stateFor(screen);
+        ConfigLayout layout = state.layout;
+        int barX = layout.sidebarX + layout.sidebarW - 8;
+
+        if (mouseX < barX || mouseX > barX + 8) {
+            return false;
+        }
+
+        int viewTop = layout.sidebarY + 46;
+        int viewH = layout.sidebarH - 54;
+        int max = Math.max(0, state.treeContentH - viewH);
+
+        if (max <= 0 || mouseY < viewTop || mouseY > viewTop + viewH) {
+            return false;
+        }
+
+        int thumbH = Math.max(24, viewH * viewH / Math.max(state.treeContentH, viewH));
+        int travel = Math.max(1, viewH - thumbH);
+        int rel = Math.max(0, Math.min(travel, (int) mouseY - viewTop - thumbH / 2));
+        state.treeScroll = rel * max / travel;
 
         ((GuiBaseAccessor) screen).malilibui$getButtons().removeAll(state.treeButtons);
         state.treeButtons.clear();

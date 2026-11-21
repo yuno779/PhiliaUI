@@ -47,6 +47,15 @@ public abstract class GuiBaseMixin {
         }
     }
 
+    @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+    private void malilibui$mouseClicked(net.minecraft.client.input.MouseButtonEvent click, boolean doubleClick,
+                                        org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        // 编辑框优先，避免抢走输入焦点。
+        if (ConfigScreenManager.onTreeScrollbarClick((GuiBase) (Object) this, click.x(), click.y())) {
+            cir.setReturnValue(true);
+        }
+    }
+
     @Inject(method = "mouseScrolled", at = @At("HEAD"), cancellable = true)
     private void malilibui$mouseScrolled(double mouseX, double mouseY, double horizontal,
                                          double vertical, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
