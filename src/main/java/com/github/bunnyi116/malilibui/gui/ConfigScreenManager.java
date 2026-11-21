@@ -936,14 +936,14 @@ public final class ConfigScreenManager {
         // 闂佸憡鐟ラ崢鏍疾鐠轰警鐓ユ慨姗嗗墮琚熼梺鍝勵槴濡插嫮妲愭导鏉戠闁告侗鍙庨崯鍥旈崒娴㈣偐鑺遍鍌涘枂闁糕剝顨呯紞鎾绘煛閸愵厼鐓愬褏濞€瀵即宕滆娴犳盯鏌?
         int viewTop = layout.sidebarY + 46;
         int viewBottom = layout.sidebarY + layout.sidebarH - 8;
-        int viewH = viewBottom - viewTop;
+        int viewH = Math.max(1, viewBottom - viewTop);
+        int contentH = Math.max(state.treeContentH, viewH);
+        int thumbH = Math.max(24, viewH * viewH / contentH);
+        int maxScroll = Math.max(1, contentH - viewH);
+        int thumbY = viewTop + (viewH - thumbH) * Math.min(state.treeScroll, maxScroll) / maxScroll;
 
-        if (state.treeContentH > viewH && viewH > 0) {
-            int thumbH = Math.max(24, viewH * viewH / state.treeContentH);
-            int maxScroll = Math.max(1, state.treeContentH - viewH);
-            int thumbY = viewTop + (viewH - thumbH) * state.treeScroll / maxScroll;
-            UiTheme.fill(ctx, layout.sidebarX + layout.sidebarW - 5, thumbY, 3, thumbH, 0x88FFFFFF);
-        }
+        UiTheme.fill(ctx, layout.sidebarX + layout.sidebarW - 5, viewTop, 3, viewH, 0x22000000);
+        UiTheme.fill(ctx, layout.sidebarX + layout.sidebarW - 5, thumbY, 3, thumbH, 0x66FFFFFF);
     }
 
     /** 婵崿鍛ｉ柣鏍电秮瀹曠兘濡搁妷銈囶唵婵炴挻鐨滈崟顓炵厙闂佸憡鐗曢幖顐︽偂濞嗗浚鐓ユ慨姗嗗墮琚熼梺鍝勫暢閸╂牜鍒掗幘顔肩闁靛濡囬崺鎰版煥濞戞鐒烽柍褜鍓欐總鏃傜箔婢舵劕鍙婃い鏍ㄨ壘閻庡ジ鏌?TAB闂?*/
