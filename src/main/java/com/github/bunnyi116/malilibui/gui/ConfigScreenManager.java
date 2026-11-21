@@ -415,25 +415,6 @@ public final class ConfigScreenManager {
             }
         }
 
-        if (state.scrollToCurrent) {
-            int offset = 0;
-
-            for (ModTree.ModEntry entry : entries) {
-                if (entry.info().modId().equals(currentModId)) {
-                    break;
-                }
-
-                offset += modRowH;
-
-                if (EXPANDED_MODS.contains(entry.info().modId())) {
-                    offset += entry.tabs().size() * tabRowH;
-                }
-            }
-
-            state.treeScroll = offset;
-            state.scrollToCurrent = false;
-        }
-
         int viewH = bottom - layout.navY;
         state.treeScroll = Math.max(0, Math.min(state.treeScroll, Math.max(0, totalH - viewH)));
         state.treeContentH = totalH;
