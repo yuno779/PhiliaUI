@@ -1049,6 +1049,41 @@ public final class ConfigScreenManager {
 
         return switcher.onMouseClicked(click, doubleClick) || inside;
     }
+
+    /**
+     * 右上角切换器展开时，滚轮优先滚动它自己的列表，不能穿透到下方工作区。
+     */
+    public static boolean onSwitcherScroll(GuiBase screen, double mouseX, double mouseY,
+                                           double horizontal, double vertical) {
+        if (!(screen instanceof GuiConfigsBase configs)) {
+            return false;
+        }
+
+        WidgetDropDownList<ModInfo> switcher = ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+
+        if (switcher == null) {
+            return false;
+        }
+
+        WidgetDropDownListAccessor accessor = (WidgetDropDownListAccessor) switcher;
+
+        if (!accessor.malilibui$isOpen()) {
+            return false;
+        }
+
+        double left = switcher.getX();
+        double top = switcher.getY();
+        double right = left + switcher.getWidth() + accessor.malilibui$getScrollbarWidth();
+        double bottom = top + switcher.getHeight() + accessor.malilibui$getMaxHeight();
+
+        if (mouseX < left || mouseX > right || mouseY < top || mouseY > bottom) {
+            return false;
+        }
+
+        switcher.onMouseScrolledImpl(mouseX, mouseY, horizontal, vertical);
+        return true;
+    }
+
     public static boolean isSearchField(GuiTextFieldGeneric field) {
         for (ConfigScreenState state : STATES.values()) {
             if (state.searchField == field) {

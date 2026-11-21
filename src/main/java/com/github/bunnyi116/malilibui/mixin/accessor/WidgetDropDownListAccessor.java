@@ -8,4 +8,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface WidgetDropDownListAccessor {
     @Accessor("isOpen")
     boolean malilibui$isOpen();
+
+    @Accessor("maxHeight")
+    int malilibui$getMaxHeight();
+
+    @Accessor("scrollbarWidth")
+    int malilibui$getScrollbarWidth();
 }
