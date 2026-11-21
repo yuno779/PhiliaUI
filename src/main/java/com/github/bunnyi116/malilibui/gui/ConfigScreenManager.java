@@ -55,6 +55,7 @@ import net.fabricmc.loader.api.FabricLoader;
  */
 public final class ConfigScreenManager {
     private static final java.util.Map<GuiBase, Integer> PENDING_TAB = new java.util.WeakHashMap<>();
+    private static boolean treeBarHovered;
     /**
      * 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偞鐗犻、鏇㈡晜缂佹ɑ娅堥梻浣告啞濞诧箓宕㈡ィ鍐╁剹闁糕剝銇滈埀顒佸笒椤繈鏁愰崨顒€顥氶梻鍌欐祰椤曟牠宕规导鏉戠柈闁圭虎鍠撻埀顑跨铻栭柛娑卞幘閿涙粌鈹戦悩璇у伐闁瑰啿娴风划濠氬垂椤愩倗鐦堥悗鍏稿嵆閺€鍗烆熆濮椻偓閸┾偓妞ゆ帊绀佹慨宥団偓瑙勬礃閸ㄥ潡鐛鈧幊婊堟濞戞瑧鈧箖姊绘担铏瑰笡妞ゃ劌鎳橀幃褑绠涢幘浣规そ楠炴﹢顢欓悾灞藉箥婵＄偑鍊栭悧妤呮嚌妤ｅ啫姹查柨婵嗘礌閸嬫挾鎲撮崟顒傤槶闂佸摜濮甸悧鐘诲Υ娓氣偓瀵噣宕煎┑鍡氣偓鍨攽閻愬弶顥為柨姘舵煛閸滀礁澧存慨濠傤煼瀹曟帒鈻庨幒鎴濆腐婵＄偑鍊戦崹褰掓晝閿旂偓顫曟繛鍡樺姇椤曢亶鏌℃径瀣仼闁挎稒鐟ラ埞鎴︽偐缂佹ɑ閿梺鍝勮嫰閻楁捇寮幇顓炵窞濠电姴瀚埀顒傚仜椤啴濡堕崱妤€娼戦梺绋款儐閹搁箖鎯€椤忓牆绠氱憸搴ｆ嫻閿熺姵鐓熼柕澶樺枙闁垱銇勯姀鈽呰€垮┑顔瑰亾闂佸啿鎼崑鍡椢涢弽顐ょ＝闁稿本鐟ч崝宥夋煕閺冣偓閻楃娀濡撮崘顔煎窛閻庢稒顭囬悾鎶芥⒒閸屾瑧鍔嶉悗绗涘懏宕查柛宀€鍋涚粻鐘绘煙閻楀牊绶茬紒鈧崟顖涚厱闁挎棁顕ч獮妯肩棯閹冩倯闁靛洤瀚伴、姗€鎮㈡搴濇樊濠电姭鎷冪仦鑺ョ亶闂侀潧娲ょ€氫即銆侀弴銏″亹闁肩⒈鍏涚槐娆忊攽閻樻鏆柍褜鍓欑壕顓㈠春閿濆洠鍋撶憴鍕８闁告梹鍨块妴浣糕枎閹寸娀鈹忛柣搴秵閸嬪棛绮旈柆宥嗏拻闁稿本鐟︾粊鐗堛亜閺囧棗娲﹂悡鈧梺鎸庣箓閹峰鎮為悾灞惧枑闁哄啫鐗忓畵浣割熆閼搁潧濮囬柣蹇斿▕閺岀喐锛愭担鍝勫闁诲酣娼ч惌鍌氼潖閾忓湱鐭欓悹鎭掑妿娴煎洭姊虹粙娆惧剱缂佸鎸鹃崚鎺撶節濮橆儵銊ф喐婢舵劕纾婚柟鎹愬吹瀹撲線鏌涢…鎴濇灈濠殿喖楠搁埞鎴﹀煡閸℃ぞ绨奸梺鑽ゅ暱閺呮盯顢氶敐澶婇唶闁哄洨鍋炲畵宥咁渻閵堝棙灏扮紒瀣灦缁傚秹鎮欓鍌滎啎闂佸壊鍋呯换鍕閵忋倖鐓涢悗锝庡亞濞叉挳鏌＄仦鍓ф创闁诡喓鍨藉畷銊︾節閸屾碍鏁梺璇叉唉椤煤濡崵绠惧┑鐘叉川瀹撲線鏌″鍐ㄥ濠殿垱鎸抽弻娑樷攽閸曨偄濮跺┑鈥冲级閹稿啿顫忓ú顏呭殥闁靛牆鎳夐弸鍛磽閸屾艾鈧綊鎳濇ィ鍐ㄧ厺鐎广儱顦伴弲鎻掝熆閼哥灙鎴﹀疾濠婂牊鈷戦柛锔诲弨濡炬悂鏌涢悩鎰佹疁鐎规洘鍔欏畷濂稿即閻斿搫骞楅梻浣侯攰閸╁洭宕濆鍛瀺闁告侗鍔堕悷閭︾叆闁割偁鍨婚弳顐⑩攽椤旂》鏀绘俊鐐扮矙閻涱噣骞囬鐔峰妳闂佹寧绻傞崐褰掞綖瀹ュ鈷掑ù锝堟鐢稒銇勯妸銉﹀殗闁轰礁鍟撮、鏃堝醇濞戞帒浜惧ù锝堝€介弮鍫濈劦妞ゆ帒瀚ч埀顒婄畵婵℃悂鍩℃担鍝ョ崺婵＄偑鍊栧Λ浣规叏閵堝鏁婇柛銉墯閳锋帒霉閿濆懏鍟為柛鐔哄仧缁辨帡宕崟顒€浠撮悗瑙勬礃濞叉牠鎮鹃悜钘夌倞妞ゎ厽鍨剁紞妤佺節濞堝灝鏋熸い顓炵墦瀹曟椽寮介鐔蜂簵濠电偞鍨崹娲偂閸愵亝鍠愭繝濠傜墕缁€鍫ユ煟閺冨牜妫戦柡鍡畵閺屻劌鈹戦崱鈺傂﹂柛鐑嗗灦閹嘲顭ㄩ崘顏嗩啋濡ょ姷鍋涢ˇ閬嶅箟閹绢喖绀嬫い鎾跺閸熷酣姊绘担鍛婃儓妞わ缚鍗冲畷褰掓偨缁嬭法鐣洪梺鐟扮摠閸斿弶鎯旈妸銉у€炲銈嗗笒閸婅崵绮ｅΔ鈧—鍐Χ閸愩劉鍋撻弴銏犵９闁割煈鍣鏍ㄧ箾瀹割喕绨荤€瑰憡绻傞埞鎴︽偐閹绘帩浠鹃梺闈╃秵閸欏啫顫忛搹鐟板闁哄洨鍠愰悵鏃堟⒑閹稿孩绌跨紒鐘冲灥瀹撳嫰姊鸿ぐ鎺戜喊闁告搫绠戦…鍥煛閸涱喚鍘剧紓浣割儓濞夋洘绂掑☉娆戠?
      */
@@ -955,6 +956,11 @@ public final class ConfigScreenManager {
         // 椤舵爮涓嶅啀濂椾竴涓ぇ妗嗭細鎼滅储妗嗗拰鍒囨崲鍣ㄥ悇鑷嫭绔嬨€?
 
         if (layout.hasSidebar) {
+            int treeBarX = layout.sidebarX + layout.sidebarW + 2;
+            int treeBarTop = layout.navY;
+            int treeBarBottom = layout.listY + layout.listH + 6;
+            treeBarHovered = mouseX >= treeBarX && mouseX <= treeBarX + 8 &&
+                    mouseY >= treeBarTop && mouseY <= treeBarBottom;
             drawSidebar(ctx, state);
         }
 
@@ -1156,7 +1162,8 @@ public final class ConfigScreenManager {
             int thumbH = Math.max(24, viewH * viewH / state.treeContentH);
             int maxScroll = Math.max(1, state.treeContentH - viewH);
             int thumbY = viewTop + (viewH - thumbH) * Math.min(state.treeScroll, maxScroll) / maxScroll;
-            UiTheme.fill(ctx, barX + 1, thumbY, 6, thumbH, UiTheme.SCROLL_THUMB);
+            UiTheme.fill(ctx, barX + 1, thumbY, 6, thumbH,
+                    treeBarHovered ? UiTheme.SCROLL_THUMB_HOVER : UiTheme.SCROLL_THUMB);
         }
     }
 
