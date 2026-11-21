@@ -453,7 +453,7 @@ public final class ConfigScreenManager {
             String modId = entry.info().modId();
             boolean current = modId.equals(currentModId);
             boolean expanded = EXPANDED_MODS.contains(modId);
-            String name = UiTheme.trim(screen.getFont(), entry.info().modName(), layout.navW - 20);
+            String name = UiTheme.trim(screen.getFont(), entry.info().modName(), layout.navW - 30);
             String version = net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer(modId)
                     .map(c -> c.getMetadata().getVersion().getFriendlyString()).orElse("");
 
@@ -1040,28 +1040,37 @@ public final class ConfigScreenManager {
                 continue;
             }
 
+            int drawTop = Math.max(y, layout.navY);
+            int drawBottom = Math.min(y + h, layout.listY + layout.listH);
+
             if (row.tab()) {
-                if (row.selected()) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, y, layout.sidebarW - 7, h, 0x22000000);
-                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
+                if (row.selected() && drawBottom > drawTop) {
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW - 7, drawBottom - drawTop, 0x22000000);
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
                 }
 
-                UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
-                        row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
+                if (y >= layout.navY - 2) {
+                    UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
+                            row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
+                }
             } else {
-                UiTheme.fill(ctx, layout.sidebarX + 1, y, layout.sidebarW - 7, h,
-                        row.selected() ? 0x3D000000 : 0x2E000000);
-
-                if (row.selected()) {
-                    UiTheme.fill(ctx, layout.sidebarX + 1, y, 3, h, UiTheme.TEXT_ACCENT);
+                if (drawBottom > drawTop) {
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, layout.sidebarW - 7, drawBottom - drawTop,
+                            row.selected() ? 0x3D000000 : 0x2E000000);
                 }
 
-                UiTheme.text(ctx, row.name(), x + 8, y + 3,
-                        row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
+                if (row.selected() && drawBottom > drawTop) {
+                    UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
+                }
 
-                if (!row.version().isEmpty()) {
-                    UiTheme.text(ctx, row.version().length() > 18 ? row.version().substring(0, 17) + "\u2026" : row.version(),
-                            x + 8, y + 12, 0xFF7A7A7A, false);
+                if (y >= layout.navY - 2) {
+                    UiTheme.text(ctx, row.name(), x + 8, y + 3,
+                            row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
+
+                    if (!row.version().isEmpty()) {
+                        UiTheme.text(ctx, UiTheme.trim(screen.getFont(), row.version(), layout.navW - 30),
+                                x + 8, y + 12, 0xFF7A7A7A, false);
+                    }
                 }
             }
         }
