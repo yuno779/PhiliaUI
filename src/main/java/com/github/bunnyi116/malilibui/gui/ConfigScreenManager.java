@@ -707,9 +707,10 @@ public final class ConfigScreenManager {
             }
         }
 
-        Integer pendingTab = PENDING_TAB.remove(screen);
+        Integer pendingTab = PENDING_TAB.get(screen);
 
         if (pendingTab != null && pendingTab >= 0 && pendingTab < state.navButtons.size()) {
+            PENDING_TAB.remove(screen);
             state.selectedTabIndex = pendingTab;
             ButtonBase pendingButton = state.navButtons.get(pendingTab);
             var pendingListener = ((ButtonBaseAccessor) pendingButton).malilibui$getActionListener();
