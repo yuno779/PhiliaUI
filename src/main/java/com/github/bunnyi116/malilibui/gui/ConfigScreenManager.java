@@ -1049,7 +1049,7 @@ public final class ConfigScreenManager {
                     UiTheme.fill(ctx, layout.sidebarX + 1, drawTop, 3, drawBottom - drawTop, UiTheme.TEXT_ACCENT);
                 }
 
-                if (y >= layout.navY - 2) {
+                if (y >= layout.navY - 2 && y + h <= layout.listY + layout.listH) {
                     UiTheme.text(ctx, row.name(), x + 8, y + (h - 8) / 2,
                             row.selected() ? UiTheme.TEXT_TITLE : 0xFFC0C0C0, row.selected());
                 }
