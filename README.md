@@ -1,5 +1,8 @@
 Philia UI
 ==========
+<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/0902dd50-11b0-4cdc-8b24-9a9a6e81f647" />
+<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/6224273e-2b36-42b2-8c59-936760a64c69" />
+
 
 **MaLiLib UI** 是一套面向 masa 系列模组（MaLiLib 生态）配置界面的重制项目。
 
