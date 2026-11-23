@@ -5,6 +5,7 @@ Philia UI
 
 
 **MaLiLib UI** 是一套面向 masa 系列模组（MaLiLib 生态）配置界面的重制项目。
+- **其所有的代码都是使用AI生成
 
 它**不 fork MaLiLib**，而是在运行时通过 Fabric Mixin 注入到 MaLiLib 的 GUI 类中，把原本横向排列、风格陈旧的配置界面重新排布为：
 
