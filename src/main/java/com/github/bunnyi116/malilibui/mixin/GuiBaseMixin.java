@@ -79,6 +79,8 @@ public abstract class GuiBaseMixin {
 
         ConfigScreenManager.onSearchBlur((GuiBase) (Object) this);
 
+        ConfigScreenManager.onNativeTabClick((GuiBase) (Object) this, click.x(), click.y());
+
         if (ConfigScreenManager.onTreeScrollbarClick((GuiBase) (Object) this, click.x(), click.y())) {
             cir.setReturnValue(true);
             return;
