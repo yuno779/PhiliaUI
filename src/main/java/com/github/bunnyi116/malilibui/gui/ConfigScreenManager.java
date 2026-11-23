@@ -90,6 +90,7 @@ public final class ConfigScreenManager {
 
     /** 闂傚倸鍊搁崐宄懊归崶褏鏆﹂柛顭戝亝閸欏繘鏌熼幆鏉啃撻柛濠傛健閺屻劑寮村Δ鈧禍鎯ь渻閵堝骸骞栭柣蹇旂箚閻忔帡姊洪崗鑲┿偞闁哄懏绻堣棟妞ゆ牜鍋為崐鍨殽閻愯尙浠㈤柛鏃€宀搁弻鐔煎礃閼碱剛鍔梺绯曟杹閸嬫挸顪冮妶鍡楃瑐缂佲偓娴ｈ褰掝敊闁款垰浜鹃悷娆忓缁岃法绱掗崣澶婂姢妞ゆ洏鍎靛畷鐔碱敇濠靛洤濯伴梻浣藉Г閿氭い锔藉▕瀹曟繂顫滈埀顒€顫忕紒妯诲缂佹稑顑呭▓顓犵磽娴ｈ櫣甯涢悽顖椻偓宕囨殾闁瑰瓨绺惧Σ鍫ユ煏韫囨洖啸闁挎稒鐟╁鐑樺濞嗘垵鍩岄梺鍝勭墱閸撶喖銆侀弴銏″殟闁靛绲肩花濠氭⒑鐟欏嫬鍔ょ€规洦鍓熼幃姗€鍩￠崘顏嗭紲闂侀€炲苯澧寸€规洘甯￠幃娆戔偓鐢殿焾鐢儳鈹戦悩顔肩伇闁糕晜鐗滅划娆撳箣閿旇棄鍓ㄥ┑鐘诧工閻楀﹪鎮″☉銏＄厓鐟滄粓宕滈悢鐓庤摕闁糕剝顨忛崥瀣煕閳╁啰鎳冩鐐搭殜濮婄粯绗熼埀顒€顭囪閳ワ箓宕奸妷銉э紵闂備緡鍓欑粙渚€寮崒鐐寸厓闁告繂瀚崳娲煕鐎ｃ劌濡介柕鍥у瀵粙鎮介棃娑樼厒濠电偛鐡ㄧ划宥囨崲閸儱钃熼柣鏂挎憸閻熷綊鏌涢…鎴濇灈妞ゎ剙顑夊娲焻閻愯尪瀚板褍澧界槐鎾愁吋閸涱噮妫＄紓浣稿€哥粔鎾煘閹达箑閱囬柕蹇嬪焺濡叉悂姊绘繝搴′簻婵炶濡囩划娆撳箳濡や礁浜楀┑鐐村灦閸╁啴宕戦幘鑽ゅ祦闁割煈鍠栨慨搴ㄦ⒑閻熸澘鏆辩紒缁樺笧閸掓帗绻濋崶鑸垫櫇闂侀潧鐗嗗ú銊╂晬濠婂牊鐓涘璺猴功婢ф垿鏌涢弬鎸庢崳缂侇喖顭烽獮姗€鎳滈棃娑楃病婵犵數鍋涘Λ娆撳箰妤ｅ啫鐭楅柟鍓х帛閻撴洟鏌曟径娑氬埌濠德ゅГ閵囧嫰濡烽敂绛嬫闂佸搫鏈粙鎾诲焵椤掑﹦绋婚柡灞诲妼鐓ら柨鏇炲€哥壕濠氭煏婵犲繗绀嬪ù婊勭矒閺屸€愁吋閸愩劌顫呮繝銏ｎ潐閿曘垽寮婚敓鐘插耿婵☆垰鍚嬮崳浼存⒑閸濆嫮鐒跨紓宥勭窔閵嗕線寮▎鎯ф倯闂佸憡渚楅崢鎼佸箯椤愶附鈷掑ù锝呮啞閹牓鏌ゅú璇茬仸闁诡啫鍥х閻犲洩灏欓悿鍥⒑缂佹ê濮囬柟纰卞亜閺侇噣姊绘笟鈧褔鏁嶈箛娑樼闁靛濡囬埀顒€顭峰濠氬磼濮橆兘鍋撴搴ｇ焼濞撴埃鍋撴鐐差樀閺佹捇鎮╅鐔蜂壕闁挎洖鍊搁悙濠冦亜閹哄棗浜剧紓浣瑰姈椤ㄥ﹪鐛弽顓炵妞ゆ挾濮寸敮銊х磽閸屾氨校闁绘濞€瀵鎮㈤崗鐓庝罕闂佸壊鍋嗛崰鎾诲礄閿熺姵鈷掑ù锝嗘灮妤犲繘鏌涙繝鍐疄鐎殿喖顭烽幃銏ゅ礂閼测晛濮洪梻浣瑰濞插秹宕戦幘鎼闁绘劘鎻懓鍧楁煛鐏炲墽娲村┑鈩冩倐婵＄兘鏁愰崨顒€鍨濆┑鐘愁問閸犳牠鏁冮妷銉富濞寸姴顑囧畵渚€鏌熼幑鎰靛殭缂佺姵濞婇弻锟犲磼濞戞氨顔囩紓鍌氱С缁舵艾顕ｆ繝姘櫖闁告洦浜濋崟鍐⒑閸濆嫬鈧爼宕愬☉銏犺Е妞ゆ劧闄勯崐鐢告偡濞嗗繐顏紒鈧崘顔界厱闁靛鍔屾禍鍦磼椤旀鍤欓柍钘夘樀婵偓闁绘ɑ褰冪粊顕€姊绘担鍛婂暈濞撴碍顨嗙粋宥呪攽閸″繑鐎烘繝鐢靛Т濞诧箓鎮″☉妯忓綊鏁愰崨顔藉枑閻庢稒绻堝鐑樺濞嗘垹蓱缂備浇顕ч悧鍡涙偩閻戣姤鍋勭痪鎷岄哺閺呮粓姊虹化鏇炲⒉闁荤啙鍥佸洭顢曢敂瑙ｆ嫽闂佺鏈悷銊╁礂鐏炰勘浜滄い鎾跺仧婢с垽鏌熼獮鍨伈妤犵偛娲、娆撳礈瑜忛崢鐘绘⒒娴ｅ湱婀介柛銊ョ秺閹ê顫濈拋鍦◤闂佸搫娲㈤崹娲偂濞嗘挻鐓欐い鏍ф閸犳岸寮抽姀銈嗏拺婵炶尪顕ч獮妤呮煙閻熺増鍠樻鐐插暟閹叉挳宕熼鈧鎾绘⒑閸涘﹦缂氶柛搴ゅ吹濡叉劙鎮欓悜妯锋嫼闂佺厧顫曢崐鏇㈠几閸岀偞鐓曢柕濞垮€楅惌娆戔偓娈垮枛椤兘寮幘缁樺亹闁肩⒈鍓ㄧ槐鍙夌節閻㈤潧孝闁挎洏鍊濆畷鏉款潩鐠虹儤杈堝銈嗘尪閸ㄦ椽鎮￠悢鍏肩厪闊洤锕ュ▍鍛存煟韫囧鍔﹂柡灞剧洴閸╋繝宕掑鍐ｆ嫛缂傚倷绶￠崰鏍敄婢舵劗宓侀柟鐑樺殾閺冣偓閹峰懘宕ㄦ繝鍕緭闂傚倸鍊烽悞锕傛儑瑜版帒鍨傚┑鐘宠壘閺嬩線鏌熼梻鎾闁逞屽厸缁舵艾鐣烽妸鈺婃晬婵犲﹤鎷戠槐鍐测攽閻愯埖褰х紒鑼跺Г缁旂喐绻濋崑鏂ょ稻椤︾増鎯旈敐鍥风床濠碘剝褰冮張顒勬偋閺囩偐鏋嶇€广儱妫▓?*/
     private static final Map<GuiTextFieldGeneric, int[]> STANDALONE_FIELD_ORIGINS = new WeakHashMap<>();
+    private static final Map<Object, int[]> STANDALONE_CONTROL_ORIGINS = new WeakHashMap<>();
 
     /** 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偞鐗犻、鏇㈠Χ閸屾矮澹曞┑顔矫畷顒勫储鐎电硶鍋撶憴鍕妞ゎ偄顦遍埀顒勬涧閵堢顕ｉ崼鏇炵闁绘ê鐏氬В搴㈢節閻㈤潧浠﹂柟绋款煼瀹曟椽宕橀鑲╋紱闂佽鍎抽悘鍫ュ磻閹炬枼鏋旈柛顭戝枟閻忓牓姊虹拠鑼闁煎綊绠栭、姘跺Ψ閳轰胶顦板銈嗘尰缁嬫垶绂嶆ィ鍐╃叆婵犻潧妫濋妤€顭胯閸ㄥ爼骞冨Δ鈧～婵嬪焵椤掑嫬鐐婇柕濞垮灪鐎氳偐绱撻崒娆戭槮妞わ富鍨拌灋婵°倕鍟犻崑鎾愁潩椤掆偓濡插鏌嶇紒妯诲磳鐎殿喗鎸抽幃銏㈢礄閻樼數娉块梻鍌欑濠€閬嶅磿閵堝绠板Δ锝呭暞閸庢鏌熼悜妯荤厸闁稿鎸鹃幉鎾礋椤掑偆妲堕梻浣侯焾缁绘垼鎽繛锝呮搐閿曨亪鐛弽銊﹀婵炴潙顑呮禍楣冩煥閺囩偛鈧摜绮婚敐澶嬬厽闁归偊鍨伴悡鎰箾閸涱喖鐏存慨濠傤煼瀹曟帒鈻庨幋顓熜滅紓鍌氬€哥粔鎾晝椤忓嫷鍤曢柕濞炬櫆閻掕偐鈧箍鍎卞Λ妤佺闁秵鈷戦柛婵嗗瀹告繈鏌涢悩鍐插鐎规洩缍€缁犳稑鈽夊▎鎴濆笚闂備礁鎲＄换鍌溾偓姘煎弮瀹曞啿煤椤忓懐鍘搁梺鍛婄矆缁€浣规櫠閹绢喗鐓涢悘鐐插⒔濞插瓨銇勯姀鈩冪濠碘€崇埣瀹曘劑顢欓柨顖氫壕濠电姵纰嶉埛鎴犵磽娴ｈ鐒界紒鐘崇墵閺岋綁鍩℃繝鍌滀桓閻庢鍠涢褔鍩ユ径鎰潊闁绘ɑ鍓氬Λ鐔兼⒑閼姐倕孝婵炶绠掗妵鎰板礃椤斿厜鍋撻弽銊ョ窞濠电偟鍋撻弬鈧梻浣虹帛閿曗晠宕戦崟顒傤洸濡わ絽鍟埛鎴︽偣閹帒濡奸柡瀣煥閳规垿顢欓悙顒佹瘓闂佺硶鏅滈惄顖炵嵁閹烘嚦鏃€鎷呴崫鍕婵犵數濮伴崹鐓庘枖濞戙埄鏁勯柛娑樼摠閸婂爼鏌曟径鍡樻珕闁绘挻鐩幃妤呮晲鎼粹€茬敖闂佺懓鍟块幊鎰閹烘挻缍囬柕濠忕畱闂夊秹姊洪悷鏉挎Щ闁硅櫕鍔欓獮澶愬箻椤旇偐顦板銈嗗姂閸娿倝寮抽敍鍕＝闁稿本鑹鹃埀顒傚厴閹偤鏁冮埀顒冪亱闂佸憡鍔﹂崯鐔稿緞閹邦剛顔掗柣搴ㄦ涧婢瑰﹤霉閸曨垱鈷戦柟绋垮缁€鈧梺绋匡攻閹倿骞冮悙鍝勫瀭妞ゆ劗濮崇花濠氭⒑閸︻厼鍔嬮柛銊ф暬椤㈡棃顢旈崼鐔哄幗闂佽鍎抽崯鍧楀焵椤掆偓椤兘宕洪埀顒併亜閹哄棗浜剧紓浣哄Т缁夌懓鐣烽弴銏＄劶鐎广儱鎳愰悿鍥⒑瑜版帒浜伴柛鐘愁殜閿濈偤寮撮姀锛勫弳闂佸搫娲ㄩ崑娑㈠焵椤掆偓缂嶅﹪骞冮敓鐘参ㄩ柨鏂垮⒔椤旀洟姊洪悷閭﹀殶闁稿孩鍔欓幃鐐寸鐎ｎ偆鍘介梺鍦劋濡繘鎮炴ィ鍐╊梿濠㈣埖鍔栭崐鍫曠叓閸ャ劍鈷掑褜鍓氱换娑㈠川椤撱劌濮涢梺閫炲苯澧叉い顐㈩槸鐓ゆ慨妞诲亾闁靛棗鍟村畷銊╁箹椤撶喐娅嶅┑鐘绘涧閸婂鈥﹂崼銉у祦闁靛繆鈧尙绠氶梺闈涚墕閹冲酣寮冲▎鎴犵＝鐎广儱鎳庨顓熸叏婵犲嫮甯涢柟宄版嚇閹粌螣閻戞鏆氶梻鍌欑劍閹爼宕瑰ú顏呭亗闁跨喓濮撮弰銉╂煃瑜滈崜姘跺Φ閸曨垰绠抽柟瀛樼妇閸嬫挾绮欐惔鎾寸€洪棅顐㈡处濮婅崵绮绘ィ鍐╃厾闁革富鍘奸。鑲╃棯椤撱垻鐣洪柡灞界Ч閹稿﹥寰勫Ο鐑╂瀰婵°倗濮烽崑鐐烘偡閳轰胶鏆︽慨妞诲亾濠碘剝鎮傛俊鐤檨闁哥喎鐗撳濠氬磼濞嗘埈妲梺鍦拡閸嬪﹪骞婇悢纰辨晬婵綆鍘藉浠嬨€佸鈧慨鈧柣妯虹－閳ь剦鍓熼幃妤呯嵁閸喖濮庡┑鈽嗗亝椤ㄥ牆鈻庨姀銈嗗€烽悗闈涙憸椤旀洟姊洪悷閭﹀殶闁稿鍠栭獮濠囧礃閳瑰じ绨?*/
     private static boolean sliderDragging;
@@ -143,6 +144,8 @@ public final class ConfigScreenManager {
 
         if (screen instanceof GuiConfigsBase configs) {
             ensureConfigsLayout(configs);
+        } else if (screen instanceof GuiRenderLayerEditBase || isMiniHudShapeManager(screen)) {
+            ensureRenderLayerLayout(screen);
         }
         // 閸忔湹绮悾宀勬桨閿涘牆顩?Litematica 濞撳弶鐓嬬仦鍌︾礆娣囨繃瀵?MaLiLib 閸樼喎顫愮敮鍐ㄧ湰閿?
         // 娑撳秴顨?2.0 娓氀勭埉閿涘矂浼╅崗宥囩壃閸у繐鍙鹃幒褌娆㈡稉搴″彠闂傤參鈧槒绶妴?
@@ -720,6 +723,9 @@ public final class ConfigScreenManager {
         }
     }
 
+    private static boolean isMiniHudShapeManager(GuiBase screen) {
+        return screen.getClass().getName().equals("fi.dy.masa.minihud.gui.GuiShapeManager");
+    }
 
     private static void ensureRenderLayerLayout(GuiBase screen) {
         if (isDisabledByConfig(screen) || isTooSmallToManage(screen)) {
@@ -728,6 +734,12 @@ public final class ConfigScreenManager {
 
         ConfigScreenState state = stateFor(screen);
         applyNavLayout(screen, state);
+
+        for (ButtonBase button : state.navButtons) {
+            ((ButtonBaseAccessor) button).malilibui$setVisible(false);
+        }
+
+        ensureModTree(screen, state);
         positionStandaloneControls(screen, state);
         state.ready = true;
     }
@@ -864,6 +876,12 @@ public final class ConfigScreenManager {
 
     private static boolean isTabButton(ButtonBase button) {
         int y = button.getY();
+        String label = ((ButtonBaseAccessor) button).malilibui$getDisplayString();
+
+        // 渲染层页面的“层级：… / 轴向：…”是内容控件，不是页签。
+        if (label != null && (label.contains("：") || label.contains(":"))) {
+            return false;
+        }
 
         return y >= 0 && y <= TAB_STRIP_MAX_Y &&
                 button.getHeight() > 0 && button.getHeight() <= TAB_MAX_HEIGHT &&
@@ -953,20 +971,19 @@ public final class ConfigScreenManager {
         GuiBaseAccessor access = (GuiBaseAccessor) screen;
 
         for (ButtonBase button : access.malilibui$getButtons()) {
-            if (state.navButtons.contains(button)
-                    || !state.positionedControls.add(button)) {
+            if (state.navButtons.contains(button)) {
                 continue;
             }
 
-            button.setPosition(button.getX() + deltaX, button.getY() + deltaY);
+            int[] origin = STANDALONE_CONTROL_ORIGINS.computeIfAbsent(button,
+                    b -> new int[] { ((ButtonBase) b).getX(), ((ButtonBase) b).getY() });
+            button.setPosition(origin[0] + deltaX, origin[1] + deltaY);
         }
 
         for (WidgetBase widget : access.malilibui$getWidgets()) {
-            if (!state.positionedControls.add(widget)) {
-                continue;
-            }
-
-            widget.setPosition(widget.getX() + deltaX, widget.getY() + deltaY);
+            int[] origin = STANDALONE_CONTROL_ORIGINS.computeIfAbsent(widget,
+                    w -> new int[] { ((WidgetBase) w).getX(), ((WidgetBase) w).getY() });
+            widget.setPosition(origin[0] + deltaX, origin[1] + deltaY);
         }
 
         for (TextFieldWrapper<? extends GuiTextFieldGeneric> wrapper : access.malilibui$getTextFields()) {

@@ -15,4 +15,7 @@ public interface ButtonBaseAccessor {
 
     @Accessor("actionListener")
     IButtonActionListener malilibui$getActionListener();
+
+    @Accessor("visible")
+    void malilibui$setVisible(boolean visible);
 }
