@@ -21,6 +21,18 @@ public interface WidgetListBaseAccessor {
     @Accessor("posY")
     void malilibui$setListPosY(int value);
 
+    @Mutable
+    @Accessor("posX")
+    void malilibui$setListPosX(int value);
+
+    @Mutable
+    @Accessor("browserWidth")
+    void malilibui$setBrowserWidth(int value);
+
+    @Mutable
+    @Accessor("browserHeight")
+    void malilibui$setBrowserHeight(int value);
+
     @Accessor("browserWidth")
     int malilibui$getBrowserWidth();
 

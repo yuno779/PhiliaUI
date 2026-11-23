@@ -740,6 +740,11 @@ public final class ConfigScreenManager {
         }
 
         ensureModTree(screen, state);
+        if (isMiniHudShapeManager(screen)) {
+            ensureShapeManagerLayout(screen, state);
+            return;
+        }
+
         positionStandaloneControls(screen, state);
         state.ready = true;
     }
@@ -959,6 +964,45 @@ public final class ConfigScreenManager {
      * {@code positionedControls} 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柟闂寸绾惧湱绱掔€ｎ収鍤︽繛鎴烆焸閺冨牆鐒垫い鎺戝暟娴滆鲸绻濆閿嬫緲閳ь剚娲熼獮濠冩償閿濆洣绗夐梺鍝勭▉閸樿偐绮荤憴鍕闁挎繂楠告晶顕€鏌ｈ箛锝呮珝闁哄苯绉归幃鐑藉箥椤斞嶇悼缁辨帞绱掑Ο鑲╃杽濠碘槅鍋勯崯顐﹀煡婢舵劕绀冮柟缁樺俯濞碱剙鈹戦悩娈挎毌闁告挻绻嗛妵鎰板礃椤旇棄浜辨繝鐢靛Т濞层倗绮婚悙鐑樼厪濠电偟鍋撳▍鍡涙煛閸涱喚鍙€闁哄本绋戦埥澶愬础閻愬吀鍖栨俊鐐€栭幐璇差渻閽樺娼栫紓浣股戞刊瀵哥磼鐎ｎ厽纭跺Δ鐘叉川缁辨挻绗熼崶褎鐏嶉梺鍦嚀濞差參骞冩导鎼晪闁逞屽墴閻涱噣骞掑Δ鈧崡鎶芥煏婵炪倐鍋撻柕濠忓缁♀偓闂佹眹鍨藉褎绂掑鍕箚妞ゆ劑鍨介崣鍕偓瑙勬礀缂嶅﹪骞愭繝鍐ㄧ窞閻忕偟鍋撻鏇㈡⒒娴ｇ懓顕滅紒璇插€胯棟濞寸姴顑呴弸渚€鏌涘畝鈧崑鐐烘偂閺囥垺鐓涢柛銉ｅ劚婵″吋顨ラ悙瀵稿⒌闁哄矉缍侀弫鎰板礃閵娿儺娼庢繝娈垮枛閿曘倝骞栭銈呭疾缂傚倸鍊烽悞锕傛晪闂佸疇顕х换妯侯潖濞差亜宸濆┑鐘插暟閸欏棗顪冮妶鍡楃仴婵炲眰鍔戝畷姘跺箳濡も偓閻撴盯鏌涘☉鍗炲箻濡ょ姴娲娲偡閹殿喗鎲煎┑顔硷工缂嶅﹪骞冨Δ浣虹瘈婵﹩鍘搁幏娲煟鎼粹剝璐″┑顔炬暬钘熷鑸靛姈閻撴瑩鏌ц箛锝呬簻濠殿喖顦辩槐鎺楊敊閼测晛顤€閻庡灚婢樼€氫即鐛崶顒夋晣闁绘ɑ褰冪粻鐐烘⒒閸屾瑧绐旀繛浣冲洦鏅煫鍥ㄧ☉缁€鍐煕閹邦垱纭剁紒瀣煼閺屾洟宕惰椤忣厽顨ラ悙鏉戞诞妤犵偞锕㈠畷婊勬媴閻戞ɑ绶版繝寰锋澘鈧鎱ㄩ悜钘夌；闁绘劕鐏氶弳婊堟煟閺傛娴夐柛銉ｅ妽缂嶅洭鏌曟繛褍鎷嬮崯搴ㄦ⒒娴ｈ櫣銆婇柛鎾寸箞瀹曟繈寮撮姀鈥斥偓鑸点亜韫囨挻顥犵痪鎯с偢閹鏁愭惔婵囧枤濠碘剝褰冮幉锟犲Φ閸曨垰绠婚柣鎰娴狀噣鎮楃憴鍕闁哥姵鐗犻妴浣割潨閳ь剟骞冮埡鍛棃婵炴垶鑹鹃埀顒傚仱濮婂宕掑▎鎰偘閻庤娲滈弫璇茬暦閹达附鍊烽柛婵嗗椤︹晠鎮峰鍛暭閻㈩垱甯炴竟鏇犳嫚濞村鏂€闂佺粯锚瀵爼骞栭幇鐗堚拻闁稿被鍊曢悘锕傛煛鐏炲墽鈽夐柍钘夘槸椤粓宕煎┑鍛煑缂傚倸鍊风粈浣规櫠鎼淬劌纾婚柣鏃傚帶閻掑灚銇勯幒鍡椾壕缂備胶濮寸粔鐟扮暦閺囥垺鐒肩€广儱鎳愰悿鍥р攽椤斿浠滈柛瀣尰椤ㄣ儵鎮欓弶鎴濐潚濡炪們鍨洪〃濠傜暦閹烘埈鐓ラ柛婊冨暟鎼村﹥绻濋悽闈浶為柛銊у帶閳绘柨鈽夐埗鍝勬处濞煎繘濡歌閺嬫牠姊洪懖鈹炬嫛闁告挻绋撴竟?
      * 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閸愬弶鐤勫┑掳鍊х徊浠嬪疮椤愩倐鍋撳顒夋Ч闁靛洤瀚伴獮鎺楀幢濡炴儳顥氬┑锛勫亼閸娿倖绂嶅鍫濈柈闁哄鍨归弳锕傛煙閻戞﹩娈曢柛濠勫厴閺屻倗鍠婇崡鐐差潾闂佸憡锕╅崜鐔奉潖缂佹ɑ濯寸紒瀣儥濡矂姊虹粙娆惧剱闁瑰憡鍎抽銉︾節閸愵亶娴勯柣搴秵娴滄粓宕戝澶嬧拺闁革富鍙€濡炬悂鏌涢悩鎰佹疁鐎规洘鍨块弫鎰緞鐎ｎ剙寮伴梻濠庡亜濞诧箑煤濮椻偓瀹曠敻鍩€椤掑嫭鈷戦柛婵嗗閸庢劗绱掔€ｎ偄绗ч柟骞垮灩閳藉濮€閻樿鏁规繝鐢靛仦閸ㄥ爼鈥﹂崶銊ь浄闁告挆鍛紳婵炶揪绲芥竟濠囧磿韫囨稒鐓ラ柡鍥朵簽閻ｇ敻鏌涢埞鎯т壕婵＄偑鍊栫敮鎺楁晝閿斿墽鐭撻梻鍫熻€介悷閭︾叆闁告洦鍘鹃悿鍕倵鐟欏嫭绀冮柛鏃€鐟╅獮鍐╃鐎ｎ亜绐涙繝鐢靛Т鐎氼剟鐛Δ鍛拻濞撴埃鍋撴繛浣冲洠鈧箓宕奸妷銉э紵闂備緡鍓欑粙渚€寮崒娑栦簻闁规澘鐖煎顕€鏌ｉ幘璺烘瀾缂佺粯鐩獮瀣倷闂堟稈鍚傞梻浣告啞濡垶淇婇崶顒€鐒垫い鎺戝枤濞兼劖绻涘ù瀣珖缂佽京鍋炵粭鐔煎焵椤掆偓椤曪綁顢曢敃鈧粻娑㈡煛婢跺孩纭堕柛濠勫仱濮婃椽宕橀崣澶嬪創闂佸摜鍠嶉崡瀹犳濡炪倖鍔ч梽鍕煕閹烘嚚褰掓晲閸滀焦缍楅梺閫炲苯鍘撮柛瀣崌濮婅櫣绮欏▎鎯у壉闂佸湱鎳撳ú顓烆嚕婵犳碍鍋勯柣鎾虫捣閻ｉ箖鎮峰鍐弰鐎规洖鍟跨叅妞ゅ繐鎳庨埀?/p>
      */
+    private static void ensureShapeManagerLayout(GuiBase screen, ConfigScreenState state) {
+        ConfigLayout layout = state.layout;
+        int screenWidth = screen.getScreenWidth();
+        int deltaLeft = layout.listX - 10;
+        int deltaRight = (layout.listX + layout.listW - 6) - screenWidth;
+
+        GuiBaseAccessor access = (GuiBaseAccessor) screen;
+
+        for (ButtonBase button : access.malilibui$getButtons()) {
+            if (state.navButtons.contains(button)) {
+                continue;
+            }
+
+            int[] origin = STANDALONE_CONTROL_ORIGINS.computeIfAbsent(button,
+                    b -> new int[] { ((ButtonBase) b).getX(), ((ButtonBase) b).getY() });
+            int dx = origin[0] < screenWidth / 2 ? deltaLeft : deltaRight;
+            button.setPosition(origin[0] + dx, origin[1]);
+        }
+
+        for (WidgetBase widget : access.malilibui$getWidgets()) {
+            int[] origin = STANDALONE_CONTROL_ORIGINS.computeIfAbsent(widget,
+                    w -> new int[] { ((WidgetBase) w).getX(), ((WidgetBase) w).getY() });
+            int dx = origin[0] < screenWidth / 2 ? deltaLeft : deltaRight;
+            widget.setPosition(origin[0] + dx, origin[1]);
+        }
+
+        GuiListBaseAccessor listAccess = (GuiListBaseAccessor) screen;
+        WidgetListBase<?, ?> list = listAccess.malilibui$getListWidget();
+
+        if (list != null) {
+            WidgetListBaseAccessor listBounds = (WidgetListBaseAccessor) list;
+            listBounds.malilibui$setListPosX(layout.listX);
+            listBounds.malilibui$setListPosY(layout.listY);
+            listBounds.malilibui$setBrowserWidth(layout.listW);
+            listBounds.malilibui$setBrowserHeight(layout.listH);
+            listBounds.malilibui$refreshBrowserEntries();
+        }
+    }
+
     private static void positionStandaloneControls(GuiBase screen, ConfigScreenState state) {
         ConfigLayout layout = state.layout;
         int deltaX = layout.listX - RENDER_LAYER_CONTROLS_X;
