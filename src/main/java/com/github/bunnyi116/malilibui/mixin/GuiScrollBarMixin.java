@@ -5,10 +5,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.Minecraft;
+import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.GuiScrollBar;
 import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.util.GuiUtils;
+import com.github.bunnyi116.malilibui.gui.ConfigScreenManager;
 import com.github.bunnyi116.malilibui.gui.UiTheme;
 import com.github.bunnyi116.malilibui.config.UiConfigs;
 import com.github.bunnyi116.malilibui.mixin.accessor.GuiScrollBarAccessor;
@@ -24,7 +26,9 @@ public abstract class GuiScrollBarMixin {
             return;
         }
 
-        if (GuiUtils.getCurrentScreen() instanceof GuiConfigsBase) {
+        if (GuiUtils.getCurrentScreen() instanceof GuiConfigsBase
+                || (GuiUtils.getCurrentScreen() instanceof GuiBase guiBase
+                    && ConfigScreenManager.isMiniHudShapeManager(guiBase))) {
             GuiScrollBarAccessor access = (GuiScrollBarAccessor) (Object) this;
             boolean hovered = mouseX > xPosition && mouseX < xPosition + width &&
                     mouseY > yPosition && mouseY < yPosition + height;

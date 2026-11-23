@@ -18,4 +18,7 @@ public interface ButtonBaseAccessor {
 
     @Accessor("visible")
     void malilibui$setVisible(boolean visible);
+
+    @Accessor("visible")
+    boolean malilibui$isVisible();
 }
