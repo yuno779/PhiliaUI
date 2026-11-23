@@ -19,6 +19,7 @@
     "WidgetDropDownListMixin",
     "WidgetSliderMixin",
     "accessor.AbstractWidgetAccessor",
+    "accessor.EditBoxAccessor",
     "accessor.ButtonBaseAccessor",
     "accessor.GuiBaseAccessor",
     "accessor.GuiConfigsBaseAccessor",

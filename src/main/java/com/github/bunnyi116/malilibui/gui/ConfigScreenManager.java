@@ -1040,11 +1040,14 @@ public final class ConfigScreenManager {
             int listHeight = layout.panelY + layout.panelH - listTop - 6;
             listBounds.malilibui$setListPosX(layout.contentX);
             listBounds.malilibui$setListPosY(listTop);
+            // 必须经过原生 setSize()：它会同步刷新 browserEntriesStartX/Y，
+            // 也就是滚动条轨道的绘制起点。只改 posX/posY 时，窗口缩小再放大后
+            // 起点仍停留在小窗口时的旧值，滚动条会从顶部压到“导入/添加形状”按钮上。
+            list.setSize(totalWidth, Math.max(40, listHeight - 2));
+            listBounds.malilibui$setTotalHeight(Math.max(40, listHeight));
             listBounds.malilibui$setBrowserWidth(browserWidth);
             listBounds.malilibui$setBrowserHeight(Math.max(40, listHeight - 2));
             listBounds.malilibui$setBrowserEntryWidth(browserWidth - 9);
-            listBounds.malilibui$setTotalWidth(totalWidth);
-            listBounds.malilibui$setTotalHeight(Math.max(40, listHeight));
             listBounds.malilibui$refreshBrowserEntries();
         }
 
@@ -1126,30 +1129,13 @@ public final class ConfigScreenManager {
             ((com.github.bunnyi116.malilibui.mixin.accessor.AbstractWidgetAccessor) field)
                     .malilibui$setWidgetY(ny);
 
-            if (Boolean.getBoolean("malilib-ui.debuglayout")) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("field ").append(field.getClass().getName())
-                  .append(" getX=").append(field.getX())
-                  .append(" getY=").append(field.getY())
-                  .append(" value=").append(field.getValue())
-                  .append('\n');
-                for (Class<?> c = field.getClass(); c != null && c != Object.class; c = c.getSuperclass()) {
-                    for (java.lang.reflect.Field f : c.getDeclaredFields()) {
-                        if (f.getType() == int.class && (f.getName().equals("x") || f.getName().equals("y"))) {
-                            try {
-                                f.setAccessible(true);
-                                sb.append("  ").append(c.getSimpleName()).append('.').append(f.getName())
-                                  .append('=').append(f.getInt(field)).append('\n');
-                            } catch (Exception ignored) {
-                            }
-                        }
-                    }
-                }
-                try {
-                    java.nio.file.Files.writeString(java.nio.file.Path.of("C:\\Users\\AsiaA\\Desktop\\rli\\field-debug.log"), sb.toString());
-                } catch (Exception ignored) {
-                }
-            }
+            // 关键：Minecraft 的 EditBox 把文字绘制位置缓存在 textX/textY 中。
+            // MaLiLib 的 GuiTextFieldGeneric 覆盖了 setX/setY，直接写自己的 x/y，
+            // 不会走 EditBox 的刷新逻辑，于是首次进入时框移动了、数字仍留在原位；
+            // 点击 +/- 会触发 setValue() 顺带刷新缓存，数字才跳回框内。
+            // 移动之后显式刷新一次缓存，让数字从第一帧就与输入框对齐。
+            ((com.github.bunnyi116.malilibui.mixin.accessor.EditBoxAccessor) field)
+                    .malilibui$refreshTextPosition();
         }
     }
 
