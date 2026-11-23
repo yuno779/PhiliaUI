@@ -1,11 +1,7 @@
 Philia UI
 ==========
-<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/0902dd50-11b0-4cdc-8b24-9a9a6e81f647" />
-<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/6224273e-2b36-42b2-8c59-936760a64c69" />
 
-
-**MaLiLib UI** 是一套面向 masa 系列模组（MaLiLib 生态）配置界面的重制项目。
-- **其所有的代码都是使用AI生成
+**MaLiLib UI** 是一套面向 masa 系列模组（MaLiLib 生态）配置界面的重制项目。其所有的代码都是使用AI生成
 
 它**不 fork MaLiLib**，而是在运行时通过 Fabric Mixin 注入到 MaLiLib 的 GUI 类中，把原本横向排列、风格陈旧的配置界面重新排布为：
 
@@ -39,9 +35,8 @@ Scroller 等）都会自动获得新的界面布局。
 
 界面预览
 ----------
-
-
-> 两种搜索栏变体（带快捷键筛选的 20px 高变体与 14px 高的普通变体）现在会被统一绘制为同尺寸、同位置的搜索框，切换 TAB 时不再跳动。
+<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/0902dd50-11b0-4cdc-8b24-9a9a6e81f647" />
+<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/6224273e-2b36-42b2-8c59-936760a64c69" />
 
 功能特性
 ----------
@@ -146,7 +141,8 @@ gradlew :26.3:runClient
 - [masa](https://github.com/maruohon/malilib)：MaLiLib 及全部 masa 系模组；
 - [sakura-ryoko](https://github.com/sakura-ryoko/malilib)：适配新版 Minecraft 的 MaLiLib 分支；
 - [aleksilassila/litematica-printer](https://github.com/aleksilassila/litematica-printer)：本项目的构建骨架来源于该项目的分支；
-- [bunnyi116](https://github.com/bunnyi116)：项目维护。
+- [bunnyi116](https://github.com/bunnyi116)：malilib UI 项目维护。
+- [[yuno779]](https://github.com/yuno779):PhiliaUI 项目维护
 
 许可证
 ----------
