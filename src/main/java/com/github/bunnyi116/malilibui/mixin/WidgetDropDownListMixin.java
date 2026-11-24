@@ -25,11 +25,13 @@ public abstract class WidgetDropDownListMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void malilibui$renderThemed(GuiContext ctx, int mouseX, int mouseY, boolean selected,
                                         org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
-        if (!ConfigScreenManager.shouldStyleDropdown()) {
+        WidgetDropDownList<?> dropdown = (WidgetDropDownList<?>) (Object) this;
+
+        if (!ConfigScreenManager.shouldStyleDropdown(dropdown)) {
             return;
         }
 
-        DropdownRenderer.render((WidgetDropDownList<?>) (Object) this, ctx, mouseX, mouseY);
+        DropdownRenderer.render(dropdown, ctx, mouseX, mouseY);
         ci.cancel();
     }
 

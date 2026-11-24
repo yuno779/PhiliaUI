@@ -45,7 +45,8 @@ public abstract class GuiBaseMixin {
                     target = "Lfi/dy/masa/malilib/gui/widgets/WidgetBase;postRenderHovered(Lfi/dy/masa/malilib/render/GuiContext;IIZ)V"))
     private void malilibui$skipDropdownHoverRender(WidgetBase widget, GuiContext ctx, int mouseX,
                                                    int mouseY, boolean selected) {
-        if (widget instanceof WidgetDropDownList<?> && ConfigScreenManager.shouldStyleDropdown()) {
+        if (widget instanceof WidgetDropDownList<?> dropdown
+                && ConfigScreenManager.shouldStyleDropdown(dropdown)) {
             return;
         }
         widget.postRenderHovered(ctx, mouseX, mouseY, selected);
@@ -55,7 +56,9 @@ public abstract class GuiBaseMixin {
     private void malilibui$afterDrawHoveredWidget(GuiContext ctx, int mouseX, int mouseY, CallbackInfo ci) {
         GuiBase screen = (GuiBase) (Object) this;
 
-        if (!(screen instanceof GuiConfigsBase configs) || !ConfigScreenManager.hasLayout(screen)) {
+        if (!(screen instanceof GuiConfigsBase configs)
+                || (!ConfigScreenManager.hasLayout(screen)
+                    && !ConfigScreenManager.isUnstyledPrinterScreen(screen))) {
             return;
         }
 

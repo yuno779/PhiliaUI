@@ -1,8 +1,11 @@
 package com.github.bunnyi116.malilibui.mixin.compat;
 
+import com.github.bunnyi116.malilibui.gui.ConfigScreenManager;
+import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.gui.GuiScrollBar;
 import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.render.RenderUtils;
+import fi.dy.masa.malilib.util.GuiUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,6 +21,12 @@ public abstract class GuiScrollBarMixin {
     private void malilibui$renderSodium(GuiContext ctx, int x, int y, float zLevel,
                                         int width, int height, int contentHeight,
                                         int barWidth, int barHeight, CallbackInfo ci) {
+        // 未接管的界面（例如 Hana beta30 打印机）保留原生滚动条。
+        if (!(GuiUtils.getCurrentScreen() instanceof GuiBase gui) ||
+                !ConfigScreenManager.hasLayout(gui)) {
+            return;
+        }
+
         int trackH = Math.max(1, height);
         RenderUtils.drawRect(ctx, x, y, width, trackH, 0x44000000);
         RenderUtils.drawOutline(ctx, x, y, width, trackH, 0x88FFFFFF);

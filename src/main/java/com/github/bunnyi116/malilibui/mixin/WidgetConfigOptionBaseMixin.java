@@ -36,7 +36,8 @@ public abstract class WidgetConfigOptionBaseMixin {
         String label = wrapper.getLabel();
         Screen current = GuiUtils.getCurrentScreen();
 
-        if (label == null || !(current instanceof GuiConfigsBase configs)) {
+        if (label == null || !(current instanceof GuiConfigsBase configs) ||
+                !ConfigScreenManager.hasLayout(configs)) {
             return;
         }
 

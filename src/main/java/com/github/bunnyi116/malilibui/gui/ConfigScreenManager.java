@@ -61,6 +61,15 @@ public final class ConfigScreenManager {
     private static final Map<String, Integer> LAST_TAB = new HashMap<>();
     private static final java.util.Set<GuiBase> TAB_RESTORED = java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>());
     private static final Map<ButtonBase, Boolean> TAB_WRAPPED = new java.util.WeakHashMap<>();
+    /** Hana 版 Litematica Printer（新 UI）内部页面保持原生布局，侧栏入口仍可跳转。 */
+    private static final String HANA_PRINTER_MOD_ID = "litematica-printer";
+    /** beta 版本线：beta29 起为新 UI；bunnyi 用 1.2.4-bunnyi116，不含 beta 标记。 */
+    private static final String HANA_BETA_MARKER = "beta";
+    private static final int HANA_BETA_MIN = 29;
+    /** dev 版本线：dev446 是最后一个旧 UI 版，dev447 及以后按新 UI 处理。 */
+    private static final String HANA_DEV_MARKER = "dev";
+    private static final int HANA_DEV_LAST = 446;
+    private static Boolean hanaPrinterDetected;
     private static String ACTIVE_MOD_ID;
     private static GuiBase ACTIVE_CONFIG_SCREEN;
     private static boolean treeBarHovered;
@@ -135,6 +144,14 @@ public final class ConfigScreenManager {
      * ------------------------------------------------------------------ */
 
     public static void ensureLayout(GuiBase screen) {
+        if (isUnstyledPrinter(screen)) {
+            // Hana beta30 打印机内部页面保持原生；侧栏入口仍要能跳到对应页面。
+            applyPendingTabVanilla(screen);
+            positionSwitcherVanilla(screen);
+            restoreVanillaLayout(screen);
+            return;
+        }
+
         if (isManageDisabled(screen)) {
             // 缂傚倸鍊搁崐鎼佸磹閹间礁纾瑰瀣捣閻棗銆掑锝呬壕閻庤娲橀崝娆撳箖濠婂牊鍤嶉柕澶堝劜閻ｉ亶姊绘担绋款棌闁稿鎳庣叅闁哄稁鍘奸崙鐘层€掑锝呬壕闂佸搫鏈ú鐔风暦閻撳簶鏀介柟閭﹀帨瑜斿铏圭磼濡纰嶉梺绋匡工椤兘宕洪埀顒併亜閹哄棗浜剧紓浣哄Т缁夌懓鐣烽弴銏＄劶鐎广儱鎳愰悿鍥煙閸忚偐鏆橀柛鏂跨Ч瀹?/ 缂傚倸鍊搁崐鎼佸磹閹间礁纾归柣鎴ｅГ閸婂潡鏌ㄩ弴鐐测偓鍝ョ矆婢舵劖鐓涚€广儱楠搁獮鎴︽煃瑜滈崜娆撳疮閺夋垹鏆﹂柕濞炬櫆閸ゅ銇勯幋鐐差嚋闁活偄绻戠换婵嬫偨闂堟稐娌梺鍓茬厛閸ㄨ泛鐣风涵鍛汗闁圭儤鍨归ˇ鈺呮⒑缂佹﹩鐒炬い銉ユ閵囨劙骞掗幘瀛樼彸闂備礁鎲℃笟妤呭窗濡ゅ懎绐楅柟閭﹀厴閺€鑺ャ亜閺囩偞顥犻柛鎺嶅嵆閺岋絽螖娴ｇ懓纾抽悗娈垮枛椤兘寮幘缁樺亹闁肩⒈鍓﹀Σ浼存⒒娴ｇ鏆遍柟纰卞亰瀹曟劘銇愰幒鎾斥偓鍨亜閺嶃劎鐭岀痪鎹愭闇夐柨婵嗙墱閸ゅ啯绻涢崼鐔糕拹闁靛洤瀚伴弫鍌炲垂椤旇偐銈俊銈囧Х閸嬫稑螞濠靛棭鍤曟い鏇楀亾鐎规洜鍘ч埞鎴﹀醇閵忥紕绉梻鍌氬€烽懗鍫曗€﹂崼銉ュ珘妞ゆ帒鍊婚惌娆撴煙閻戞ê鐏嶉柡瀣閺屾洝绠涚€ｎ亖鍋撻弽顓熷亗闁绘柨鍚嬮悡蹇涚叓閸パ嶆敾婵炲懎鎳橀弻锝堢疀閺囩偐鏋呴梺鍝勬湰閻╊垶骞冮妶鍡樺闂傗偓閹邦剚鐎抽梻鍌欐祰椤曟牠宕归弶妫垫椽顢橀～顑藉亾娴ｈ倽鏃堝川椤撶媭妲规俊鐐€栫敮濠囨倿閿曞倹鍋熸い鎰剁悼缁♀偓闂佹眹鍨藉褎绂掗敃鍌涚厱闁靛鍎抽崺锝夋煛娴ｅ壊鍎旀慨濠冩そ瀹曨偊宕熼鐔蜂壕闁硅揪绠戦悙濠囨煏婵炑冨暙缁犲搫鈹戦悩鑼闁哄绨遍崑鎾诲箛閺夎法锛涢梺鐟板⒔缁垶鎮￠悢闀愮箚闁靛牆鍊告禍楣冩⒑閹稿孩纾搁柛搴＄－閸掓帞鈧綆鍠栫粻铏繆閵堝拑鏀婚柡鍛櫊濮婃椽鎳為妷鍐句邯钘濋弶鍫氭櫇閻滃鏌ｉ幇顔煎妺闁稿﹤鐏氶〃銉╂倷閼碱兛铏庨梺鍛婃⒐瀹€鎼佸蓟閻旂厧绀冮柤纰卞墰椤旀帡姊虹紒妯绘儎闁告挾鍠栭妴浣肝旈崨顓狀槹濡炪倖宸婚崑鎾绘煃瑜滈崜娆撴倶濮樿翰鈧啴濡烽埡鍌氣偓鐑芥煠绾板崬鍘搁柧蹇撻叄濮婅櫣鎷犻崣澶岊洶婵炲瓨绮犳禍顏勵嚕鐠囨祴妲堥柕蹇曞Х閸樻悂姊虹粙鎸庢拱缂侇喖绉瑰畷姘槈閵忊檧鎷?tick 濠电姷鏁告慨鐑藉极閹间礁纾婚柣鎰惈閸ㄥ倿鏌涢锝嗙缂佺姴缍婇弻宥夊传閸曨剙娅ｉ梺绋胯閸斿矂鍩為幋锕€纾兼繛鎴炵懅缁夋娊姊洪幖鐐插姶闁告挻鐟╅幃鈥斥槈閵忥紕鍘卞┑鐐村灥瀹曨剟寮稿☉妯忓綊鎮╅锝嗙彋濠殿喖锕ㄥ▍锝夊礌閺嶎厼鍗抽柣鏇氱劍缂嶅姊绘担鍛婂暈妞ゎ厼娲鏌ヮ敃閿曗偓閻?
             return;
@@ -256,8 +273,152 @@ public final class ConfigScreenManager {
     /**
      * 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偞鐗犻、鏇㈠Χ閸屾矮澹曞┑顔矫畷顒勫储鐎电硶鍋撶憴鍕妞ゎ偄顦遍埀顒勬涧閵堢顕ｉ崼鏇炵闁绘ê鐏氬В搴㈢節閻㈤潧浠╅柟娲讳簽缁辩偤鍩€椤掍胶绠鹃柛婊冨暟缁夘噣鏌熼姘拱鐎垫澘瀚换娑㈠箳閹寸姷楔闂佽桨鐒﹂崝娆忕暦閹偊妲绘繝纰樺墲濡炶棄顫忓ú顏勪紶闁告洦鍓﹀Λ鐐电磽娴ｈ櫣甯涢柛鏃€鐟ラ敃銏℃媴缁洘鏂€闂佺粯顭堥婊冾啅閵夆晜鐓曢柣鏇氱閻忥箓鎸婇悢鍏肩厪闊洤顑呴埀顒佺墵閹繝寮撮姀锛勫弳濠电娀娼уΛ娆撍夐悙鐑樼厱濠电姴鍟慨澶愭煃瑜滈崜婵嬶綖婢跺⊕鍝勎熸笟顖涘兊闂侀潧艌閺呮稓绮婚弻銉︾厱闁哄洢鍔岄悘锟犳煙椤栨粌浠遍柟顔肩秺瀹曞爼鏁愰崒姘闂佽偐鈷堥崜娑⑺囬鈧濠氬磼濞嗘劗銈板銈嗘肠閸涱喖搴婇梺鍦劋椤ㄥ懐澹曟繝姘厵闁绘鐗婄欢鑼棯閹岀吋闁哄瞼鍠栧畷婊嗩槾閻㈩垱鐩弻锝夊箻閸楃偛濮曠紓浣虹帛閻╊垶鐛€ｎ喗鍊婚柛鈩冪懃婵搫鈹戦悩顐ｅ鐎广儱娲ㄩ弳銈夋⒑閸濆嫭婀扮紒瀣灱閻忔帞绱撴担鍓插剰缂併劑浜跺畷鎴﹀箻濠㈠嫭妫冨畷姗€鍩℃繝鍐◥闂傚倷绀侀幖顐﹀疮椤愶附鍋嬫繝濠傜墕閺嬩礁鈹戦悩鍙夊闁绘挾鍠栭弻鐔兼倷椤掆偓閳绘洘銇勬惔銏╂畼缂佽鲸鎸搁濂稿幢椤撯檧鍋撻幐搴㈠弿濠电姴鍋嗛悡鑲┾偓瑙勬礃鐢帡锝炲┑瀣垫晞閻犳亽鍔嶉弲濂告⒒閸屾瑧顦﹂柟璇х磿濠€浣虹磽娓氬洤鏋熼柣鐔村劦閹箖鎮块妯规睏闂佸湱鍎ら崵锕傚煛閸愨晛鏋戦棅顐㈡处缁嬫帡宕戝┑鍫㈢＝濞达絽顫栭懖鈺傚床闁糕剝绋掗悡蹇涙煕椤愶絿绠撻柍褜鍓欓幉锛勭矉瀹ュ棎鍋呴柛鎰ㄦ櫅娴狀厼鈹戦悩璇у伐闁瑰啿閰ｉ妴鍌涚附閸涘﹦鍘介梺鍐叉惈閿曘倝鎮橀悩鐐戒簻闁哄浂浜炵粔顔锯偓瑙勬磸閸斿秶鎹㈠┑瀣妞ゎ厽鍨熼崑鎾诲箻缂佹ǚ鎷洪梺鍛婄☉閿曪妇绱撳鑸电厱閹兼番鍨婚崣鈧梺璇″灟缁舵岸鐛Ο鑲╃＜婵☆垶鏀辩€氬ジ姊绘担鍛婅础妞ゎ厼鐗嗛湁闁绘垼妫勯悡鈥愁熆鐠轰警鍎嶅ù婊勭矌閹插憡寰勯幇顒傦紱闂佺懓澧界划顖炲煕?
      */
+    /** 排除 Hana beta29 及以后的打印机（新 UI）；旧版 Hana、dev446、bunnyi 等继续适配。 */
+    private static boolean isUnstyledPrinter(GuiBase screen) {
+        if (!(screen instanceof GuiConfigsBase configs)) {
+            return false;
+        }
+
+        return HANA_PRINTER_MOD_ID.equals(configs.getModId()) && isHanaPrinterInstalled();
+    }
+
+    /**
+     * 判断装的是否为需要排除的 Hana 新 UI 打印机，两条版本线：
+     * beta+数字 >= 29，或 dev+数字 > 446。
+     * beta29/30/31…、dev447+ 命中；旧 Hana(beta25…)、dev446 及更早、
+     * bunnyi(1.2.4-bunnyi116) 不会。结果缓存，因为游戏进程内 mod 版本不变。
+     */
+    public static boolean isHanaPrinterInstalled() {
+        if (hanaPrinterDetected == null) {
+            hanaPrinterDetected = FabricLoader.getInstance().getModContainer(HANA_PRINTER_MOD_ID)
+                    .map(container -> isNewUiHanaVersion(
+                            container.getMetadata().getVersion().getFriendlyString()))
+                    .orElse(false);
+        }
+
+        return hanaPrinterDetected;
+    }
+
+    /**
+     * 取标记（beta/dev）后紧跟的数字，没有则返回 -1。
+     * 版本号统一小写，bunnyi 的 "bunnyi116" 不含 beta/dev 标记，不会被误判。
+     */
+    private static int versionNumberAfter(String version, String marker) {
+        int at = version.indexOf(marker);
+
+        if (at < 0) {
+            return -1;
+        }
+
+        int start = at + marker.length();
+        int end = start;
+
+        while (end < version.length() && Character.isDigit(version.charAt(end))) {
+            end++;
+        }
+
+        if (end == start) {
+            return -1;
+        }
+
+        try {
+            return Integer.parseInt(version.substring(start, end));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    /** beta 数字 >= 29，或 dev 数字 > 446，即为需要排除的新 UI。 */
+    private static boolean isNewUiHanaVersion(String version) {
+        if (version == null) {
+            return false;
+        }
+
+        String lower = version.toLowerCase(Locale.ROOT);
+
+        return versionNumberAfter(lower, HANA_BETA_MARKER) >= HANA_BETA_MIN
+                || versionNumberAfter(lower, HANA_DEV_MARKER) > HANA_DEV_LAST;
+    }
+
+    public static boolean isUnstyledPrinterScreen(GuiBase screen) {
+        return isUnstyledPrinter(screen);
+    }
+
+    /**
+     * 未接管的打印机页面：只把右上角模组切换框放到适配界面里的同一坐标。
+     * Hana 在切换内置页面时会重设控件坐标，因此渲染前也会再调用一次。
+     */
+    public static void positionSwitcherVanilla(GuiBase screen) {
+        if (!(screen instanceof GuiConfigsBase configs)) {
+            return;
+        }
+
+        WidgetDropDownList<ModInfo> switcher =
+                ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+
+        if (switcher == null) {
+            return;
+        }
+
+        int tabCount = 0;
+
+        for (ButtonBase button : ((GuiBaseAccessor) screen).malilibui$getButtons()) {
+            if (isTabButton(button) && !isMiniHudActionButton(button)) {
+                tabCount++;
+            }
+        }
+
+        ConfigLayout layout = ConfigLayout.compute(screen.getScreenWidth(), screen.getScreenHeight(), tabCount);
+        int y = layout.panelY + 4;
+        int closeX = layout.contentX + layout.contentW - CLOSE_BUTTON_SIZE;
+        int switchW = switcher.getWidth() > 0 ? switcher.getWidth() : 130;
+        int switchX = Math.max(layout.contentX + 8, closeX - TOP_BAR_GAP - switchW);
+
+        if (switcher.getX() != switchX || switcher.getY() != y) {
+            switcher.setPosition(switchX, y);
+        }
+    }
+
+    /** 未被接管的界面仍要响应左侧模组树里“工作台 / 更多打印设置”的跳转。 */
+    private static void applyPendingTabVanilla(GuiBase screen) {
+        Integer pending = PENDING_TAB.remove(screen);
+
+        if (pending == null || pending < 0) {
+            return;
+        }
+
+        List<ButtonBase> tabs = new ArrayList<>();
+
+        for (ButtonBase button : ((GuiBaseAccessor) screen).malilibui$getButtons()) {
+            if (isTabButton(button) && !isMiniHudActionButton(button)) {
+                tabs.add(button);
+            }
+        }
+
+        if (pending >= tabs.size()) {
+            return;
+        }
+
+        ButtonBase button = tabs.get(pending);
+        IButtonActionListener listener = ((ButtonBaseAccessor) button).malilibui$getActionListener();
+
+        if (listener == null) {
+            return;
+        }
+
+        Minecraft.getInstance().execute(() -> {
+            if (GuiUtils.getCurrentScreen() == screen) {
+                listener.actionPerformedWithButton(button, 0);
+            }
+        });
+    }
+
     private static boolean isManageDisabled(GuiBase screen) {
         if (!UiConfigs.General.ENABLED.getBooleanValue()) {
+            return true;
+        }
+
+        if (isUnstyledPrinter(screen)) {
             return true;
         }
 
@@ -1376,6 +1537,27 @@ public final class ConfigScreenManager {
         return current instanceof GuiBase gui && hasLayout(gui);
     }
 
+    /**
+     * Hana beta30 打印机的页面本身不适配，但右上角的模组切换下拉框
+     * 必须保持与其它界面一致的 Philia UI 样式。
+     */
+    public static boolean shouldStyleDropdown(WidgetDropDownList<?> dropdown) {
+        if (shouldStyleDropdown()) {
+            return true;
+        }
+
+        Screen current = GuiUtils.getCurrentScreen();
+
+        if (!(current instanceof GuiConfigsBase configs) || !isUnstyledPrinter(configs)) {
+            return false;
+        }
+
+        WidgetDropDownList<ModInfo> switcher =
+                ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+
+        return switcher == dropdown;
+    }
+
     public static boolean isNavButton(GuiBase screen, ButtonBase button) {
         ConfigScreenState state = STATES.get(screen);
 
@@ -1440,7 +1622,8 @@ public final class ConfigScreenManager {
      * 右上角模组切换器拥有最高点击优先级，避免被搜索框抢走。
      */
     public static boolean onSwitcherClick(GuiBase screen, MouseButtonEvent click, boolean doubleClick) {
-        if (!(screen instanceof GuiConfigsBase configs)) {
+        if ((!hasLayout(screen) && !isUnstyledPrinter(screen))
+                || !(screen instanceof GuiConfigsBase configs)) {
             return false;
         }
 
@@ -1480,7 +1663,8 @@ public final class ConfigScreenManager {
      */
     public static boolean onSwitcherScroll(GuiBase screen, double mouseX, double mouseY,
                                            double horizontal, double vertical) {
-        if (!(screen instanceof GuiConfigsBase configs)) {
+        if ((!hasLayout(screen) && !isUnstyledPrinter(screen))
+                || !(screen instanceof GuiConfigsBase configs)) {
             return false;
         }
 

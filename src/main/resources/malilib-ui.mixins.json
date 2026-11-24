@@ -38,8 +38,9 @@
     "dialog.GuiTableEditMixin",
     "compat.LpctoolsConfigPageMixin",
     "compat.MagicConfigGuiMixin",
-    "compat.MagicConfigGuiAccessor",
     "compat.SelectorDropDownListMixin",
+    "compat.HanaPrinterColorsMixin",
+    "compat.HanaPrinterListColorsMixin",
     "compat.WidgetDropDownListMixin"
   ],
   "injectors": {
