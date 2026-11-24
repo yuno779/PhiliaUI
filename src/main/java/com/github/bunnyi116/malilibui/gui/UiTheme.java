@@ -2,6 +2,7 @@ package com.github.bunnyi116.malilibui.gui;
 
 import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.render.RenderUtils;
+import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.client.gui.Font;
 
 import com.github.bunnyi116.malilibui.config.UiConfigs;
@@ -333,6 +334,33 @@ public final class UiTheme {
     }
 
     /**
+     * 与配置列表搜索框一致的“玻璃”输入框：纯半透明黑底，不带任何边框。
+     * 用于顶栏叉号、模组下拉框等需要与搜索框保持同一视觉语言的控件。
+     */
+    public static void drawGlassField(GuiContext ctx, int x, int y, int width, int height,
+                                      boolean active) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        fill(ctx, x, y, width, height, active ? 0xCC000000 : 0x99000000);
+    }
+
+    /**
+     * 下拉框专用底：与顶栏搜索框完全一致的半透明黑。
+     * 原生下拉框的重绘已在 SelectorDropDownListMixin 中拦截，
+     * 底层不再有不透明黑框，半透明色可正常叠出深蓝面板色。
+     */
+    public static void drawDropdownField(GuiContext ctx, int x, int y, int width, int height,
+                                         boolean active) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        fill(ctx, x, y, width, height, active ? 0xCC000000 : 0x99000000);
+    }
+
+    /**
      * 绘制承载选项列表 / 渲染层控件的内嵌凹槽面板。
      */
     public static void drawContentWell(GuiContext ctx, int x, int y, int width, int height) {
@@ -380,6 +408,19 @@ public final class UiTheme {
         gradient(ctx, x, y, width, height, top, bottom);
         outline(ctx, x, y, width, height, border);
         hline(ctx, x + 1, y + 1, width - 2, highlight);
+    }
+
+    /**
+     * 在给定方框正中画一个字符（如下拉箭头 ▼、关闭 ×）。
+     * MC 字形的可见像素大约落在基线上方的 8px 区间内，
+     * 直接按 (height - fontHeight)/2 定位会偏上，这里统一补偿到视觉居中。
+     */
+    public static void drawCenteredGlyph(GuiContext ctx, String glyph, int x, int y,
+                                          int width, int height, int color, boolean shadow) {
+        int fontH = StringUtils.getFontHeight();
+        int gx = x + (width - ctx.fontRenderer().width(glyph)) / 2;
+        int gy = y + (height - fontH) / 2 + 1;
+        text(ctx, glyph, gx, gy, color, shadow);
     }
 
     /**

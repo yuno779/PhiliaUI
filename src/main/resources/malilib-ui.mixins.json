@@ -37,6 +37,8 @@
     "dialog.GuiStringListEditMixin",
     "dialog.GuiTableEditMixin",
     "compat.LpctoolsConfigPageMixin",
+    "compat.MagicConfigGuiMixin",
+    "compat.MagicConfigGuiAccessor",
     "compat.SelectorDropDownListMixin",
     "compat.WidgetDropDownListMixin"
   ],

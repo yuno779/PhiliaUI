@@ -9,6 +9,7 @@ import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.widgets.WidgetDropDownList;
+import fi.dy.masa.malilib.gui.widgets.WidgetBase;
 import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.util.data.ModInfo;
 import com.github.bunnyi116.malilibui.gui.ConfigScreenManager;
@@ -29,6 +30,27 @@ public abstract class GuiBaseMixin {
         ConfigScreenManager.ensureLayout((GuiBase) (Object) this);
     }
 
+    /**
+     * 通用拦截：所有 hovered widget 的 postRenderHovered 都经由
+     * {@code GuiBase.drawHoveredWidget} 调用。很多 mod 的下拉框（如显示“无”的
+     * 快捷键筛选框）会在其中再画一遍原生样式，盖在我们的主题渲染上、与其它
+     * 主题化下拉框重叠。这里对所有 {@link WidgetDropDownList} 子类统一跳过
+     * 这次原生 hover 绘制，无需逐个 mod 适配。
+     *
+     * <p>展开态的面板由 {@link #malilibui$afterDrawHoveredWidget} 里单独重绘的
+     * switcher 和 DropdownRenderer 负责，因此跳过不会丢失展开列表。</p>
+     */
+    @Redirect(method = "drawHoveredWidget",
+            at = @At(value = "INVOKE",
+                    target = "Lfi/dy/masa/malilib/gui/widgets/WidgetBase;postRenderHovered(Lfi/dy/masa/malilib/render/GuiContext;IIZ)V"))
+    private void malilibui$skipDropdownHoverRender(WidgetBase widget, GuiContext ctx, int mouseX,
+                                                   int mouseY, boolean selected) {
+        if (widget instanceof WidgetDropDownList<?> && ConfigScreenManager.shouldStyleDropdown()) {
+            return;
+        }
+        widget.postRenderHovered(ctx, mouseX, mouseY, selected);
+    }
+
     @Inject(method = "drawHoveredWidget", at = @At("TAIL"))
     private void malilibui$afterDrawHoveredWidget(GuiContext ctx, int mouseX, int mouseY, CallbackInfo ci) {
         GuiBase screen = (GuiBase) (Object) this;
@@ -45,13 +67,8 @@ public abstract class GuiBaseMixin {
         if (switcher != null && ((WidgetDropDownListAccessor) switcher).malilibui$isOpen()) {
             switcher.postRenderHovered(ctx, mouseX, mouseY, false);
         }
-
-        if (switcher != null) {
-            com.github.bunnyi116.malilibui.gui.UiTheme.fill(ctx, switcher.getX(), switcher.getY(),
-                    switcher.getWidth(), switcher.getHeight(), 0x18000000);
-            com.github.bunnyi116.malilibui.gui.UiTheme.outline(ctx, switcher.getX(), switcher.getY(),
-                    switcher.getWidth(), switcher.getHeight(), 0x55FFFFFF);
-        }
+        // 之前这里还会给 switcher 叠一层白色描边，那是早期未主题化时的高亮，
+        // 现在下拉框已有自己的主题渲染与展开面板，这层白边必须去掉。
     }
 
     @Inject(method = "mouseDragged", at = @At("HEAD"), cancellable = true)
@@ -65,6 +82,12 @@ public abstract class GuiBaseMixin {
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
     private void malilibui$mouseClicked(net.minecraft.client.input.MouseButtonEvent click, boolean doubleClick,
                                         org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        // 顶栏强制退出叉号：点击后直接回到游戏，不经过父界面栈。
+        if (ConfigScreenManager.onCloseButtonClick((GuiBase) (Object) this, click.x(), click.y())) {
+            cir.setReturnValue(true);
+            return;
+        }
+
         // 右上角模组切换器最高优先级，不能被搜索框抢走点击。
         if (ConfigScreenManager.onSwitcherClick((GuiBase) (Object) this, click, doubleClick)) {
             cir.setReturnValue(true);

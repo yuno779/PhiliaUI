@@ -18,6 +18,7 @@ import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import fi.dy.masa.malilib.gui.button.ButtonGeneric;
 import fi.dy.masa.malilib.gui.widgets.WidgetBase;
 import fi.dy.masa.malilib.gui.widgets.WidgetDropDownList;
+import fi.dy.masa.malilib.gui.widgets.WidgetSearchBar;
 import fi.dy.masa.malilib.gui.widgets.WidgetListBase;
 import fi.dy.masa.malilib.gui.widgets.WidgetListConfigOptionsBase;
 import fi.dy.masa.malilib.gui.wrappers.TextFieldWrapper;
@@ -74,6 +75,9 @@ public final class ConfigScreenManager {
      */
     private static final int TAB_STRIP_MAX_Y = 64;
     private static final int TAB_MAX_HEIGHT = 22;
+    /** 顶栏控件间距：搜索框到下拉框、下拉框到叉号完全一致。 */
+    private static final int TOP_BAR_GAP = 6;
+    private static final int CLOSE_BUTTON_SIZE = 18;
 
     /**
      * 婵犵數濮烽弫鍛婃叏閻戣棄鏋侀柟闂寸绾惧鏌ｉ幇顒佹儓缂佺姵澹嗙槐鎺斺偓锝庡亽閸庛儵鏌涢妶鍡樼闁哄本鐩、鏇㈡晲閸℃瑯妲伴梻浣侯焾椤戝懘宕愰崸妤€绠栨俊銈呮噺閺呮煡骞栫划鍏夊亾閸愯尙顔囧┑鐘垫暩閸嬫盯鎯岄崼鐔侯洸妞ゅ繐鐗嗛拑鐔哥箾閹寸偟鐓繛宀婁邯閺屾盯骞樺璇蹭壕濠碘剝褰冮悧濠勬崲濞戞埃鍋撻悽娈跨劸閺嶏繝姊洪幐搴″摵婵☆偂鐒﹀鍕箛椤撶姴骞楁繝纰樻閸ㄦ娊宕㈣瀹曟繄鈧綆鍓涘Λ顖涖亜閹捐泛孝濞存粌澧界槐鎺旂磼濡偐鐤勯梺绯曟杹閸嬫挸顪冮妶鍡楃瑨閻庢氨鍏樺顐﹀磼閻愬鍘卞銈嗗姧缁茶法绮婚幘缁樼厱閻庯綆浜炴晥濠殿喖锕ㄥ▍锝囨閹烘嚦鐔兼嚒閵堝懎姹查梻鍌欑濠€閬嶅煕閸儱纾诲┑鐘叉搐杩濋梺绋挎湰缁嬫捇姊介崟顖涚厱婵炴垶锕崝鐔兼煕濡湱鐭欐慨濠冩そ楠炴劖鎯旈敐鍥╂殼闂備胶顢婂▍鏇㈠礉濞嗘挸绠栭柣鎰惈瀹告繂鈹戦悩鎻掝伀妞ゆ梹娲熷娲礂閼测斂鍋為梺鍝勬噺閻╊垶濡撮崒鐐村殐闁冲搫鍟伴敍婊堟煟鎼搭垳绉靛ù婊嗘硾铻ｉ柍褜鍓欓—鍐Χ閸愩劎浠鹃梺鎸庢磸閸ㄤ粙鐛崘顔肩厸濞达絿鍎ゅ▓楣冩⒑閹肩偛鍔橀柛鏂跨Ч椤㈡瑨绠涘☉娆屾嫽闂佺鏈悷褔藝閿曞倹鐓欓悹鍥囧懐锛熼梺杞扮贰閸犳牞鐏冮梺鍛婂姀閺呮稒鎯旀繝鍥ㄢ拺缂佸娉曢悘閬嶆煕鎼淬垹鐏╃紒杈╁仱瀵粙顢橀悢鍝勫箥闂傚倷绶￠崣蹇曠不閹达妇宓佹俊銈傚亾闁宠鍨块、娑橆潩閻撳孩顔嶉梻渚€鈧偛鑻晶顔剧磼閻樿尙效鐎规洘娲熷畷锟犳倶缂佹ɑ銇濆┑鈩冩倐閸┾剝鎷呯粙鎸庮吇闂傚倷鑳堕…鍫ユ儔婵傜纾婚柣鎰劋閸?
@@ -374,10 +378,22 @@ public final class ConfigScreenManager {
         ConfigLayout layout = state.layout;
         int x = layout.sidebarX + layout.sidebarW + 17;
         int y = layout.panelY + 4;
-        WidgetDropDownList<ModInfo> switcher = screen instanceof GuiConfigsBase configs
-                ? ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget() : null;
-        int right = switcher != null ? switcher.getX() - 6
-                : layout.contentX + layout.contentW - 6;
+        WidgetDropDownList<ModInfo> switcher = null;
+        WidgetDropDownList<?> masaSwitcher = null;
+        if (screen instanceof GuiConfigsBase configs) {
+            switcher = ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+            masaSwitcher = getMasaGadgetSwitcher(configs);
+        }
+
+        // 顶栏从右到左：叉号 -> 原生模组切换框 -> MasaGadget 切换框 -> 搜索框。
+        // 按各控件宽度直接推算搜索框右边界，不依赖 setPosition 结果，避免调用顺序抖动。
+        int right = layout.contentX + layout.contentW - CLOSE_BUTTON_SIZE - TOP_BAR_GAP;
+        if (switcher != null) {
+            right -= Math.max(80, switcher.getWidth()) + TOP_BAR_GAP;
+        }
+        if (masaSwitcher != null) {
+            right -= Math.max(80, masaSwitcher.getWidth()) + TOP_BAR_GAP;
+        }
         int w = Math.max(80, right - x);
 
         if (state.searchField == null) {
@@ -653,16 +669,58 @@ public final class ConfigScreenManager {
      * 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柣鎴ｅГ閸婂潡鏌ㄩ弴姘舵濞存粌缍婇弻娑㈠箛閸忓摜鏁栭梺娲诲幗閹瑰洭寮婚悢铏圭＜闁靛繒濮甸悘鍫ユ⒑閸濆嫬顏ラ柛搴″级缁岃鲸绻濋崶顬囨煕濞戝崬骞楁繛鍫熺叀濮婃椽宕崟顒夋！缂備緡鍠楅幑鍥ь嚕鐠囨祴妲堥柕蹇曞Х閻も偓闂備礁鐤囧銊х矆娓氣偓閳ユ牜鈧綆浜栭弨浠嬫煟濮楀棗浜滃ù婊呭亾缁绘稓鈧數顭堢敮鍫曟煟鎺抽崝鎴﹀箖閿熺姴鍗抽柣鏃傤焾瀵灝鈹戦绛嬫當婵☆偅顨嗛弲鑸靛鐎涙鍘遍梺鐟扮摠缁诲啰鎷归敍鍕＜閺夊牄鍔岀粭姘箾閻撳海绠诲┑鈩冩倐婵＄兘顢欑粵瀣棆闂傚倸鍊峰ù鍥敋閺嶎厼闂い鏇楀亾鐎规洘濞婇弫鎰緞閸艾浜惧〒姘ｅ亾鐎殿喗鎸虫慨鈧柍鈺佸暞閻濇娊姊绘担鍛婂暈濞撴碍顨婂畷褰掓焼瀹ュ棗鍓ㄩ悗骞垮劚椤︿即鍩涢幒鎳ㄥ綊鏁愰崨顔兼殘闂佸摜鍠撻崑銈夊箖娴犲鏁嶆慨妯诲礃閸氼偊鎮楃憴鍕┛缂佺粯绻傞悾宄拔熸笟顖氭櫊濡炪倖姊归崕铏叏閸濆嫧鏀介柣鎰摠缂嶆垿鏌涘顒夊剰妞ゎ厼娲ら埢搴ㄥ箣閻樼绱￠柣鐔哥矋濡啫顕ｇ拠娴嬫闁冲灈鏂侀崑鎾绘晝閸屾氨顓哄┑鐘绘涧濞层劏銇愰娑氱瘈缁剧増蓱椤﹪鏌涢妸锔界凡閾荤偞绻濋棃娑卞剰闁藉啰鍠栭弻鏇熺箾閸喖濮夊┑鈩冨絻閻楀﹦鎹㈠☉銏犲耿婵☆垵娅ｉ崝鎼佹⒑鐠囪尙绠哄ù婊庡墰濡叉劙骞樼€涙ê顎撻梺鎯х箳閹虫挾绮敓鐘斥拺缂備焦锕╁▓妯衡攽閻愨晛浜鹃柣搴㈩問閸犳稑鐣烽崹顐ゎ浄闁挎洖鍊归崑鈺呮倶閻愰潧浜鹃柣锝囧厴濮婄粯绗熼埀顒勫焵椤掑倸浠滈柤娲诲灡閺呰埖瀵肩€涙鍘遍梺鍦劋閹哥霉椤曗偓閺岀喖顢欓悾宀€鐓€闁句紮缍侀幃妯跨疀閺冨倸顫ч梺璇茬箰閸熸潙顫忕紒妯肩懝闁逞屽墴閸┾偓妞ゆ帒鍊告禒婊堟煠濞茶鐏￠柡鍛閳ь剚绋掗敃鈺佲枔娴犲鐓熼柟閭﹀幗缂嶆垵鈹戦鑲╁ⅱ闁逞屽墮閻忔艾顭垮Ο灏栧亾濮樼厧骞橀柟骞垮灩閳规垹鈧綆浜為敍婊冣攽閻愭潙鐏﹂柣鐕傜畵椤㈡瑩寮崼鐔叉嫽婵炶揪绲块悺鏃堝吹濞嗗精鏃堟偐濞堣法鍔搁梺鎸庢磸閸ㄤ粙寮婚崱妤婂悑闁告侗鍨抽弸鍐⒒娴ｅ憡璐￠柛瀣尭閿曘垼銇愰幒鎾斥偓鍨攽閻樻彃鏆斿ù婊勭矒閺屸€愁吋鎼粹€茬盎婵炲濮电划鎾诲蓟閿濆鏁囬柣鏇氱劍閻や線姊虹拠鈥虫灍妞ゃ劌锕ら悾鐑芥倻缁涘鏅ｉ梺缁樺姈閸旀垿宕曢悽绋胯摕闁挎繂鎳夐弨浠嬫煕閳╁喚娈㈤柡鍡愬灮缁辨挻鎷呮禒瀣懙闂佸湱鎳撳ú銈夋偩閻戣棄绠抽柟瀛樻⒐椤秹鏌ｆ惔鈩冭础濠殿噮鍙冨畷鎴﹀箻鐠囨煡鏁滃┑掳鍊撻懗鍫曞储闁秵鈷戦柟绋挎捣缁犳挻淇婇锝囨噰鐎规洘鍔欓獮鍥敊閻熼澹曞┑鐐茬墕閻忔繂鈻嶅鈧弻娑㈠箻鐠虹儤鐏堝Δ鐘靛仜閸熸娊藝閸︻厸鍋撶憴鍕闁靛牊鎮傞獮鍐閵堝棛鍙嗛柣搴秵閸嬫帗绂掗幖浣光拻闁稿本鑹鹃埀顒€鍢查湁闁搞儺鍓欒繚闂侀€炲苯澧撮柡灞剧〒閳ь剨缍嗛崑鍛暦瀹€鍕厸鐎光偓閳ь剟宕伴弽顓犲祦闁糕剝鍑瑰Σ濂告⒑闂堚晝绋绘俊鐐扮矙楠?
      * 26.x 濠电姷鏁告慨鐑藉极閹间礁纾块柟瀵稿Т缁躲倝鏌﹀Ο渚＆婵炲樊浜濋弲婊堟煟閹伴潧澧幖鏉戯躬濮婃椽宕ㄦ繝鍌毿曟繛瀛樼矋閻楃姴鐣烽幋锕€绠婚悹鍥ㄥ絻閻庮厼顪冮妶鍡楀Ё缂傚秴妫楄灋闁告劦鍠楅崐鐢告偡濞嗗繐顏痪鐐倐閺屾盯濡搁妶鍥╃厯濡ょ姷鍋涢崯瀛樻叏閳ь剟鏌ｅΟ鐑橆棥婵炲拑绲垮Σ鎰板箳閹冲磭鍠撶槐鎺懳熼懡銈呯濠电姷鏁告慨鐑藉极閹间礁纾婚柣鎰惈閸ㄥ倿鏌涢锝嗙缂佺姵褰冮湁闁挎繂鎳庨ˉ蹇旂箾鐎涙澧甸柡灞炬礃缁绘稖顦查柟铏姍閹箖鎳滈悽鐢电槇闂侀潧楠忕徊浠嬫偂閹扮増鐓曢柡鍐ｅ亾婵炲弶绮庨崚鎺楀醇閻旈绐為柣搴祷閸斿鑺辩拠宸富闁靛牆妫欑亸鐢告煕閻樺弶鎹ｇ紒顕呭幖椤繈鎳滈棃娑掑亾?
      */
+    /** MasaGadget 的快速切换框属于顶栏，取到它以便从“下移”的排序/筛选框中排除。 */
+    private static WidgetDropDownList<?> getMasaGadgetSwitcher(GuiConfigsBase configs) {
+        try {
+            java.lang.reflect.Field field = findField(configs.getClass(), "masa_gadget$masaModGuiList");
+
+            if (field != null) {
+                field.setAccessible(true);
+                Object value = field.get(configs);
+
+                if (value instanceof WidgetDropDownList<?> dropdown) {
+                    return dropdown;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
+
+        return null;
+    }
+
+    private static java.lang.reflect.Field findField(Class<?> type, String name) {
+        for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
+            try {
+                return c.getDeclaredField(name);
+            } catch (NoSuchFieldException ignored) {
+            }
+        }
+        return null;
+    }
+
     private static void positionExtraDropdowns(GuiConfigsBase configs, ConfigScreenState state) {
         
 
         ConfigLayout layout = state.layout;
         WidgetDropDownList<ModInfo> switcher = ((GuiConfigsBaseAccessor) configs).malilibui$getModSwitchWidget();
+        WidgetDropDownList<?> masaSwitcher = getMasaGadgetSwitcher(configs);
         List<WidgetDropDownList<?>> extras = new ArrayList<>();
 
         for (WidgetBase widget : ((GuiBaseAccessor) configs).malilibui$getWidgets()) {
-            if (widget instanceof WidgetDropDownList<?> dropdown && dropdown != switcher) {
+            if (widget instanceof WidgetDropDownList<?> dropdown
+                    && dropdown != switcher && dropdown != masaSwitcher && !extras.contains(dropdown)) {
                 extras.add(dropdown);
+            }
+        }
+
+        // MagicLib 的筛选/排序框在 hoveringWidgets 里单独渲染，可能不在 widgets 列表，
+        // 一并纳入统一定位，避免“无”和“最近使用”上下错位重叠。
+        if (configs instanceof com.github.bunnyi116.malilibui.mixin.compat.MagicConfigGuiAccessor magic) {
+            for (WidgetBase widget : magic.malilibui$getHoveringWidgets()) {
+                if (widget instanceof WidgetDropDownList<?> dropdown
+                        && dropdown != switcher && dropdown != masaSwitcher && !extras.contains(dropdown)) {
+                    extras.add(dropdown);
+                }
             }
         }
 
@@ -675,6 +733,15 @@ public final class ConfigScreenManager {
         int y = switcher != null ? switcher.getY()
                 : layout.contentY + (layout.headerH - 18) / 2;
 
+        // MagicLib/MasaGadget 的排序、筛选下拉框（如“最近使用”“字母顺序”）
+        // 排在内容区顶部那一行、彼此相邻，不再堆在顶栏模组切换器旁边。
+        // 右边界必须给工作区列表的竖直滚动条留出空间，否则会盖在滚动条上无法拖动。
+        int scrollbarReserve = 26;
+        int contentRight = layout.contentX + layout.contentW - scrollbarReserve;
+        int contentRowY = layout.panelY + 32;
+        int extraGap = 6;
+        int leftmostExtraX = Integer.MAX_VALUE;
+
         for (int i = extras.size() - 1; i >= 0; --i) {
             WidgetDropDownList<?> dropdown = extras.get(i);
 
@@ -682,10 +749,14 @@ public final class ConfigScreenManager {
             if (dropdownClass.contains("magiclib") || dropdownClass.contains("SelectorDropDownList")) {
                 // MasaGadget 闂?MagicLib 闂?SelectorDropDownList 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偞鐗犻、鏇㈠煕濮橆厽銇濆┑陇鍩栧鍕箾椤噣妾柟渚垮妼椤啰鎷犻煫顓烆棜闂佽姘﹂～澶娒洪敃鍌氱闁绘梻顑曢埀顑跨铻栭柛娑卞幘椤︽澘顪冮妶鍡楀闁搞劏顫夌粋宥夊醇閺囩啿鎷绘繛杈剧秬濞咃絿鏁☉銏＄厸閻忕偠顕ф慨鍌涱殽閻愬澧垫い銏℃礋閺佸倻鎮伴垾鍏呭闂佺鏈粙鎾绘⒔閸曨垱鐓曟繛鎴烇公閸旂喖鏌涘鈧禍璺侯潖濞差亜鎹舵い鎾跺仜婵℃椽姊洪幖鐐插闁糕晜鐗曢銉╁礋椤栨氨顦板銈嗘尰缁嬫垶绂嶆ィ鍐╁仭婵炲棗绻愰顏嗙磼閳ь剟宕橀鐣屽幗闂佸湱铏庨崹顏堝磻閹惧磭鏆﹂柛銉ｅ妽椤旀洟姊绘担绛嬫綈闁稿氦澹堥。楣冩⒑闁偛鑻晶鍓х磼閻樿櫕宕岄柣娑卞櫍楠炴帒螖閳ь剛绮绘繝姘厵濡鐒﹂ˇ椋庣磼?
                 // 闂傚倸鍊搁崐宄懊归崶顒夋晪鐟滃秹婀侀梺缁樺灥椤洟鍩€椤戣法鍔嶇紒缁樼箞瀹曟垿鎳為妷褎鍒涢悗瑙勬礈閸犳牠銆佸Ο琛℃婵☆垳鎳撻ˉ姘辩磽娴ｉ缚妾搁柛妯恒偢楠炲﹨绠涘☉娆忎户濡炪倕绻愬Λ娑氬婵傚憡鍊堕柣鎰煐椤ュ鏌ょ粙璺ㄧШ闁哄苯绉堕幉鎾礋椤愩倓绱濋柣搴ゎ潐濞叉﹢宕曟總鏉嗗洨鈧稒眉缁诲棝鏌＄仦璇插姕闁轰浇浜槐鎺旂磼濡吋鍒涘Δ鐘靛仜椤戝骞冨▎鎾崇骇闁瑰濯弳鈩冪節瀵伴攱婢橀埀顒侇殕閹便劑骞橀鑲╊啈濠电姴锕ら悧鍡涘几娴ｅ箍浜滈柡鍥殔娴滄儳顪冮妶鍐ㄧ仾婵炶尙鍠栧顐﹀磼閻愭潙鐧勬繝銏ｆ硾椤﹁京绱炲澶嬧拻闁稿本鐟чˇ锕€顭块悷甯含鐎规洘鍨垮畷銊╊敍濞戞ê绨ラ梻浣侯焾閻ジ宕戦悙鍝勭９闂傚牊绋堥弨浠嬫煕鐏炲墽顣查柛鐔哄仱閺岋綁骞樼€靛憡鍣銈冨妸閸庣敻骞冨▎鎾村殤妞ゆ垼鍎诲鎼佹⒒娴ｇ瓔鍤欑紒璇叉瀵彃顭ㄩ崨顔煎簥濠电偞鍨崹鐟邦啅濠靛洢浜滈柡鍐ㄦ搐娴滃綊鏌ｉ悢璇茬毢缂佽鲸鎸婚幏鍛村礈閹绘帒澹堟俊鐐€ф俊鍥极鐠囪尙鏆︽繛宸簻閻掑灚銇勯幒宥夋濞存粍绮撻弻鐔兼倻濡櫣浠村銈呮禋娴滎亪寮诲☉銏犖ч柛婊冨暢閸氼偊鎮楀▓鍨灈闁绘牜鍘ч悾鐑芥偂鎼存ɑ鏂€闂佺硶鈧磭绠查悗鍨墱缁辨捇宕掑▎鎺濆敼闂佺顑嗛幐鎼佲€﹂崸妤佸殝闂傚牊绋戦～宥夋⒑缂佹ɑ灏版繛鍙夘焽閹广垹鈽夐姀鐘茶€垮┑鈽嗗灠缁绘宕戦幇鐗堝殟閺夊牃鏅濈壕鍏间繆椤栫偞娅滅紒銊ヮ煼濮婃椽妫冨☉姘暫闂佺懓鍟块柊锝咁嚕閹惰姤鏅查柛銉到娴滈箖鎮峰▎蹇擃仾缂佲偓閸愵亞纾奸悹鍥皺婢э附顨ラ悙鎻掓殻闁糕晪绻濆畷鎺戔槈濮樻瘷銈夋⒒娴ｇ鏆遍柟纰卞亰閺佸啴鏁愰崶顭戞綗濠碘槅鍨甸妴鈧柡鈧禒瀣叆婵炴垶锚椤忊晛霉濠婂啨鍋㈤柡灞剧⊕缁绘繈宕橀鍡欐殼婵＄偑鍊ら崢鐓幟洪埡鍚藉洭宕奸弴鐔哄帾闂佹悶鍎崝灞炬叏瀹ュ洠鍋撳▓鍨灈妞ゎ參鏀辨穱濠囨倻閽樺）銊╂煏婢跺牆鍔滈悘蹇擃儔濮婂宕掑▎鎴М闂佺顕滅换婵嬬嵁閹版澘骞㈡俊顖濐嚙椤庢挻淇婇悙宸剰闂佸府缍侀崺鐐剁疀濞戞瑢鎷婚梺绋挎湰閻熝囧礉瀹ュ鐓熸い蹇撳缁夎櫣鈧娲樼换鍌炴偩濠靛鐒垫い鎺戝閻掑灚銇勯幒宥囶槮闁搞値鍓熼弻娑樜熼幁鎺戜划闂佺偨鍎荤粻鎾崇暦閸洦鏁嗗璺侯儐濞呮牠姊绘担铏瑰笡闁告梹鐗曢…鍥р枎閹惧磭顦銈嗘⒒閳峰牆銆掓繝姘厪闁割偅绻冮ˉ鐐淬亜閵夈儲顥滈柍瑙勫灴椤㈡瑩宕崟銊ヤ壕闁哄洢鍨归悡婵嬫煙閹规劦鍤欓梺鍗炴喘閺岋繝宕堕埡浣圭亖闂?
-                int width = switcher != null ? switcher.getWidth() : 130;
+                int width = dropdown.getWidth() > 0 ? dropdown.getWidth() : 130;
+                int dropdownH = dropdown.getHeight() > 0 ? dropdown.getHeight() : 18;
+                contentRight -= width;
                 dropdown.setWidth(width);
-                dropdown.setHeight(switcher != null ? switcher.getHeight() : 18);
-                dropdown.setPosition(right - width, y);
+                dropdown.setHeight(dropdownH);
+                dropdown.setPosition(Math.max(layout.contentX + 8, contentRight), contentRowY);
+                leftmostExtraX = Math.min(leftmostExtraX, dropdown.getX());
+                contentRight -= extraGap;
                 expandMasaGadgetVisibleEntries();
                 continue;
             }
@@ -694,6 +765,71 @@ public final class ConfigScreenManager {
             right -= width;
             dropdown.setPosition(Math.max(layout.contentX + 8, right), y);
             right -= 4;
+        }
+
+        // TweakMore/MagicLib 的“快捷键搜索”按钮由原生搜索栏绘制，位置固定在内容区右侧，
+        // 会被上面重新排布的筛选/排序下拉框盖住。保持它原本的原生外观与功能，只挪到这一行左侧。
+        positionSearchKeybindButton(configs, state, leftmostExtraX, contentRowY, 16);
+    }
+
+    /**
+     * 把 malilib 搜索栏自带的快捷键搜索按钮移到筛选/排序下拉框左边。
+     *
+     * <p>该按钮由 {@code WidgetSearchBarConfigs} 自己绘制（不在 GuiBase.buttons 中），
+     * TweakMore 等模组把它放在内容区右侧，正好和 Philia UI 重新定位后的下拉框重叠。
+     * 这里只改坐标，不改按钮实例、宽高或监听器，因此点击/热键搜索功能完全不变，
+     * 外观也保持原生（“无框”）样式。</p>
+     */
+    private static void positionSearchKeybindButton(GuiConfigsBase configs, ConfigScreenState state,
+                                                    int leftmostExtraX, int rowY, int rowH) {
+        if (leftmostExtraX == Integer.MAX_VALUE) {
+            return;
+        }
+
+        try {
+            WidgetListBase<?, ?> listWidget = ((GuiListBaseAccessor) configs).malilibui$getListWidget();
+
+            if (listWidget == null || listWidget.getSearchBarWidget() == null) {
+                return;
+            }
+
+            WidgetSearchBar bar = listWidget.getSearchBarWidget();
+            java.lang.reflect.Field field = findField(bar.getClass(), "button");
+
+            if (field == null) {
+                for (Class<?> c = bar.getClass(); c != null && c != Object.class; c = c.getSuperclass()) {
+                    for (java.lang.reflect.Field f : c.getDeclaredFields()) {
+                        if (ButtonBase.class.isAssignableFrom(f.getType())) {
+                            field = f;
+                            break;
+                        }
+                    }
+
+                    if (field != null) {
+                        break;
+                    }
+                }
+            }
+
+            if (field == null) {
+                return;
+            }
+
+            field.setAccessible(true);
+            Object value = field.get(bar);
+
+            if (!(value instanceof ButtonBase button)) {
+                return;
+            }
+
+            int x = Math.max(state.layout.contentX + 8, leftmostExtraX - 6 - button.getWidth());
+            int y = rowY + (rowH - button.getHeight()) / 2;
+
+            if (button.getX() != x || button.getY() != y) {
+                button.setPosition(x, y);
+            }
+        } catch (Throwable ignored) {
+            // 某些版本的 malilib 字段名不同；找不到时保持原生布局即可。
         }
     }
 
@@ -873,12 +1009,64 @@ public final class ConfigScreenManager {
 
         ConfigLayout layout = state.layout;
         // 闂傚倸鍊搁崐鎼佸磹妞嬪孩顐芥慨姗嗗墻閻掍粙鏌ゆ慨鎰偓鏍偓姘煼閺岋綁寮崒姘粯缂備讲鍋撳璺哄閸嬫捇宕楁径濠佸闂備礁鎲″ú锕傚磻婢舵劕鏄ラ柣鎰劋閻撶喖骞栨潏鍓хɑ闁哄棌鏅濋惀顏堫敇閻愰潧鐓熼悗瑙勬礃閸ㄥ潡鐛Ο鍏煎珰闁告瑥顦粊鑸典繆閻愵亜鈧牠骞愭ィ鍐ㄧ獥閹肩补妾ч弸鏃傗偓鍏夊亾闁告洦鍓涢崢浠嬫椤愩垺澶勯柟姝屽吹缁鈧綆鍠楅悡鏇㈡煏婵炲灝濡界痪顓犲亾閵囧嫰寮撮鍡櫳戠紓浣稿€圭敮鐐哄焵椤掑﹦绉靛ù婊呭仱瀹曟劙鎮欏顔藉瘜闂侀潧鐗嗗Λ妤冪箔閹烘挶浜滈柨鏃囧Г缁惰尙鎮▎鎴斿亾閸忓浜鹃梺鍛婃处閸撴盯宕㈡禒瀣拺缂備焦锚婵洦銇勯弴銊ュ籍闁糕斂鍎插鍕箛椤撶姴骞樻繝鐢靛仩鐏忣亪顢氳閹﹢鏁傞柨顖氫壕閻熸瑥瀚径鍕煕閹捐泛鏋涢柣娑卞枛椤粓鍩€椤掑嫨鈧礁鈻庨幘鏉戜簵闁硅壈鎻徊娲磻閹炬椿鏁囬柕蹇婃閹疯櫣绱撴担鍓插剱閻庣瑳鍐胯€块柟娈垮枤绾惧吋銇勯弮鍥т汗閼叉牠姊哄Ч鍥у姶濞存粠浜妴浣糕槈閵忊€斥偓鐑芥煛婢跺鐏嶉柛瀣崌瀹曞ジ寮撮悢鍝勫箺闂備礁缍婇崑濠囧礈濞嗘垹妫憸鏃堝蓟濞戙垺鏅查柛鈩兠埀顒佸姍閺岋紕浠︾拠娴嬪亾濠靛棛鏆︾憸鐗堝俯閺佸啴鏌曡箛锝嗙窔缂佽鲸绻堝缁樻媴閼恒儯鈧啰绱掗埀顒佹媴閾忓湱鐓嬮梺鐓庢憸閺佹悂銆呴悜鑺ョ叆闁哄洨鍋涢埀顒€鎽滄竟鏇°亹閹烘挾鍘介梺鍝勫暙閻楁粌螞閹寸姵鍠愰柣妤€鐗嗙徊濠氭煃鐟欏嫬鐏撮柟顔界懇瀵爼骞嬮悩杈敇闂傚倷绀佸﹢閬嶁€﹂崼銉ョ婵犲﹤鐗嗛悞鍨亜閹哄秷鍏岄柍缁樻崌閺岋繝宕ㄩ姘ｆ瀰闂佺粯渚楅崳锝呯暦濮椻偓婵℃瓕顦虫繛鍫ョ畺濮婃椽骞栭悙鎻掑Ф闂佺粯鎸搁悧鍡涒€﹂崶顒佸亜闁稿繐鐨烽幏娲⒒閸屾氨澧涚紒瀣尵缁顫濋婵堢畾闂佸湱绮敮妤呭吹閸モ斁鍋撳▓鍨灁闁告梹鍨垮濠氬幢濡ゅ﹤鎮戦梺绯曞墲閻熴儵鐛崼鐔虹瘈闁汇垽娼ф禒婊勪繆椤愶綆娈橀柟骞垮灲楠炴帒螖閳ь剟宕欓悩缁樼厱闁规澘鍚€缁ㄧ晫鐥幆褋鍋㈤柡宀嬬節瀹曟﹢濡搁妷銏犱壕闁归棿绀侀崙鐘绘煛閸愩劌鈧崵澹曟總绋跨骇闁割偅绋戞俊浠嬫倶韫囷絽寮柟钘夌埣閺佹劙宕ㄩ鐔蜂壕闁圭儤鍩堝鈺呮煟閹捐櫕鎹ｅù鐘櫅閳规垿鎮欓懠顒€顣洪梺纭咁嚋缁绘繈鐛崼銉ノ╅柍杞拌兌椤斿﹪姊洪崫鍕殭闁稿﹤鎽滅划顓㈡晸閻樻枼鎷洪梺鍛婄☉閿曘儵鎮樺┑瀣厱婵炴垵宕▍妯荤箾閼测晛鏋涢柡灞稿墲瀵板嫭绻濋崟顐殼闂備礁鎼幊蹇曟崲閸儱绠栫€规洖娲ㄧ壕鍏间繆椤栨碍璐＄紒鐘冲哺濮婃椽妫冨☉姘暫闂佺锕ら幉锛勭矉瀹ュ棎鍋呴柛鎰ㄦ櫅娴狀厼鈹戦悩璇у伐闁瑰啿閰ｉ妴鍌炴嚃閳哄啰锛滈柣搴秵閸嬪嫮绮幒鎾变簻妞ゆ挾鍋炵粚璺ㄧ磼閻樺磭鈽夐柍钘夘槸铻ｇ痪鎷岄哺琚ㄦ繝纰夌磿閸嬫垿宕愰弴鐘冲床闁归偊鍎靛☉妯滄棃宕橀…鎴烆棥闂備胶顫嬮崟鍨暦闂佹娊鏀遍崹鍧楀蓟濞戞ǚ鏀介柛鈩冾殢娴犲ジ姊洪崫鍕棤闁稿鍋熼幑銏犫攽鐎ｎ亞鍔﹀銈嗗笒鐎氼剟骞戦懜鐐逛簻闁规崘娉涘暩闂佷紮缍€閸╂牜鎹㈠┑瀣潊闁挎繂鎳愰崢顐︽⒑閸涘﹥鈷愭繛鍙夌矌閸掓帡宕奸妷銉э紲濠殿噯缍嗛崢鑲╃礊婵犲洤鏋侀柟鐗堟緲閻愬﹪鏌嶉崫鍕偓褰掑疮閹烘鈷掑ù锝呮啞閹叉悂鏌涢悩鏌ュ弰妤犵偛锕ら～婊堝焵椤掑嫮宓侀柛鎰电厑濞差亶鏁傞柛鏇ㄥ弾閸炴椽姊绘担绛嬫綈闁诡垰鐭傚畷褰掓偋閸繍鍤ら梺瑙勫婢ф鍩涢幋锔界厵闁兼祴鏅涙禒婊堟煃瑜滈崗娆撳磹濠靛棛鏆﹂柨婵嗩槸缁€鍐煏婵炑冨椤旀洘绻濆▓鍨灍闁靛洦鐩畷鎴﹀箻閸ㄦ稑浜鹃悷娆忓绾炬悂鏌涢弮鈧崹鍧楀Υ娴ｈ倽鐔封枎閻愵儷鈺呮⒒娴ｅ憡鎯堥柟閿嬪灩缁辩偞鎷呴崜鍙夌稁濠电偛妯婃禍婊冾啅濠靛棌鏀介柣妯诲絻椤忊晠鏌嶅畡鎵ⅵ闁哄矉缍€缁犳盯骞橀崜浣烘澖闂備礁鎲″褰掑垂閸ф鍋?
-        int x = Math.min(layout.contentX + layout.contentW - 130, layout.screenW - 138);
         int y = layout.panelY + 4;
+        int closeX = layout.contentX + layout.contentW - CLOSE_BUTTON_SIZE;
 
-        if (switcher.getX() != x || switcher.getY() != y) {
-            switcher.setPosition(x, y);
+        // 顶栏从右到左：叉号 -> 原生模组切换框 -> MasaGadget 切换框 -> 搜索框。
+        // MasaGadget 的 fasSwitch 框与原生切换框功能一致，一并归位到顶栏同一行。
+        WidgetDropDownList<?> masaSwitcher = getMasaGadgetSwitcher(configs);
+        int cursor = closeX - TOP_BAR_GAP;
+
+        int switchW = switcher.getWidth() > 0 ? switcher.getWidth() : 130;
+        cursor -= switchW;
+        int switchX = Math.max(layout.contentX + 8, cursor);
+        if (switcher.getX() != switchX || switcher.getY() != y) {
+            switcher.setPosition(switchX, y);
         }
+        cursor -= TOP_BAR_GAP;
+
+        if (masaSwitcher != null) {
+            int masaW = masaSwitcher.getWidth() > 0 ? masaSwitcher.getWidth() : 100;
+            cursor -= masaW;
+            int masaX = Math.max(layout.contentX + 8, cursor);
+            if (masaSwitcher.getHeight() != 18) {
+                masaSwitcher.setHeight(18);
+            }
+            if (masaSwitcher.getX() != masaX || masaSwitcher.getY() != y) {
+                masaSwitcher.setPosition(masaX, y);
+            }
+        }
+    }
+
+    /** 右上角强制关闭按钮的几何位置，与工作区右边缘对齐。 */
+    private static int[] closeButtonBounds(ConfigScreenState state) {
+        ConfigLayout layout = state.layout;
+        return new int[] {
+                layout.contentX + layout.contentW - CLOSE_BUTTON_SIZE,
+                layout.panelY + 4,
+                CLOSE_BUTTON_SIZE,
+                CLOSE_BUTTON_SIZE
+        };
+    }
+
+    /** 点击叉号：直接回到游戏，不经过 malilib 的父界面栈。 */
+    public static boolean onCloseButtonClick(GuiBase screen, double mouseX, double mouseY) {
+        ConfigScreenState state = STATES.get(screen);
+
+        if (state == null || !state.ready || state.layout == null) {
+            return false;
+        }
+
+        int[] b = closeButtonBounds(state);
+
+        if (mouseX < b[0] || mouseX > b[0] + b[2] || mouseY < b[1] || mouseY > b[1] + b[3]) {
+            return false;
+        }
+
+        // GuiBase.openGui(null) 内部调用各版本对应的 Minecraft.setScreen(null)，
+        // 避免 1.21.11 与 26.x 方法名不同导致的兼容问题。
+        GuiBase.openGui(null);
+        return true;
     }
 
     private static boolean hasModSwitcher(ConfigScreenState state) {
@@ -1149,6 +1337,12 @@ public final class ConfigScreenManager {
         return state != null && state.ready && state.layout != null;
     }
 
+    /** 只在被我们接管的 malilib 界面里替换下拉框样式。 */
+    public static boolean shouldStyleDropdown() {
+        Screen current = GuiUtils.getCurrentScreen();
+        return current instanceof GuiBase gui && hasLayout(gui);
+    }
+
     public static boolean isNavButton(GuiBase screen, ButtonBase button) {
         ConfigScreenState state = STATES.get(screen);
 
@@ -1194,6 +1388,19 @@ public final class ConfigScreenManager {
 
         drawContentHeader(ctx, state);
         drawSearchBar(ctx, state);
+        drawCloseButton(ctx, state, mouseX, mouseY);
+    }
+
+    /** 绘制顶栏最右侧的强制退出按钮，与搜索框同高、与工作区右边缘对齐。 */
+    private static void drawCloseButton(GuiContext ctx, ConfigScreenState state,
+                                        int mouseX, int mouseY) {
+        int[] b = closeButtonBounds(state);
+        boolean hovered = mouseX >= b[0] && mouseX <= b[0] + b[2]
+                && mouseY >= b[1] && mouseY <= b[1] + b[3];
+
+        UiTheme.drawGlassField(ctx, b[0], b[1], b[2], b[3], hovered);
+        UiTheme.drawCenteredGlyph(ctx, "×", b[0], b[1], b[2], b[3],
+                hovered ? 0xFFFFFFFF : UiTheme.ACCENT_PINK, false);
     }
 
     /**

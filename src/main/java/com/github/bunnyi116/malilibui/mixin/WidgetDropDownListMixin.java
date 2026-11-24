@@ -7,8 +7,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.widgets.WidgetDropDownList;
+import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.util.GuiUtils;
 
+import com.github.bunnyi116.malilibui.gui.ConfigScreenManager;
+import com.github.bunnyi116.malilibui.gui.DropdownRenderer;
 import com.github.bunnyi116.malilibui.mixin.accessor.WidgetDropDownListAccessor;
 import com.github.bunnyi116.malilibui.config.UiConfigs;
 
@@ -18,6 +21,18 @@ import com.github.bunnyi116.malilibui.config.UiConfigs;
  */
 @Mixin(WidgetDropDownList.class)
 public abstract class WidgetDropDownListMixin {
+    /** 收起和展开状态都换成当前 UI 的深色样式，MasaGadget 的下拉框同样继承此类。 */
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    private void malilibui$renderThemed(GuiContext ctx, int mouseX, int mouseY, boolean selected,
+                                        org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (!ConfigScreenManager.shouldStyleDropdown()) {
+            return;
+        }
+
+        DropdownRenderer.render((WidgetDropDownList<?>) (Object) this, ctx, mouseX, mouseY);
+        ci.cancel();
+    }
+
     @Inject(method = "onMouseScrolledImpl", at = @At("RETURN"), cancellable = true)
     private void malilibui$consumeScrollWheel(double mouseX, double mouseY, double horizontalAmount,
                                               double verticalAmount, CallbackInfoReturnable<Boolean> cir) {
