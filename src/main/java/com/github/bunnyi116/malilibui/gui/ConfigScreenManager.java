@@ -698,6 +698,39 @@ public final class ConfigScreenManager {
         return null;
     }
 
+    /**
+     * 读取 MagicLib/TweakMore 配置界面里单独渲染的 hoveringWidgets。
+     * 这里刻意用反射，不能直接 instanceof 任何 Mixin 类：
+     * Mixin 禁止外部代码直接加载 Mixin 类，否则打开部分模组（如 MiniHUD）
+     * 的配置界面时会抛 IllegalClassLoadError 崩溃。
+     */
+    private static List<WidgetBase> getHoveringWidgets(GuiConfigsBase configs) {
+        try {
+            java.lang.reflect.Field field = findField(configs.getClass(), "hoveringWidgets");
+
+            if (field != null) {
+                field.setAccessible(true);
+                Object value = field.get(configs);
+
+                if (value instanceof List<?> list) {
+                    List<WidgetBase> result = new ArrayList<>();
+
+                    for (Object item : list) {
+                        if (item instanceof WidgetBase widget) {
+                            result.add(widget);
+                        }
+                    }
+
+                    return result;
+                }
+            }
+        } catch (Throwable ignored) {
+            // 没有该字段的模组界面直接忽略。
+        }
+
+        return java.util.Collections.emptyList();
+    }
+
     private static void positionExtraDropdowns(GuiConfigsBase configs, ConfigScreenState state) {
         
 
@@ -713,14 +746,14 @@ public final class ConfigScreenManager {
             }
         }
 
-        // MagicLib 的筛选/排序框在 hoveringWidgets 里单独渲染，可能不在 widgets 列表，
+        // MagicLib/TweakMore 的筛选/排序框在 hoveringWidgets 里单独渲染，可能不在 widgets 列表，
         // 一并纳入统一定位，避免“无”和“最近使用”上下错位重叠。
-        if (configs instanceof com.github.bunnyi116.malilibui.mixin.compat.MagicConfigGuiAccessor magic) {
-            for (WidgetBase widget : magic.malilibui$getHoveringWidgets()) {
-                if (widget instanceof WidgetDropDownList<?> dropdown
-                        && dropdown != switcher && dropdown != masaSwitcher && !extras.contains(dropdown)) {
-                    extras.add(dropdown);
-                }
+        // 注意：不能用 instanceof 直接引用 Mixin 类，运行时 Mixin 禁止外部直接加载，
+        // 否则在部分模组（如 MiniHUD）的配置界面会崩溃；这里改用反射读字段。
+        for (WidgetBase widget : getHoveringWidgets(configs)) {
+            if (widget instanceof WidgetDropDownList<?> dropdown
+                    && dropdown != switcher && dropdown != masaSwitcher && !extras.contains(dropdown)) {
+                extras.add(dropdown);
             }
         }
 
