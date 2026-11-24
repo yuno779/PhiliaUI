@@ -37,6 +37,8 @@ Scroller 等）都会自动获得新的界面布局。
 ----------
 <img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/0902dd50-11b0-4cdc-8b24-9a9a6e81f647" />
 <img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/6224273e-2b36-42b2-8c59-936760a64c69" />
+<img width="2559" height="1599" alt="31fdd883d85346b194a49358fec6f8da" src="https://github.com/user-attachments/assets/009ec0a8-cebb-407d-bdb5-d81c6fbc714e" />
+
 
 功能特性
 ----------
@@ -142,7 +144,7 @@ gradlew :26.3:runClient
 - [sakura-ryoko](https://github.com/sakura-ryoko/malilib)：适配新版 Minecraft 的 MaLiLib 分支；
 - [aleksilassila/litematica-printer](https://github.com/aleksilassila/litematica-printer)：本项目的构建骨架来源于该项目的分支；
 - [bunnyi116](https://github.com/bunnyi116)：malilib UI 项目维护。
-- [[yuno779]](https://github.com/yuno779):PhiliaUI 项目维护
+- [yuno779](https://github.com/yuno779):PhiliaUI 项目维护
 
 许可证
 ----------
