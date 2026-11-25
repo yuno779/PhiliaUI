@@ -64,6 +64,13 @@ public interface WidgetListBaseAccessor {
     void malilibui$refreshBrowserEntries();
 
 
+    @Mutable
+    @Accessor("lastScrollbarPosition")
+    void malilibui$setLastScrollbarPosition(int value);
+
+    @Invoker("reCreateListEntryWidgets")
+    void malilibui$reCreateListEntryWidgets();
+
     @Accessor("scrollBar")
     GuiScrollBar malilibui$getScrollBar();
 

@@ -41,6 +41,7 @@
     "compat.SelectorDropDownListMixin",
     "compat.HanaPrinterColorsMixin",
     "compat.HanaPrinterListColorsMixin",
+    "compat.SliderToggleScrollMixin",
     "compat.WidgetDropDownListMixin"
   ],
   "injectors": {

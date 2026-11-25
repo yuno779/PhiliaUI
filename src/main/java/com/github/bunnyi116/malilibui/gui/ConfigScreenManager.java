@@ -232,10 +232,43 @@ public final class ConfigScreenManager {
             WidgetListBase<?, ?> widget = ((GuiListBaseAccessor) list).malilibui$getListWidget();
 
             if (widget != null) {
-                GuiScrollBar bar = ((WidgetListBaseAccessor) widget).malilibui$getScrollBar();
+                WidgetListBaseAccessor accessor = (WidgetListBaseAccessor) widget;
+                GuiScrollBar bar = accessor.malilibui$getScrollBar();
                 bar.setValue(Math.max(0, Math.min(value, bar.getMaxValue())));
+
+                // initGui() 重建后 lastScrollbarPosition 已等于旧值，单改 scrollBar.value
+                // 会让下一帧渲染误判“未变化”而不重建条目，画面仍停在顶部。
+                // 这里强制清掉缓存并立即重建可见条目，使画面与滚动值一致。
+                accessor.malilibui$setLastScrollbarPosition(-1);
+                accessor.malilibui$reCreateListEntryWidgets();
             }
         }
+    }
+
+    private static int savedRebuildScroll;
+    private static int pendingRebuildFrames;
+
+    /** malilib 的数值“文本/滑块”切换按钮会重建界面，重建前记下滚动位置。 */
+    public static void saveScrollBeforeRebuild() {
+        Screen current = GuiUtils.getCurrentScreen();
+        savedRebuildScroll = current instanceof GuiBase screen ? getScrollValue(screen) : 0;
+        // 切换按钮触发 initGui()，随后 Philia UI 的 ensureList 在渲染前还会多次
+        // reCreateListWidget（新建 scrollBar 归零）。用粘性窗口在若干帧内持续
+        // 重新应用目标值，覆盖所有滞后重建；窗口结束后不再干预用户滚动。
+        pendingRebuildFrames = 20;
+    }
+
+    /** ensureList() 每帧调用：返回本帧要恢复的滚动值并推进粘性窗口。 */
+    public static int consumeRebuildScroll() {
+        if (pendingRebuildFrames <= 0) {
+            return -1;
+        }
+        pendingRebuildFrames--;
+        return savedRebuildScroll;
+    }
+
+    public static boolean hasPendingRebuildScroll() {
+        return pendingRebuildFrames > 0;
     }
 
     /**
@@ -1352,6 +1385,18 @@ public final class ConfigScreenManager {
         GuiScrollBar listBar = ((WidgetListBaseAccessor) widget).malilibui$getScrollBar();
         ((GuiScrollBarAccessor) listBar).malilibui$setBackgroundColor(0x44000000);
         ((GuiScrollBarAccessor) listBar).malilibui$setForegroundColor(0xFFFFFFFF);
+
+        // “文本/滑块”切换按钮重建界面后，在该列表 widget 完成所有重建后恢复滚动位置。
+        // ensureList 在每一帧渲染前运行，此时 listBar 已是最终实例，恢复不会被后续重建冲掉。
+        if (hasPendingRebuildScroll()) {
+            int restoreTo = consumeRebuildScroll();
+            WidgetListBaseAccessor wa = (WidgetListBaseAccessor) widget;
+            GuiScrollBar bar = wa.malilibui$getScrollBar();
+            bar.setValue(Math.max(0, Math.min(restoreTo, bar.getMaxValue())));
+            wa.malilibui$setLastScrollbarPosition(-1);
+            wa.malilibui$reCreateListEntryWidgets();
+        }
+
         state.listWidget = widget;
     }
 

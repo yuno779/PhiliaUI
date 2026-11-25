@@ -82,6 +82,9 @@ $RECYCLE.BIN/
 *.bak
 *.tmp
 
+# buildSrc 本机 JDK 路径配置（每人机器不同，不入库）
+buildSrc/gradle.properties
+
 # 环境变量文件 (敏感配置忽略，保留示例文件)
 .env
 .env.*
